@@ -21,6 +21,29 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
       rel="stylesheet"
     />
+
+    <link
+      rel="stylesheet"
+      href="../plugins/datatables-bs4/css/dataTables.bootstrap4.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
+    />
+    <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
+    <style>
+      #additional_table td,
+      th {
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .modal {
+        overflow: auto !important;
+      }
+    </style>
+    
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -42,13 +65,13 @@
       <aside class="main-sidebar sidebar-light-primary elevation-4">
         <!-- Brand Logo -->
         <a href="../index.html" class="brand-link">
-          <img
-            src="dist/img/AdminLTELogo.png"
-            alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3"
-            style="opacity: 0.8"
-          />
-          <span class="brand-text font-weight-light">AdminLTE 3</span>
+          <div class="text-center">
+            <img
+              class="profile-user-img img-fluid img-circle"
+              src="../../img/core-img/logo.png"
+              alt="User profile picture"
+            />
+          </div>
         </a>
 
         <!-- Sidebar -->
@@ -57,7 +80,7 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src="../dist/img/user2-160x160.jpg"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
@@ -171,10 +194,7 @@ with font-awesome or any other icon font library -->
                 </ul>
               </li>
               <li class="nav-item">
-                <a
-                  href="additional_categories.html"
-                  class="nav-link active"
-                >
+                <a href="additional_categories.html" class="nav-link active">
                   <i class="nav-icon fas fa-tags"></i>
                   <p>Additional/Extras</p>
                 </a>
@@ -209,7 +229,7 @@ with font-awesome or any other icon font library -->
             <div class="row">
               <div
                 class="col-lg-3 col-6"
-                style="cursor: pointer;"
+                style="cursor: pointer"
                 data-toggle="modal"
                 data-target="#add-default"
               >
@@ -227,7 +247,7 @@ with font-awesome or any other icon font library -->
             </div>
           </div>
           <!-- /.container-fluid -->
-        </section>  
+        </section>
 
         <!-- Main content -->
         <section class="content">
@@ -260,6 +280,105 @@ with font-awesome or any other icon font library -->
       </div>
       <!-- /.content-wrapper -->
 
+      <div class="modal fade" id="add-default">
+        <div class="modal-dialog">
+          <form id="new_additional_form">
+            <div class="modal-content">
+              <div class="modal-header bg-indigo">
+                <h4 class="modal-title">New Item</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-6">
+                    <label>Item Name:</label
+                    ><input class="form-control" required />
+                  </div>
+                  <div class="col-6">
+                    <label>Item Price:</label
+                    ><input class="form-control" required />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-save">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <form id="update_additional">
+            <div class="modal-content">
+              <div class="modal-header bg-info">
+                <h4 class="modal-title" id="additional_title"></h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-12">
+                    <label>Item Price:</label>
+                    <input id="item_id" hidden />
+                    <input
+                      class="form-control"
+                      id="new_item_price"
+                      placeholder="Enter new item price"
+                      required
+                    />
+                    <label>Status:</label>
+                    <select class="form-control">
+                      <option value="1">Active</option>
+                      <option value="0">Disable</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-update">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block"><b>Version</b> 3.0.5</div>
         <strong
@@ -285,5 +404,139 @@ with font-awesome or any other icon font library -->
     <script src="../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js"></script>
+
+    <script src="../plugins/datatables/jquery.dataTables.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../plugins/toastr/toastr.min.js"></script>
   </body>
+
+  <script>
+    $(document).ready(function () {
+      //     if (sessionStorage.getItem("user_info") == null)
+      //       window.location = "../../authentication/login.html";
+      //  $("#user_admin").html(JSON.parse(sessionStorage.getItem("user_info")).name);
+
+      let table = $("#additional_table").DataTable({
+        responsive: true,
+        autoWidth: false,
+        ajax: {
+          url: "../php_function/additional_categories/get_additional.php",
+          dataSrc: "",
+        },
+        columns: [
+          {
+            data: "additional_type",
+          },
+          {
+            data: "additional_amount",
+          },
+          {
+            data: "status",
+            render: function (data, type, full, meta) {
+              let status = data;
+              if (status == 1) {
+                return "<span style='height: 15px; width: 15px; border-radius: 50%; display: inline-block; background:#57DA4F;'></span>";
+              } else {
+                return "<span style='height: 15px; width: 15px; border-radius: 50%; display: inline-block; background:#FF5733;'></span>";
+              }
+            },
+          },
+        ],
+      });
+
+      $("#additional_table tbody").on("click", "tr", async function () {
+        console.log(table.row(this).data());
+        $("#modal-default").modal("show");
+
+        $("#item_id").val(table.row(this).data().additional_id);
+        $("#new_item_price").val(
+          parseInt(table.row(this).data().additional_amount)
+        );
+        $("#additional_title").html(table.row(this).data().additional_type);
+      });
+
+      updateSuccess = () => {
+        $("#modal-default").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "Item Modified!",
+        });
+      };
+
+      $("#modal-default").on("hidden.bs.modal", function () {
+        $("#btn-update").removeAttr("disabled", "disabled");
+        table.ajax.reload();
+      });
+
+      $("#update_additional").submit((e) => {
+        e.preventDefault();
+        $("#btn-update").attr("disabled", "disabled");
+        let item_id = e.target[1].value;
+        let item_price = e.target[2].value;
+        let status = e.target[3].value;
+
+        $.ajax({
+          url: "../php_function/additional_categories/update_additional.php",
+          data:
+            "item_id=" +
+            item_id +
+            "&item_price=" +
+            item_price +
+            "&status=" +
+            status,
+          type: "POST",
+          success: function (response) {
+            updateSuccess();
+          },
+        });
+      });
+
+      addSuccess = () => {
+        $("#add-default").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "New item added!",
+        });
+      };
+
+      $("#add-default").on("hidden.bs.modal", function () {
+        table.ajax.reload();
+        $("#btn-save").removeAttr("disabled", "disabled");
+      });
+
+      $("#new_additional_form").submit((e) => {
+        e.preventDefault();
+        $("#btn-save").attr("disabled", "disabled");
+        let item_name = e.target[1].value;
+        let item_price = e.target[2].value;
+
+        $.ajax({
+          url: "../php_function/additional_categories/insert_additional.php",
+          data: "item_name=" + item_name + "&item_price=" + item_price,
+          type: "POST",
+          success: function (response) {
+            addSuccess();
+          },
+        });
+      });
+    });
+  </script>
 </html>

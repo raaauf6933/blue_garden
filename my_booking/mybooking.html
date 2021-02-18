@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>The Palatin - Hotel &amp; Resort Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../img/core-img/favicon.ico" />
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+
+  <body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+      <div class="cssload-container">
+        <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+      <!-- Navbar Area -->
+      <div class="palatin-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+          <div class="container">
+            <!-- Menu -->
+            <nav class="classy-navbar justify-content-between" id="palatinNav">
+              <!-- Nav brand -->
+              <a href="../index.html" class="nav-brand"
+                ><img src="../img/core-img/logo.png" alt=""
+              /></a>
+
+              <!-- Navbar Toggler -->
+              <div class="classy-navbar-toggler">
+                <span class="navbarToggler"
+                  ><span></span><span></span><span></span
+                ></span>
+              </div>
+
+              <!-- Menu -->
+              <div class="classy-menu">
+                <!-- close btn -->
+                <div class="classycloseIcon">
+                  <div class="cross-wrap">
+                    <span class="top"></span><span class="bottom"></span>
+                  </div>
+                </div>
+
+                <!-- Nav Start -->
+                <div class="classynav">
+                  <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../rooms.html">Rooms</a></li>
+                    <li><a href="../gallery.html">Gallery</a></li>
+                    <li><a href="../about-us.html">About Us</a></li>
+                    <li>
+                      <a href="../contact.html">Contact</a>
+                    </li>
+                  </ul>
+
+                  <!-- Button -->
+                  <div class="menu-btn">
+                    <a href="../myBooking.html" class="btn palatin-btn"
+                      >My Booking <i class="fa fa-search" aria-hidden="true"></i
+                    ></a>
+                  </div>
+                </div>
+                <!-- Nav End -->
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcumb Area Start ##### -->
+
+    <section class="contact-form-area mb-100">
+      <div class="container" style="margin-top: 10rem !important">
+        <div class="row mx-auto w-75">
+          <div claas="col-12">
+            <div class="card shadow bg-muted">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-12">
+                    <h4 class="text-info">Guest Information</h4>
+                    <address class="m-t-5 m-b-5">
+                      <h5 class="m-2">Name: <b id="guest_name"></b></h5>
+                      <h5 class="m-2">Address: <b id="guest_address"></b></h5>
+                      <h5 class="m-2">Phone: <b id="guest_contact"></b></h5>
+                      <h5 class="m-2">E-mail: <b id="guest_email"></b></h5>
+                    </address>
+                  </div>
+                  <div class="col-xl-6 col-lg-12">
+                    <h4 class="text-success">Booking Information</h4>
+                    <address class="m-t-5 m-b-5">
+                      <h5 class="m-2">Check-In: <b id="checkin"></b></h5>
+                      <h5 class="m-2">Check-Out: <b id="checkout"></b></h5>
+                      <h5 class="m-2">
+                        No. Night(s): <b id="num_nights"></b>
+                      </h5>
+                      <h5 class="m-2">Booking Status: <b id="status"></b></h5>
+                    </address>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-center">
+                      <button
+                        class="btn btn-primary mr-1"
+                        data-toggle="modal"
+                        data-target="#modal-sm"
+                      >
+                        <i class="fa fa-image"></i> UPLOAD BANK RECEIPT
+                      </button>
+                      <a
+                        class="btn btn-primary ml-1 text-light"
+                        href="../change_booking/select_date.html"
+                      >
+                        <i class="fa fa-undo"></i> CHANGE BOOKING
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-12">
+            <div class="card shadow bg-muted mt-2">
+              <div class="card-body">
+                <h3 class="text-secondary">Room Details</h3>
+                <table id="rooms" class="table table-sm table-hover">
+                  <thead>
+                    <tr class="table-success">
+                      <th>Availed Room</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card shadow bg-muted mt-2">
+              <div class="card-body">
+                <h3 class="text-secondary m-2">Upload Receipt History</h3>
+                <table id="upload_image" class="table table-sm table-hover">
+                  <thead>
+                    <tr class="table-info">
+                      <th>Receipt ID</th>
+                      <th>Upload Date</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card shadow bg-muted mt-2">
+              <div class="card-body">
+                <h3 class="text-secondary m-2">Payment History</h3>
+                <table id="payment_history" class="table table-sm table-hover">
+                  <thead>
+                    <tr class="table-primary">
+                      <th>Payment Amount</th>
+                      <th>Payment Date</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ##### Contact Form Area End ##### -->
+
+    <div class="modal fade" id="modal-sm">
+      <div class="modal-dialog modal-sm">
+        <form id="upload_img_form" enctype="multipart/form-data">
+          <div class="modal-content">
+            <div class="modal-header bg-dark">
+              <h4 class="modal-title text-light">Upload Receipt</h4>
+              <button
+                type="button"
+                class="close text-light"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input
+                type="file"
+                id="imgToUpload"
+                class="imgToUpload form-control-file"
+                accept="image/x-png,image/gif,image/jpeg"
+                required
+              />
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="submit" class="btn btn-primary" id="btn-submit">
+                Save changes
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-image">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <h4 class="modal-title"></h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img
+              id="receipt_img"
+              class="img-fluid"
+              style="height: 700px; width: 100%; max-width: 500px"
+            />
+          </div>
+          <div class="modal-footer justify-content-end">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- ##### Google Maps ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+      <div class="container">
+        <div class="row">
+          <!-- Footer Widget Area -->
+          <div class="col-12 col-lg-5">
+            <div class="footer-widget-area mt-50">
+              <a href="#" class="d-block mb-5"
+                ><img src="../img/core-img/logo.png" alt=""
+              /></a>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                malesuada lorem maximus mauris sceleri sque, at rutrum nulla
+                dictum. Ut ac ligula sapien. Suspendisse cursus faucibus
+                finibus.
+              </p>
+            </div>
+          </div>
+
+          <!-- Footer Widget Area -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="footer-widget-area mt-50">
+              <h6 class="widget-title mb-5">Find us on the map</h6>
+              <img src="../img/bg-img/footer-map.png" alt="" />
+            </div>
+          </div>
+
+          <!-- Footer Widget Area -->
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="footer-widget-area mt-50">
+              <h6 class="widget-title mb-5">Subscribe to our newsletter</h6>
+              <form action="#" method="post" class="subscribe-form">
+                <input
+                  type="email"
+                  name="subscribe-email"
+                  id="subscribeemail"
+                  placeholder="Your E-mail"
+                />
+                <button type="submit">Subscribe</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Copywrite Text -->
+        </div>
+      </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="../js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="../js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="../js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="../js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="../js/active.js"></script>
+
+    <script src="../admin/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../admin/plugins/toastr/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <script src="./datepicker_files/jquery.datepicker2.js"></script>
+    <script src="../admin/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="../admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  </body>
+
+  <script>
+    $(document).ready(() => {
+      let billing_id = sessionStorage.getItem("my_booking_billingid");
+      let guest_id = sessionStorage.getItem("my_booking_guestid");
+      if (guest_id == null || guest_id == undefined)
+        window.location = "../my_booking.html";
+
+    
+
+      let reservation_id = 0;
+
+      $.ajax({
+        url: "../php_functions/my_booking/get_rooms.php",
+        data: "guest_id=" + guest_id,
+        type: "POST",
+        success: function (response) {
+          reservation_id = JSON.parse(response)[0].reservation_id;
+          JSON.parse(response).map((e) => {
+            $("#rooms > tbody:last-child").append(
+              "<tr class='guest_room'><td>" +
+                e.roomtype_name +
+                "</td><td>PHP " +
+                e.room_price +
+                "</td></tr>"
+            );
+          });
+        },
+      });
+
+      booking_status = (value) => {
+        if (value == 0 || value == 1) {
+          return "<span class='text-danger'>Pending</span>";
+        } else {
+          return "<span class='text-success'>Confirmed</span>";
+        }
+      };
+
+      $.ajax({
+        url: "../php_functions/my_booking/get_guest_details.php",
+        data: "guest_id=" + guest_id,
+        type: "POST",
+        success: function (response) {
+          JSON.parse(response).map((e) => {
+            $("#guest_name").html(e.first_name + " " + e.last_name);
+            $("#guest_address").html(
+              e.addressline_1 + " " + e.city + " " + e.zipcode
+            );
+            $("#guest_contact").html(e.contact_number);
+            $("#guest_email").html(e.email);
+            $("#checkin").html(e.checkin_date);
+            $("#checkout").html(e.checkout_date);
+            $("#status").html(booking_status(e.status));
+          });
+        },
+      });
+
+      $.ajax({
+        url: "../php_functions/my_booking/get_payment.php",
+        data: "guest_id=" + guest_id,
+        type: "POST",
+        success: function (response) {
+          JSON.parse(response).map((e) => {
+            $("#payment_history > tbody:last-child").append(
+              "<tr class='guest_room'><td>PHP " +
+                e.payed_capital +
+                "</td><td> " +
+                moment(e.payment_date).format("YYYY-MM-DD hh:mm a") +
+                "</td></tr>"
+            );
+          });
+        },
+      });
+
+      let table_receipts = $("#upload_image").DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        searching: false,
+        bAutoWidth: false,
+        responsive: true,
+        autoWidth: false,
+        ajax: {
+          url: "../php_functions/my_booking/get_receipts.php",
+          type: "POST",
+          dataSrc: "",
+          data: { guest_id: guest_id },
+        },
+        columns: [
+          {
+            data: "receipt_photo_id",
+          },
+          {
+            data: "upload_date",
+            render: function (data, type, full, meta) {
+              let status = data;
+              return moment(status).format("YYYY-MM-DD hh:mm a");
+            },
+          },
+        ],
+      });
+
+      $("#upload_image tbody").on("click", "tr", async function () {
+        //$("#guest_additional").dataTable().fnDestroy();
+        $("#modal-image").modal("show");
+        $("#receipt_img").attr(
+          "src",
+          "../admin/dist/img/bank_receipts/" +
+            table_receipts.row(this).data().photo +
+            ""
+        );
+      });
+
+      uploadSuccess = () => {
+        $("#modal-sm").modal("hide");
+        $(".loading").remove();
+        Swal.fire({
+          icon: "success",
+          title: "Bank Receipt Uploaded!",
+        });
+
+        $("#btn-submit").removeAttr("disabled", "disabled");
+      };
+
+      $("#modal-sm").on("hidden.bs.modal", function () {
+        table_receipts.ajax.reload();
+        $("#btn-submit").removeAttr("disabled", "disabled");
+      });
+
+      $("#upload_img_form").submit((e) => {
+        e.preventDefault();
+        $("#btn-submit").attr("disabled", "disabled");
+        $("#btn-submit").append(
+          '<div class="loading spinner-border text-light" style="width: 1em;height: 1em;"></div>'
+        );
+        var fd = new FormData();
+        let upload_image = $("#imgToUpload").prop("files")[0];
+        fd.append("file", upload_image);
+        fd.append("reservation_id", reservation_id);
+        $.ajax({
+          url: "../php_functions/my_booking/upload_picture.php",
+          type: "POST",
+          cache: false,
+          processData: false, // tell jQuery not to process the data
+          contentType: false, // tell jQuery not to set contentType
+          dataType: "script",
+          data: fd,
+          success: (res) => {
+            uploadSuccess();
+          },
+        });
+      });
+    });
+  </script>
+</html>

@@ -16,9 +16,9 @@
     }
 
     // :: 3.0 Nice-select Active Code
-    if ($.fn.niceSelect) {
-        $('select').niceSelect();
-    }
+    // if ($.fn.niceSelect) {
+    //     $('select').niceSelect();
+    // }
 
     // :: 4.0 Sliders Active Code
     if ($.fn.owlCarousel) {

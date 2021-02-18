@@ -21,6 +21,11 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
       rel="stylesheet"
     />
+
+    <link
+      rel="stylesheet"
+      href="../plugins/datatables-bs4/css/dataTables.bootstrap4.css"
+    />
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -42,13 +47,13 @@
       <aside class="main-sidebar sidebar-light-primary elevation-4">
         <!-- Brand Logo -->
         <a href="../index.html" class="brand-link">
-          <img
-            src="dist/img/AdminLTELogo.png"
-            alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3"
-            style="opacity: 0.8"
-          />
-          <span class="brand-text font-weight-light">AdminLTE 3</span>
+          <div class="text-center">
+            <img
+              class="profile-user-img img-fluid img-circle"
+              src="../../img/core-img/logo.png"
+              alt="User profile picture"
+            />
+          </div>
         </a>
 
         <!-- Sidebar -->
@@ -57,7 +62,7 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src="../dist/img/user2-160x160.jpg"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
@@ -94,35 +99,26 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a
-                      href="walkin/select_date.html"
-                      class="nav-link"
-                    >
+                    <a href="walkin/select_date.html" class="nav-link">
                       <i class="fas fa-walking nav-icon text-info"></i>
                       <p>Walk - In</p>
                     </a>
                   </li>
                   <div class="dropdown-divider"></div>
                   <li class="nav-item">
-                    <a
-                      href="pending_bookings.html"
-                      class="nav-link "
-                    >
+                    <a href="pending_bookings.html" class="nav-link">
                       <i class="fas fa-user-clock nav-icon text-danger"></i>
                       <p>Pending Booking</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a
-                      href="confirmed_bookings.html"
-                      class="nav-link"
-                    >
+                    <a href="confirmed_bookings.html" class="nav-link">
                       <i class="fas fa-user-tag nav-icon text-success"></i>
                       <p>Confirmed Booking</p>
                     </a>
                   </li>
                   <div class="dropdown-divider"></div>
-                
+
                   <li class="nav-item">
                     <a href="checkin.html" class="nav-link active">
                       <i class="fas fa-user-check nav-icon text-success"></i>
@@ -137,10 +133,7 @@
                   </li>
                   <div class="dropdown-divider"></div>
                   <li class="nav-item">
-                    <a
-                      href="expired_noshow.html"
-                      class="nav-link"
-                    >
+                    <a href="expired_noshow.html" class="nav-link">
                       <i class="fas fa-user-times nav-icon text-danger"></i>
                       <p>Expired/Noshow</p>
                     </a>
@@ -258,6 +251,310 @@
       </div>
       <!-- /.content-wrapper -->
 
+      <div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+          <form id="checkin_form">
+            <div class="modal-content">
+              <div class="modal-header bg-info">
+                <h4 class="modal-title">Guest Details</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table">
+                  <tr>
+                    <th>Reservation ID:</th>
+                    <td id="reservation_id"></td>
+                    <th>Booking Reference:</th>
+                    <td id="booking_reference">FFD12</td>
+                    <th>Number of Guest</th>
+                    <td id="number_guest">18</td>
+                  </tr>
+                  <tr>
+                    <th>Name:</th>
+                    <td id="name">Rauf Dimaampao</td>
+                    <th>Contact Number:</th>
+                    <td id="contact_number">09472454073</td>
+                    <th>Email:</th>
+                    <td id="email">6933rauf@gmail.com</td>
+                  </tr>
+                  <tr>
+                    <th>Address</th>
+                    <td colspan="5" id="address">Manila, Philippines</td>
+                  </tr>
+                </table>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header bg-dark">
+                        <h3 class="card-title">Uploaded Bank Receipt</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body table-responsive p-0">
+                        <table
+                          class="table table-head-fixed text-nowrap"
+                          id="receipts"
+                        >
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Uploaded Date</th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class="text-center"
+                            style="cursor: pointer"
+                          ></tbody>
+                        </table>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header bg-success">
+                        <h3 class="card-title">Booking Details:</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div
+                        class="card-body table-responsive p-0"
+                        style="height: 200px"
+                      >
+                        <table
+                          class="table table-head-fixed text-nowrap"
+                          id="confirmed_rooms"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Room Type</th>
+                              <th>Room no.</th>
+                              <th>Room Price</th>
+                            </tr>
+                          </thead>
+                          <tbody class="text-center"></tbody>
+                        </table>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header bg-indigo">
+                        <h3
+                          style="font-size: 1.1rem; font-weight: 400; margin: 0"
+                          class="d-flex"
+                        >
+                          <div class="mr-auto">Additional/Extras</div>
+                          <div class="ml-auto">
+                            <button
+                              type="button"
+                              id="btn-additional"
+                              class="btn btn-light"
+                            >
+                              <i class="fas fa-edit"></i>
+                            </button>
+                          </div>
+                        </h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body table-responsive p-0">
+                        <table
+                          class="table table-head-fixed text-nowrap"
+                          id="guest_additional"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Additional Type</th>
+                              <th>Qty</th>
+                              <th>Price</th>
+                              <th>Total</th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class="text-center"
+                            style="cursor: pointer"
+                          ></tbody>
+                        </table>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="card-header bg-primary">
+                        <h3 class="card-title">Payment History</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body table-responsive p-0">
+                        <table
+                          class="table table-head-fixed text-nowrap"
+                          id="payment_history"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Payment Amount</th>
+                              <th>Payment Date</th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class="text-center"
+                            style="cursor: pointer"
+                          ></tbody>
+                        </table>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
+                      <table class="table">
+                        <tbody>
+                          <tr class="table-primary">
+                            <th><h4>BALANCE:</h4></th>
+                            <th>
+                              <h4>₱ <b id="balance"></b></h4>
+                            </th>
+                          </tr>
+                          <tr class="table-primary">
+                            <th><h4>TOTAL AMOUNT</h4></th>
+                            <th>
+                              <h4>₱ <b id="total_amount"></b></h4>
+                            </th>
+                          </tr>
+                          <tr>
+                            <th></th>
+                            <th>
+                              <label>Amount Paid:</label>
+                              <input id="billing_id" hidden />
+                              <input
+                                onkeypress="return isNumberKey(event)"
+                                class="form-control"
+                                placeholder="Enter Amount"
+                                required
+                              />
+                            </th>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-danger" id="btn-submit">
+                  Check-out
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="modal-additional">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-secondary">
+              <h4 class="modal-title">Select Additionals</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="additional_type">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="modal-image">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-secondary">
+              <h4 class="modal-title"></h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img
+                id="receipt_img"
+                class="img-fluid"
+                style="height: 700px; width: 100%; max-width: 500px"
+              />
+            </div>
+            <div class="modal-footer justify-content-end">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block"><b>Version</b> 3.0.5</div>
         <strong
@@ -283,5 +580,411 @@
     <script src="../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js"></script>
+
+    <script src="../dist/js/scriptvalidation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="../plugins/datatables/jquery.dataTables.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../plugins/toastr/toastr.min.js"></script>
+
+    
   </body>
+
+  <script>
+    $(document).ready(function () {
+      // if (sessionStorage.getItem("user_info") == null)
+      //     window.location = "../../authentication/login.html";
+
+      // $("#user_admin").html(
+      //   JSON.parse(sessionStorage.getItem("user_info")).name
+      // );
+
+      let table = $("#checkin_table").DataTable({
+        responsive: true,
+        autoWidth: false,
+        ajax: {
+          url: "../php_function/checkin/get_checkin.php",
+          dataSrc: "",
+        },
+        columns: [
+          {
+            data: "reservation_id",
+          },
+          {
+            data: "first_name",
+            render: function (data, type, full, meta) {
+              let status = full;
+              return status.first_name + " " + status.last_name;
+            },
+          },
+          {
+            data: "checkin_date",
+          },
+          {
+            data: "checkout_date",
+          },
+          {
+            data: "num_guest",
+          },
+        ],
+      });
+
+      let global_reservation_id = 0;
+      let global_billing_id = 0;
+      let global_total_amount = 0;
+      let global_total_payed = 0;
+      let global_balance = 0;
+      let global_additional = 0;
+
+      $("#checkin_table tbody").on("click", "tr", async function () {
+        if (table.data().count() > 0) {
+          $("#receipts").dataTable().fnDestroy();
+          $("#guest_additional").dataTable().fnDestroy();
+          $("#modal-lg").modal("show");
+          $("#reservation_id").html(table.row(this).data().reservation_id);
+          $("#booking_reference").html(
+            table.row(this).data().booking_reference
+          );
+          $("#number_guest").html(table.row(this).data().num_guest);
+          $("#name").html(
+            table.row(this).data().first_name +
+              " " +
+              table.row(this).data().last_name
+          );
+          $("#contact_number").html(table.row(this).data().contact_number);
+          $("#email").html(table.row(this).data().email);
+          $("#address").html(
+            table.row(this).data().addressline_1 +
+              " " +
+              table.row(this).data().city +
+              " " +
+              table.row(this).data().zipcode
+          );
+          $("#billing_id").val(table.row(this).data().billing_id);
+
+          var reservation_id = table.row(this).data().reservation_id;
+          var billing_id = table.row(this).data().billing_id;
+          global_reservation_id = reservation_id;
+          global_billing_id = billing_id;
+
+          let table_receipts = $("#receipts").DataTable({
+            paging: false,
+            ordering: false,
+            info: false,
+            searching: false,
+            bAutoWidth: false,
+            responsive: true,
+            autoWidth: false,
+            ajax: {
+              url: "../php_function/checkin/get_upload_receipts.php",
+              type: "POST",
+              dataSrc: "",
+              data: { reservation_id: reservation_id },
+            },
+            columns: [
+              {
+                data: "receipt_photo_id",
+              },
+              {
+                data: "upload_date",
+                render: function (data, type, full, meta) {
+                  let status = data;
+                  return moment(status).format("YYYY-MM-DD hh:mm a");
+                },
+              },
+            ],
+          });
+
+          $("#receipts tbody").on("click", "tr", async function () {
+            $("#modal-image").modal("show");
+            $("#receipt_img").attr(
+              "src",
+              "../dist/img/bank_receipts/" +
+                table_receipts.row(this).data().photo +
+                ""
+            );
+          });
+
+          await $.ajax({
+            url: "../php_function/checkin/get_checkin_rooms.php",
+            data: "reservation_id=" + reservation_id,
+            type: "POST",
+            success: function (response) {
+              var pending_rooms = JSON.parse(response);
+              pending_rooms.map((e) => {
+                $("#confirmed_rooms > tbody:last-child").append(
+                  "<tr class='guest_details'><td>" +
+                    e.roomtype_name +
+                    "</td><td>" +
+                    e.room_num +
+                    "</td><td>" +
+                    e.room_price +
+                    "</td></tr>"
+                );
+              });
+            },
+          });
+
+          var total_amount_payed = 0;
+          await $.ajax({
+            url: "../php_function/checkin/get_payment_history.php",
+            data: "billing_id=" + billing_id,
+            type: "POST",
+            success: function (response) {
+              var payment_history = JSON.parse(response);
+              payment_history.map((e) => {
+                global_total_payed += parseInt(e.payed_capital);
+                $("#payment_history > tbody:last-child").append(
+                  "<tr class='guest_details'><td>" +
+                    e.payed_capital +
+                    "</td><td>" +
+                    moment(e.payment_date).format("YYYY-MM-DD hh:mm a") +
+                    "</td></tr>"
+                );
+              });
+            },
+          });
+
+          let additional_amount = 0;
+          let guest_additional = await $("#guest_additional").DataTable({
+            paging: false,
+            ordering: false,
+            info: false,
+            searching: false,
+            bAutoWidth: false,
+            responsive: true,
+            autoWidth: false,
+            ajax: {
+              url: "../php_function/checkin/get_guest_additional.php",
+              dataSrc: "",
+              type: "POST",
+              data: { reservation_id: reservation_id },
+            },
+            columns: [
+              {
+                data: "description",
+              },
+              {
+                data: "Qty",
+              },
+              {
+                data: "additional_amount",
+              },
+              {
+                data: "total_amount",
+              },
+            ],
+          });
+
+          await $.ajax({
+            url: "../php_function/checkin/get_guest_additional.php",
+            data: "reservation_id=" + reservation_id,
+            type: "POST",
+            success: (response) => {
+              JSON.parse(response).map((e) => {
+                global_additional += parseInt(e.total_amount);
+              });
+            },
+          });
+
+          global_total_amount = 0 + global_additional;
+          await $.ajax({
+            url: "../php_function/checkin/get_checkin_billing.php",
+            data: "billing_id=" + billing_id,
+            type: "POST",
+            success: (response) => {
+              var billing_pending = JSON.parse(response);
+              global_total_amount += parseFloat(billing_pending);
+              $("#total_amount").html(global_total_amount);
+            },
+          });
+
+          global_balance = global_total_amount - global_total_payed;
+          $("#balance").html(global_balance);
+
+          $("#modal-lg").on("hidden.bs.modal", function () {
+            $("#btn-submit").removeAttr("disabled", "disabled");
+            table.ajax.reload();
+            $(".guest_details").remove();
+          });
+
+          $("#modal-lg").on("hidden.bs.modal", function () {
+            global_additional = 0;
+            global_balance = 0;
+            global_reservation_id = 0;
+            global_total_amount = 0;
+            global_total_payed = 0;
+            global_billing_id = 0;
+            table.ajax.reload();
+            $(".guest_details").remove();
+            $("#btn-submit").removeAttr("disabled", "disabled");
+          });
+
+          //additional_type_modal
+          $("#modal-additional").on("hidden.bs.modal", function () {
+            $("#equictntbl").dataTable().fnClearTable();
+            $("#guest_additional").dataTable().fnDestroy();
+            guest_additional.ajax.reload();
+          });
+        }
+      });
+
+      $(document).on("click", "#btn-additional", async (e) => {
+        $("#modal-additional").modal("show");
+
+        await $.ajax({
+          url: "../php_function/checkin/get_additional_type.php",
+          type: "POST",
+          success: (response) => {
+            let additional_type = JSON.parse(response);
+            console.log(additional_type);
+            additional_type.map((e) => {
+              $("#additional_type > tbody:last-child").append(
+                "<tr class='additional_type'><td>" +
+                  e.additional_type +
+                  "</td><td>" +
+                  e.additional_amount +
+                  "</td><td colspan='2'><form class='add-additional'> <div class='input-group mb-3'><input value='" +
+                  global_reservation_id +
+                  "' hidden/><input value='" +
+                  e.additional_id +
+                  "'  hidden/><input type='number' min='1' class='inputAd form-control' aria-describedby='button-addon2' required> <div class='input-group-append'> <button class='btn btn-outline-secondary' ><i class='fas fa-plus'></i></button> </div> </div></form></td></tr>"
+              );
+            });
+          },
+        });
+
+        $(".add-additional").submit(async function (e) {
+          $("#guest_additional").dataTable().fnDestroy();
+          e.preventDefault();
+          let reservation_id = e.target[0].value;
+          let additional_id = e.target[1].value;
+          let qty = e.target[2].value;
+
+          updateGuestadditional = () => {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Additional Added",
+            });
+          };
+
+          await $.ajax({
+            url: "../php_function/checkin/insert_guest_additional.php",
+            data:
+              "reservation_id=" +
+              reservation_id +
+              "&additional_id=" +
+              additional_id +
+              "&qty=" +
+              qty,
+            type: "POST",
+            success: (response) => {
+              let guest_billing = JSON.parse(response);
+              guest_billing.map((e) => {
+                global_additional = parseInt(e.additional_amount);
+                global_total_amount =
+                  parseInt(e.original_capital) + global_additional;
+                global_total_payed = parseInt(e.payed_capital);
+                global_balance = global_total_amount - global_total_payed;
+              });
+              console.log();
+              $("#balance").html(global_balance);
+              $("#total_amount").html(global_total_amount);
+
+              $(".inputAd").val("");
+              updateGuestadditional();
+            },
+          });
+        });
+
+        $("#modal-additional").on("hidden.bs.modal", function () {
+          //table.ajax.reload();
+
+          $(".additional_type").remove();
+        });
+      });
+
+      updateSuccess = () => {
+        $("#modal-lg").modal("hide");
+        sessionStorage.setItem("rev_id_invoice", global_reservation_id);
+        window.open("./invoice_print/invoice-print.html", "_blank");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "Checkout Success",
+        });
+      };
+
+      updateHigh = () => {
+        $("#btn-submit").removeAttr("disabled", "disabled");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          icon: "warning",
+          title: "Too much payment amount",
+        });
+      };
+
+      updateError = () => {
+        $("#btn-submit").removeAttr("disabled", "disabled");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          icon: "error",
+          title: " Insufficient Payment Amount",
+        });
+      };
+
+      $("#checkin_form").submit((e) => {
+        e.preventDefault();
+        $("#btn-submit").attr("disabled", "disabled");
+        var payment_amt = parseInt(e.target[3].value);
+
+        $.ajax({
+          url: "../php_function/checkin/update_booking.php",
+          data:
+            "billing_id=" + global_billing_id + "&payed_capital=" + payment_amt,
+          type: "POST",
+          success: function (response) {
+            if (response == '"1"') {
+              updateSuccess();
+            } else if (response == '"2"') {
+              updateHigh();
+            } else {
+              updateError();
+            }
+          },
+        });
+      });
+    });
+  </script>
 </html>

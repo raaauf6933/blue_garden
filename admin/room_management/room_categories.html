@@ -21,6 +21,24 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
       rel="stylesheet"
     />
+
+    <link
+      rel="stylesheet"
+      href="../plugins/datatables-bs4/css/dataTables.bootstrap4.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
+    />
+
+    <style>
+      #room_categories td,
+      th {
+        text-align: center;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -42,13 +60,13 @@
       <aside class="main-sidebar sidebar-light-primary elevation-4">
         <!-- Brand Logo -->
         <a href="../index.html" class="brand-link">
-          <img
-            src="dist/img/AdminLTELogo.png"
-            alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3"
-            style="opacity: 0.8"
-          />
-          <span class="brand-text font-weight-light">AdminLTE 3</span>
+          <div class="text-center">
+            <img
+              class="profile-user-img img-fluid img-circle"
+              src="../../img/core-img/logo.png"
+              alt="User profile picture"
+            />
+          </div>
         </a>
 
         <!-- Sidebar -->
@@ -57,7 +75,7 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src="../dist/img/user2-160x160.jpg"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
@@ -261,6 +279,202 @@ with font-awesome or any other icon font library -->
       </div>
       <!-- /.content-wrapper -->
 
+      <div class="modal fade" id="add-default">
+        <div class="modal-dialog">
+          <form
+            id="add_roomtype_form"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="modal-content">
+              <div class="modal-header bg-info">
+                <h4 class="modal-title">New Room Type</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="exampleFormControlInput1">Room Photo:</label>
+                  <div class="d-flex justify-content-center">
+                    <input
+                      type="file"
+                      class="imgToUpload form-control-file w-50"
+                      accept="image/x-png,image/gif,image/jpeg"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <label>Room Name:</label
+                    ><input class="form-control" required />
+                  </div>
+                  <div class="col-4">
+                    <label>Room Capacity:</label
+                    ><input class="form-control" required />
+                  </div>
+                  <div class="col-4">
+                    <label>Room Price:</label
+                    ><input class="form-control" required />
+                  </div>
+                  <div class="col-12">
+                    <label>Description:</label
+                    ><textarea
+                      class="form-control"
+                      rows="3"
+                      style="resize: none"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-save">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="room-default">
+        <div class="modal-dialog">
+          <form
+            id="update_room_form"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="modal-content">
+              <div class="modal-header bg-secondary">
+                <h4 class="modal-title" id="room-title"></h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img
+                  id="room_img"
+                  style="height: 373px; width: 100%; max-width: 466px"
+                  class="img-fluid rounded mx-auto d-block"
+                  alt="Responsive image"
+                />
+                <table class="table">
+                  <tr>
+                    <th>Room Photo:</th>
+                    <td>
+                      <input
+                        id="update_photo"
+                        type="file"
+                        class="form-control-file"
+                        accept="image/x-png,image/gif,image/jpeg"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Room Name:</th>
+                    <td id="room_name"></td>
+                  </tr>
+                  <tr>
+                    <th>Room Capacity:</th>
+                    <td id="room_capacity"></td>
+                  </tr>
+                  <tr>
+                    <th>Room Price:</th>
+                    <td>
+                      <input id="roomtype_id" val="" hidden />
+                      <input class="form-control" id="room_price" required />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Description</th>
+                    <td>
+                      <textarea
+                        id="room_description"
+                        class="form-control"
+                        rows="3"
+                        style="resize: none"
+                        required
+                      ></textarea>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-danger" id="deleteBtn">
+                  Delete
+                </button>
+                <button type="submit" class="btn btn-primary" id="btn-update">
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+      <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+          <form id="delete_room_form">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <h4 class="modal-title">Delete</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                <p>Are you sure you want to delete?</p>
+                <input id="roomtype_id1" hidden />
+                <i class="fas fa-trash fa-2x"></i>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="submit" class="btn btn-danger" >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block"><b>Version</b> 3.0.5</div>
         <strong
@@ -286,5 +500,241 @@ with font-awesome or any other icon font library -->
     <script src="../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js"></script>
+
+    <script src="../plugins/datatables/jquery.dataTables.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../plugins/toastr/toastr.min.js"></script>
   </body>
+
+  <script>
+    $(document).ready(function () {
+      // if (sessionStorage.getItem("user_info") == null)
+      //   window.location = "../../authentication/login.html";
+      // $("#user_admin").html(
+      //   JSON.parse(sessionStorage.getItem("user_info")).name
+      // );
+
+      //get all room categories
+      let table = $("#room_categories").DataTable({
+        responsive: true,
+        autoWidth: false,
+        ajax: {
+          url: "../php_function/room_categories/get_room_type.php",
+          dataSrc: "",
+        },
+        columns: [
+          {
+            data: "roomtype_name",
+          },
+          {
+            data: "roomtype_capacity",
+          },
+          {
+            data: "roomtype_price",
+          },
+        ],
+      });
+
+      let roomtype_id = 0;
+      $("#room_categories tbody").on("click", "tr", async function () {
+        $("#room-default").modal("show");
+        roomtype_id = table.row(this).data().roomtype_id;
+        let room_name = table.row(this).data().roomtype_name;
+        let roomtype_capacity = table.row(this).data().roomtype_capacity;
+        let roomtype_price = table.row(this).data().roomtype_price;
+        let room_description = table.row(this).data().description;
+
+        $("#roomtype_id").val(table.row(this).data().roomtype_id);
+        $("#room-title").html(room_name);
+        $("#room_name").html(room_name);
+        $("#room_capacity").html(roomtype_capacity);
+        $("#room_price").val(roomtype_price);
+        $("#room_description").html(room_description);
+
+        $("#room_img").attr(
+          "src",
+          "../dist/img/room/" + table.row(this).data().roomtype_photo + ""
+        );
+      });
+
+      addSuccess = () => {
+        $("#add-default").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "A new room type added!",
+        });
+      };
+
+      $("#add-default").on("hidden.bs.modal", function () {
+        $("#btn-submit").removeAttr("disabled", "disabled");
+        table.ajax.reload();
+      });
+
+      $("#add_roomtype_form").submit((e) => {
+        e.preventDefault();
+        $("#btn-save").attr("disabled", "disabled");
+        var fd = new FormData();
+        let room_photo = $(".imgToUpload").prop("files")[0];
+        let room_name = e.target[2].value;
+        let room_capacity = e.target[3].value;
+        let room_price = e.target[4].value;
+        let room_description = e.target[5].value;
+        fd.append("file", room_photo);
+        fd.append("roomname", room_name);
+        fd.append("roomcapacity", room_capacity);
+        fd.append("roomprice", room_price);
+        fd.append("roomdescription", room_description);
+        $.ajax({
+          url: "../php_function/room_categories/insert_room_type.php",
+          type: "POST",
+          cache: false,
+          processData: false, // tell jQuery not to process the data
+          contentType: false, // tell jQuery not to set contentType
+          dataType: "script",
+          data: fd,
+          success: (res) => {
+            addSuccess();
+          },
+        });
+      });
+
+      $("#deleteBtn").click(() => {
+        $("#modal-sm").modal("show");
+        $("#roomtype_id1").val(roomtype_id);
+      });
+
+      deletSuccess = () => {
+        $("#room-default").modal("hide");
+        $("#modal-sm").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "Roomtype Deleted!",
+        });
+      };
+
+      errorDelete = () => {
+        $("#modal-delete").modal("hide");
+        $("#modal-sm").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 5000,
+        });
+
+        Toast.fire({
+          type: "warning",
+          title: "This roomtype is still exist!",
+        });
+      };
+      $("#delete_room_form").submit((e) => {
+        e.preventDefault();
+        $.ajax({
+          url: "../php_function/room_categories/delete_roomtype.php",
+          data: "roomtype_id=" + roomtype_id,
+          type: "POST",
+          success: function (response) {
+            if (response == '"1"') {
+              deletSuccess();
+            } else {
+              errorDelete();
+            }
+          },
+        });
+      });
+
+      updateSuccess = () => {
+        $("#room-default").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "Room updated!",
+        });
+      };
+
+      $("#room-default").on("hidden.bs.modal", function () {
+        table.ajax.reload();
+        $("#update_photo").val("");
+        $("#btn-update").removeAttr("disabled", "disabled");
+      });
+
+      $("#update_room_form").submit((e) => {
+        e.preventDefault();
+        $("#btn-update").attr("disabled", "disabled");
+        let room_name = $("#room_name").text();
+        let roomtype_id = e.target[2].value;
+        let room_price = e.target[3].value;
+        let description = e.target[4].value;
+        let tmp = 0;
+
+        if (e.target[1].files.length <= 0) {
+          $.ajax({
+            url: "../php_function/room_categories/update_roomtype.php",
+            data:
+              "roomtype_id=" +
+              roomtype_id +
+              "&room_name=" +
+              room_name +
+              "&room_price=" +
+              room_price +
+              "&description=" +
+              description +
+              "&tmp=" +
+              tmp,
+            type: "POST",
+            success: function (response) {
+              updateSuccess();
+            },
+          });
+        } else {
+          var fd = new FormData();
+          tmp = 1;
+          let room_photo = $("#update_photo").prop("files")[0];
+          fd.append("file", room_photo);
+          fd.append("roomtype_id", roomtype_id);
+          fd.append("room_name", room_name);
+          fd.append("room_price", room_price);
+          fd.append("description", description);
+          fd.append("tmp", tmp);
+
+          $.ajax({
+            url: "../php_function/room_categories/update_roomtype.php",
+            type: "POST",
+            cache: false,
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            dataType: "script",
+            data: fd,
+            success: (res) => {
+              updateSuccess();
+            },
+          });
+        }
+      });
+    });
+  </script>
 </html>

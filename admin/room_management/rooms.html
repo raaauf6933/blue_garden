@@ -21,6 +21,25 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
       rel="stylesheet"
     />
+
+    <link
+    rel="stylesheet"
+    href="../plugins/datatables-bs4/css/dataTables.bootstrap4.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
+  />
+  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
+
+  <style>
+    #rooms_table td,
+    th {
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -42,13 +61,13 @@
       <aside class="main-sidebar sidebar-light-primary elevation-4">
         <!-- Brand Logo -->
         <a href="../index.html" class="brand-link">
-          <img
-            src="dist/img/AdminLTELogo.png"
-            alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3"
-            style="opacity: 0.8"
-          />
-          <span class="brand-text font-weight-light">AdminLTE 3</span>
+          <div class="text-center">
+            <img
+              class="profile-user-img img-fluid img-circle"
+              src="../../img/core-img/logo.png"
+              alt="User profile picture"
+            />
+          </div>
         </a>
 
         <!-- Sidebar -->
@@ -57,7 +76,7 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src="../dist/img/user2-160x160.jpg"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
@@ -169,7 +188,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  href="pages/additional_categories/additional_categories.html"
+                  href="../additional_categories/additional_categories.html"
                   class="nav-link"
                 >
                   <i class="nav-icon fas fa-tags"></i>
@@ -178,7 +197,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  href="pages/user_management/user_management.html"
+                  href="../user_management/user_management.html"
                   class="nav-link"
                 >
                   <i class="nav-icon fas fa-user-cog"></i>
@@ -186,7 +205,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="reports/reports.html" class="nav-link">
+                <a href="../reports/reports.html" class="nav-link">
                   <i class="nav-icon fas fa-chart-area"></i>
                   <p>Reports</p>
                 </a>
@@ -254,6 +273,127 @@
       </div>
       <!-- /.content-wrapper -->
 
+      <div class="modal fade" id="add-default">
+        <div class="modal-dialog">
+          <form id="new_room_form">
+            <div class="modal-content">
+              <div class="modal-header bg-info">
+                <h4 class="modal-title">New Room</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-12">
+                    <label>Room Type:</label
+                    ><select class="form-control" id="select_roomtype">
+                      <option selected disabled hidden>Select Room Type</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label>Room Num:</label
+                    ><input class="form-control" required />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="modal-sm">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">1B2</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <label>Status:</label>
+              <select class="form-control">
+                <option>Occupied</option>
+                <option>Maintenance</option>
+              </select>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="submit" class="btn btn-primary">
+                Save Changes
+              </button>
+              <button id="deleteBtn" type="button" class="btn btn-danger">
+                Delete
+              </button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+      <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog modal-sm">
+          <form id="delete_room_form">
+            <div class="modal-content">
+              <div class="modal-header bg-danger">
+                <h4 class="modal-title">Delete</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                <input id="room_id" hidden />
+                <p>Are you sure you want to delete?</p>
+                <i class="fas fa-trash fa-2x"></i>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="submit" class="btn btn-danger">
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
       <footer class="main-footer">
         <div class="float-right d-none d-sm-block"><b>Version</b> 3.0.5</div>
         <strong
@@ -279,5 +419,156 @@
     <script src="../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../dist/js/demo.js"></script>
+
+    <script src="../plugins/datatables/jquery.dataTables.js"></script>
+    <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../plugins/toastr/toastr.min.js"></script>
+
   </body>
+
+  <script>
+    $(document).ready(function () {
+  //     if (
+  //       sessionStorage.getItem("user_info") == null 
+  //     )
+  //       window.location = "../../authentication/login.html";
+  //  $("#user_admin").html(JSON.parse(sessionStorage.getItem("user_info")).name);
+        
+      //get all room categories
+      let table = $("#rooms_table").DataTable({
+        responsive: true,
+        autoWidth: false,
+        ajax: {
+          url: "../php_function/rooms/get_rooms.php",
+          dataSrc: "",
+        },
+        columns: [
+          {
+            data: "room_num",
+          },
+          {
+            data: "roomtype_name",
+          },
+        ],
+      });
+
+      $.ajax({
+        url: "../php_function/rooms/get_roomtype.php",
+        type: "POST",
+        success: (response) => {
+          JSON.parse(response).map((e) => {
+           
+            $("#select_roomtype").append(
+              "<option value='" +
+                e.roomtype_id +
+                "'>" +
+                e.roomtype_name +
+                "</option>"
+            );
+          });
+        },
+      });
+
+      let room_id = 0;
+      $("#rooms_table tbody").on("click", "tr", async function () {
+        console.log(table.row(this).data());
+        $("#modal-sm").modal("show");
+        room_id = table.row(this).data().room_id;
+      });
+
+      updateSuccess = () => {
+        $("#add-default").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "Room added!",
+        });
+      };
+      $("#new_room_form").submit((e) => {
+        e.preventDefault();
+        let roomtype_id = e.target[1].value;
+        let room_num = e.target[2].value;
+
+        $.ajax({
+          url: "../php_function/rooms/insert_new_room.php",
+          data: "roomtype_id=" + roomtype_id + "&room_num=" + room_num,
+          type: "POST",
+          success: function (response) {
+            updateSuccess();
+          },
+        });
+      });
+
+      $("#add-default").on("hidden.bs.modal", function () {
+        table.ajax.reload();
+      });
+
+      $("#deleteBtn").click(() => {
+        $("#modal-delete").modal("show");
+        $("#room_id").val(room_id);
+      });
+
+      deletSuccess = () => {
+        $("#modal-delete").modal("hide");
+        $("#modal-sm").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          title: "Room Deleted!",
+        });
+      };
+
+      errorDelete = () => {
+        $("#modal-delete").modal("hide");
+        $("#modal-sm").modal("hide");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 5000,
+        });
+
+        Toast.fire({
+          type: "warning",
+          title: "This room is reserved or occupied!",
+        });
+      };
+
+      $("#modal-delete").on("hidden.bs.modal", function () {
+        table.ajax.reload();
+      });
+
+      $("#delete_room_form").submit((e) => {
+        e.preventDefault();
+        $.ajax({
+          url: "../php_function/rooms/delete_room.php",
+          data: "room_id=" + room_id,
+          type: "POST",
+          success: function (response) {
+            if (response == '"1"') {
+              deletSuccess();
+            } else {
+              errorDelete();
+            }
+          },
+        });
+      });
+    });
+  </script>
 </html>

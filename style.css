@@ -1557,3 +1557,57 @@ img {
 /* ====== The End ====== */
 
 /*# sourceMappingURL=style.css.map */
+
+/* custom css */
+
+.room-details-item {
+  margin-bottom: 50px;
+}
+
+.room-details-item img {
+  margin-bottom: 40px;
+}
+
+
+.room-details-item .rd-text .rd-title {
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.room-details-item .rd-text .rd-title h3 {
+  color: #19191a;
+  float: left;
+}
+
+.room-details-item .rd-text .rd-title .rdt-right {
+  float: right;
+  text-align: right;
+}
+
+.room-details-item .rd-text h2 {
+  color: #37aadc;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.room-details-item .rd-text h2 span {
+  font-family: "Cabin", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #19191a;
+}
+
+.room-details-item .rd-text table {
+  margin-bottom: 32px;
+}
+
+.room-details-item .rd-text table tbody tr td.r-o {
+  width: 120px;
+  color: #707079;
+}
+
+.room-details-item .rd-text table tbody tr td {
+  font-size: 16px;
+  color: #19191a;
+  line-height: 36px;
+}
