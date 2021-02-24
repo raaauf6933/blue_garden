@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Fairfields Report</title>
+    <title>Blue Garden Resort</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Bootstrap 4 -->
@@ -44,10 +44,10 @@
           <div class="col-12">
             <h2>
               <img
-                src="../../dist/img/resort.png"
+                src="../../../img/core-img/logo.png"
                 style="height: 80px"
                 class="img-fluid"
-              />Fairfields Resort & Playhouse Inn
+              />Blue Garden Hotel & Resort
               <small class="float-right"
                 >Date created: <strong id="date_created"></strong
               ></small>
@@ -60,11 +60,11 @@
           <div class="col-sm-6 invoice-col">
             <address>
               <strong id="guest_name"></strong><br />
-              <h4 class="m-0">
-                Padilla St. San Carlos City, Pangasinan, Philippines
+              <h4 class="mb-2">
+                P-1, Central Barangay Lalakay, Los Banos, Laguna, Los Baños, 4030 Laguna
               </h4>
               <h4 class="m-0">(63) 935-536-0312</h4>
-              <h4 class="m-0">fairfieldsresort@yahoo.com</h4>
+              <h4 class="m-0">officialbluegarden@gmail.com</h4>
             </address>
             <h1 class="ml-3" id="report_type"></h1>
           </div>
@@ -72,9 +72,9 @@
           <div class="col-sm-6 invoice-col text-center">
             <address>
               <label>From:</label>
-              <h4><b>2020-08-01</b></h4>
+              <h4><b id="report-from"></b></h4>
               <label>To:</label>
-              <h4><b>2020-08-01</b></h4>
+              <h4><b id="report-to"></b></h4>
             </address>
           </div>
           <!-- /.col -->
@@ -172,16 +172,19 @@
 
     <script type="text/javascript">
       $(document).ready(async function () {
-        // if (sessionStorage.getItem("user_info") == null)
-        //   window.location = "../../../authentication/login.html";
+        if (sessionStorage.getItem("user_info") == null)
+          window.location = "../../authentication/login.html";
 
-        // $("#user_admin").html(
-        //   JSON.parse(sessionStorage.getItem("user_info")).name
-        // );
+        $("#user_admin").html(
+          JSON.parse(sessionStorage.getItem("user_info")).name
+        );
 
         let report_type = sessionStorage.getItem("report_type");
         let from = sessionStorage.getItem("report_from");
         let to = sessionStorage.getItem("report_to");
+
+        $("#report-from").html(from);
+        $("#report-to").html(to);
 
         $("#report_type").html(report_type);
         let date_now = Date.now();
@@ -229,11 +232,13 @@
                   date_to.getTime() - date_from.getTime();
                 var nights = Difference_In_Time / (1000 * 3600 * 24);
 
-                console.log(e.total_amount)
+                console.log(e.total_amount);
                 num_reservation += 1;
                 num_room += parseInt(e.num_rooms);
                 num_guest += parseInt(e.num_guest);
-                total_amount += (nights * parseInt(e.total_amount)) + parseInt(e.additional_amount);
+                total_amount +=
+                  nights * parseInt(e.total_amount) +
+                  parseInt(e.additional_amount);
                 total_sales += parseInt(e.total_payed);
 
                 $("#invoice > tbody").append(
@@ -256,7 +261,7 @@
                     "</td><td>" +
                     sts(e.status) +
                     "</td><td>" +
-                    ((e.total_amount * nights) +parseInt(e.additional_amount)) +
+                    (e.total_amount * nights + parseInt(e.additional_amount)) +
                     "</td><td>" +
                     e.total_payed +
                     "</td></tr>"

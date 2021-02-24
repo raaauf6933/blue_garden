@@ -4,7 +4,9 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Admin | Walk-In - Select Dates</title>
+    <title>Blue Garden Resort | Admin</title>
+
+    <link rel="icon" type="image/png" href="../../img/core-img/favicon.ico" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href="../../img/icon.png" />
@@ -98,7 +100,7 @@
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block" id="user_admin">Juan Dela Cruz</a>
+              <a href="#" class="d-block" id="user_admin"></a>
             </div>
           </div>
 
@@ -329,12 +331,14 @@
       <!-- /.content-wrapper -->
 
       <footer class="main-footer">
-        <div class="float-right d-none d-sm-block"><b>Version</b> 3.0.2</div>
         <strong
-          >Copyright &copy; 2014-2019
-          <a href="http://adminlte.io">AdminLTE.io</a>.</strong
-        >
-        All rights reserved.
+        >Copyright 2021
+       Blue Garden Resort.</strong
+      >
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.5
+      </div>
       </footer>
 
       <!-- Control Sidebar -->
@@ -370,12 +374,12 @@
 
   <script>
     $(document).ready(function () {
-    //   if (sessionStorage.getItem("user_info") == null)
-    //     window.location = "../authentication/login.html";
+      if (sessionStorage.getItem("user_info") == null)
+        window.location = "../authentication/login.html";
         
-      // $("#user_admin").html(
-      //   JSON.parse(sessionStorage.getItem("user_info")).name
-      // );
+      $("#user_admin").html(
+        JSON.parse(sessionStorage.getItem("user_info")).name
+      );
 
       error = () => {
         const Toast = Swal.mixin({

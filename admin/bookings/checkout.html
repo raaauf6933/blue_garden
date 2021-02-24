@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>AdminLTE 3 | Blank Page</title>
+    <title>Blue Garden Resort | Admin</title>
+
+    <link rel="icon" type="image/png" href="../../img/core-img/favicon.ico" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -52,6 +54,14 @@
             ></a>
           </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a style="color: white; cursor:pointer;" className="nav-link" id="logout">
+              Sign out
+            </a>
+          </li>
+        </ul>
+
       </nav>
       <!-- /.navbar -->
 
@@ -74,13 +84,13 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="../dist/img/user2-160x160.jpg"
+                src="../dist/img/avatar5.png"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Alexander Pierce</a>
+              <a href="#" class="d-block" id="user_admin"></a>
             </div>
           </div>
 
@@ -321,7 +331,7 @@
                           </thead>
                           <tbody
                             class="text-center"
-                            style="cursor: pointer;"
+                            style="cursor: pointer"
                           ></tbody>
                         </table>
                       </div>
@@ -339,7 +349,7 @@
                       <!-- /.card-header -->
                       <div
                         class="card-body table-responsive p-0"
-                        style="height: 200px;"
+                        style="height: 200px"
                       >
                         <table
                           class="table table-head-fixed text-nowrap"
@@ -366,16 +376,10 @@
                     <div class="card">
                       <div class="card-header bg-indigo">
                         <h3
-                          style="
-                            font-size: 1.1rem;
-                            font-weight: 400;
-                            margin: 0;
-                          "
+                          style="font-size: 1.1rem; font-weight: 400; margin: 0"
                           class="d-flex"
                         >
-                          <div class="mr-auto">
-                            Additional/Extras
-                          </div>
+                          <div class="mr-auto">Additional/Extras</div>
                         </h3>
                       </div>
                       <!-- /.card-header -->
@@ -394,7 +398,7 @@
                           </thead>
                           <tbody
                             class="text-center"
-                            style="cursor: pointer;"
+                            style="cursor: pointer"
                           ></tbody>
                         </table>
                       </div>
@@ -423,7 +427,7 @@
                           </thead>
                           <tbody
                             class="text-center"
-                            style="cursor: pointer;"
+                            style="cursor: pointer"
                           ></tbody>
                         </table>
                       </div>
@@ -479,7 +483,7 @@
               <img
                 id="receipt_img"
                 class="img-fluid"
-                style="height: 700px; width: 100%; max-width: 500px;"
+                style="height: 700px; width: 100%; max-width: 500px"
               />
             </div>
             <div class="modal-footer justify-content-end">
@@ -498,12 +502,14 @@
       </div>
 
       <footer class="main-footer">
-        <div class="float-right d-none d-sm-block"><b>Version</b> 3.0.5</div>
         <strong
-          >Copyright &copy; 2014-2019
-          <a href="http://adminlte.io">AdminLTE.io</a>.</strong
-        >
-        All rights reserved.
+        >Copyright 2021
+       Blue Garden Resort.</strong
+      >
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.0.5
+      </div>
       </footer>
 
       <!-- Control Sidebar -->
@@ -532,10 +538,18 @@
 
   <script>
     $(document).ready(function () {
-      // if (sessionStorage.getItem("user_info") == null)
-      //     window.location = "../../authentication/login.html";
+      if (sessionStorage.getItem("user_info") == null)
+        window.location = "../authentication/login.html";
 
-      // $("#user_admin").html(JSON.parse(sessionStorage.getItem("user_info")).name);
+      $("#user_admin").html(
+        JSON.parse(sessionStorage.getItem("user_info")).name
+      );
+
+      $("#logout").click(() => {
+        sessionStorage.removeItem("user_info");
+        window.location = "../authentication/login.html";
+      });
+
 
       //get all pending bookings
       let table = $("#check_out").DataTable({

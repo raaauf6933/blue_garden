@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Blue Garden Resort | Admin</title>
+
+    <link rel="icon" type="image/png" href="../img/core-img/favicon.ico" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Font Awesome -->
@@ -54,6 +56,13 @@
             ></a>
           </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a style="color: white; cursor:pointer;" className="nav-link" id="logout">
+              Sign out
+            </a>
+          </li>
+        </ul>
       </nav>
       <!-- /.navbar -->
 
@@ -76,13 +85,13 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="dist/img/user2-160x160.jpg"
+                src="dist/img/avatar5.png"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Alexander Pierce</a>
+              <a href="#" class="d-block" id="user_admin"></a>
             </div>
           </div>
 
@@ -245,7 +254,7 @@
                     <i class="far fa-calendar-times"></i>
                   </div>
                   <a
-                    href="./pages/bookings/pending_bookings.html"
+                    href="./bookings/pending_bookings.html"
                     class="small-box-footer"
                   >
                     More info <i class="fas fa-arrow-circle-right"></i>
@@ -257,7 +266,7 @@
                 <!-- small card -->
                 <div class="small-box bg-success">
                   <div class="inner">
-                    <h2><b id="num_confirmed">1</b></h2>
+                    <h2><b id="num_confirmed"></b></h2>
 
                     <h4>
                       Confirmed<br />
@@ -268,7 +277,7 @@
                     <i class="far fa-calendar-check"></i>
                   </div>
                   <a
-                    href="./pages/bookings/confirmed_bookings.html"
+                    href="./bookings/confirmed_bookings.html"
                     class="small-box-footer"
                   >
                     More info <i class="fas fa-arrow-circle-right"></i>
@@ -291,7 +300,7 @@
                     <i class="fas fa-bed"></i>
                   </div>
                   <a
-                    href="./pages/bookings/checkin.html"
+                    href="./bookings/checkin.html"
                     class="small-box-footer"
                   >
                     More info <i class="fas fa-arrow-circle-right"></i>
@@ -303,7 +312,7 @@
                 <!-- small card -->
                 <div class="small-box bg-orange">
                   <div class="inner">
-                    <h3 id="num_vacant">9</h3>
+                    <h3 id="num_vacant"></h3>
 
                     <h4 class="mb-4">
                       No. of Vacant <br />
@@ -395,10 +404,7 @@
       </div>
       <!-- /.content-wrapper -->
       <footer class="main-footer">
-        <strong
-          >Copyright &copy; 2014-2019
-          <a href="http://adminlte.io">AdminLTE.io</a>.</strong
-        >
+        <strong>Copyright 2021 Blue Garden Resort.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
           <b>Version</b> 3.0.5
@@ -448,4 +454,38 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
   </body>
+
+  <script>
+    $(document).ready(function () {
+      if (sessionStorage.getItem("user_info") == null)
+        window.location = "authentication/login.html";
+
+      $("#user_admin").html(
+        JSON.parse(sessionStorage.getItem("user_info")).name
+      );
+
+      $("#logout").click(() => {
+        sessionStorage.removeItem("user_info");
+        window.location = "authentication/login.html";
+      });
+
+      $.ajax({
+        url: "php_function/dashboard/get_items.php",
+        type: "POST",
+        success: function (response) {
+          console.log(JSON.parse(response));
+          JSON.parse(response).map((e) => {
+            $("#num_pending").html(e.pending_booking);
+            $("#num_confirmed").html(e.num_confirmed);
+            $("#num_room_using_today").html(e.num_checkout_today);
+            $("#num_vacant").html(e.no_vacant_today);
+            $("#num_pending_picture").html(e.pending_with_picture);
+            $("#num_checkin").html(e.confirmed_tommorow);
+            $("#num_guest").html(e.num_guest_today);
+            $("#num_checkout").html(e.num_checkout_today);
+          });
+        },
+      });
+    });
+  </script>
 </html>
