@@ -34,6 +34,20 @@
       href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
     />
     <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
+
+    <style>
+      #pending_booking td,
+      th {
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .modal {
+        overflow: auto !important;
+      }
+    </style>
+
+
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -168,14 +182,14 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="pages/room_management/rooms.html" class="nav-link">
+                    <a href="../room_management/rooms.html" class="nav-link">
                       <i class="fas fa-bed nav-icon text-orange"></i>
                       <p>Rooms</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a
-                      href="pages/room_management/room_categories.html"
+                      href="../room_management/room_categories.html"
                       class="nav-link"
                     >
                       <i class="fas fa-bed nav-icon text-warning"></i>
@@ -186,7 +200,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  href="pages/additional_categories/additional_categories.html"
+                  href="../additional_categories/additional_categories.html"
                   class="nav-link"
                 >
                   <i class="nav-icon fas fa-tags"></i>
@@ -195,7 +209,7 @@
               </li>
               <li class="nav-item">
                 <a
-                  href="pages/user_management/user_management.html"
+                  href="../user_management/user_management.html"
                   class="nav-link"
                 >
                   <i class="nav-icon fas fa-user-cog"></i>
@@ -203,7 +217,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="reports/reports.html" class="nav-link">
+                <a href="../reports/reports.html" class="nav-link">
                   <i class="nav-icon fas fa-chart-area"></i>
                   <p>Reports</p>
                 </a>
