@@ -185,47 +185,23 @@
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
       <div class="container">
-        <div class="row">
-          <!-- Footer Widget Area -->
-          <div class="col-12 col-lg-5">
-            <div class="footer-widget-area mt-50">
-              <a href="#" class="d-block mb-5"
-                ><img src="../img/core-img/logo.png" alt=""
-              /></a>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                malesuada lorem maximus mauris sceleri sque, at rutrum nulla
-                dictum. Ut ac ligula sapien. Suspendisse cursus faucibus
-                finibus.
-              </p>
-            </div>
-          </div>
-
-          <!-- Footer Widget Area -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="footer-widget-area mt-50">
-              <h6 class="widget-title mb-5">Find us on the map</h6>
-              <img src="../img/bg-img/footer-map.png" alt="" />
-            </div>
-          </div>
-
-          <!-- Footer Widget Area -->
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="footer-widget-area mt-50">
-              <h6 class="widget-title mb-5">Subscribe to our newsletter</h6>
-              <form action="#" method="post" class="subscribe-form">
-                <input
-                  type="email"
-                  name="subscribe-email"
-                  id="subscribeemail"
-                  placeholder="Your E-mail"
-                />
-                <button type="submit">Subscribe</button>
-              </form>
-            </div>
-          </div>
-
-          <!-- Copywrite Text -->
+        <div class="row pt-5">
+          <p class="col-md-8 text-left">
+            Copyright ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            2021 All rights reserved | Blue Garden Resort
+          </p>
+          <p class="col-md-4 text-right social">
+            <!-- <a href=""><span class="fa fa-tripadvisor"></span></a> -->
+            <a href="https://www.facebook.com/blugarden" target="_blank"
+              ><span class="fa fa-facebook"></span
+            ></a>
+            <!-- <a href="#"><span class="fa fa-twitter"></span></a>
+            <a href="#"><span class="fa fa-linkedin"></span></a>
+            <a href="#"><span class="fa fa-vimeo"></span></a> -->
+          </p>
         </div>
       </div>
     </footer>
@@ -246,13 +222,12 @@
   </body>
 
   <script>
-      if (
-        sessionStorage.getItem("checkin_date") == null ||
-        sessionStorage.getItem("checkout_date") == null
-      )
-        window.location = "../index.html";
+    if (
+      sessionStorage.getItem("checkin_date") == null ||
+      sessionStorage.getItem("checkout_date") == null
+    )
+      window.location = "../index.html";
 
-        
     let date_from = new Date(sessionStorage.getItem("checkin_date"));
     let date_to = new Date(sessionStorage.getItem("checkout_date"));
 
