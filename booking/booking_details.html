@@ -93,20 +93,28 @@
         <div class="bread">
           <div class="breadcrumb-pagination">
             <div class="completed">
-              <span>1</span>
-              <p>Select Dates</p>
+              <a href="../index.html">
+                <span>1</span>
+                <p>Select Dates</p>
+              </a>
             </div>
             <div class="completed">
-              <span>2</span>
-              <p>Rooms</p>
+              <a href="select_rooms.html">
+                <span>2</span>
+                <p>Rooms</p>
+              </a>
             </div>
             <div class="completed">
-              <span>3</span>
-              <p>Guest Detail</p>
+              <a href="guest-details.html">
+                <span>3</span>
+                <p>Guest Detail</p>
+              </a>
             </div>
             <div class="active">
-              <span>4</span>
-              <p>Review</p>
+              <a href="booking_details.html">
+                <span>4</span>
+                <p>Review</p>
+              </a>
             </div>
             <div class="todo">
               <span>5</span>
@@ -159,9 +167,9 @@
                       <span class="text-muted">BDO Account </span> 006844224985
                     </p>
                     <p class="mb-1">
-                      <span class="text-muted">Payment Type: </span> Bank Deposit
+                      <span class="text-muted">Payment Type: </span> Bank
+                      Deposit
                     </p>
-                    
                   </div>
                 </div>
 
@@ -250,9 +258,10 @@
                 <div class="col-xl-6 col-lg-12">
                   <h4>HOW TO PAY ?</h4>
                   <p>
-                    * Payment is available only for Bank Deposit  <br />
-                    * BDO Account number - 006844224985 | BDO Account name - Blue Garden Resort
-                    <br/>
+                    * Payment is available only for Bank Deposit <br />
+                    * BDO Account number - 006844224985 | BDO Account name -
+                    Blue Garden Resort
+                    <br />
                     * After Confirming, You will receive an Email w/ Booking
                     Number<br />
                     * Deposit your 50% Downpayment to bank, and upload your bank
@@ -317,12 +326,14 @@
             Copyright ©
             <script>
               document.write(new Date().getFullYear());
-            </script>2021
-            All rights reserved | Blue Garden Resort
+            </script>
+            2021 All rights reserved | Blue Garden Resort
           </p>
           <p class="col-md-4 text-right social">
             <!-- <a href=""><span class="fa fa-tripadvisor"></span></a> -->
-            <a href="https://www.facebook.com/blugarden" target="_blank"><span class="fa fa-facebook"></span></a>
+            <a href="https://www.facebook.com/blugarden" target="_blank"
+              ><span class="fa fa-facebook"></span
+            ></a>
             <!-- <a href="#"><span class="fa fa-twitter"></span></a>
             <a href="#"><span class="fa fa-linkedin"></span></a>
             <a href="#"><span class="fa fa-vimeo"></span></a> -->
@@ -357,7 +368,6 @@
         sessionStorage.getItem("guest_details") == null
       )
         window.location = "../index.html";
-
 
       let guest_details = JSON.parse(sessionStorage.getItem("guest_details"));
 

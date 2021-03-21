@@ -93,16 +93,22 @@
         <div class="bread">
           <div class="breadcrumb-pagination">
             <div class="completed">
-              <span>1</span>
-              <p>Select Dates</p>
+              <a href="../index.html">
+                <span>1</span>
+                <p>Select Dates</p>
+              </a>
             </div>
             <div class="completed">
-              <span>2</span>
-              <p>Rooms</p>
+              <a href="select_rooms.html">
+                <span>2</span>
+                <p>Rooms</p>
+              </a>
             </div>
             <div class="active">
-              <span>3</span>
-              <p>Guest Detail</p>
+              <a href="./guest-details.html">
+                <span>3</span>
+                <p>Guest Detail</p>
+              </a>
             </div>
             <div class="todo">
               <span>4</span>
@@ -185,7 +191,7 @@
                           type="text"
                           name="contact"
                           class="form-control"
-                          onkeypress="return restrictCharacters(this, event, digitsOnly);"
+                          onkeypress="return isNumberKey(event)"
                           autocomplete="off"
                           required
                         />
@@ -201,16 +207,22 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-2 mb-2 mb-lg-0 col-lg-2 mt-2">
-                      <label class="ml-2">Additional Guest?</label>
-                      <div class="d-flex justify-content-center">
+                    <div class="col-md-2 mb-2 mb-lg-0 col-lg-2 mt-2 text-center">
+                      <i
+                        class="fa fa-exclamation-circle"
+                        style="font-size: 2rem; cursor: pointer"
+                      ></i>
+                      <h5 style="font-size: 1em">
+                        Additional Guest is upon check-in
+                      </h5>
+                      <!-- <div class="d-flex justify-content-center">
                         <i
                           class="fa fa-exclamation-circle"
                           style="font-size: 2rem; cursor: pointer"
                           data-toggle="modal"
                           data-target="#exampleModal"
                         ></i>
-                      </div>
+                      </div> -->
                     </div>
                     <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
                       <div class="field-icon-wrap">
@@ -371,6 +383,7 @@
     <!-- Active js -->
     <script src="../js/active.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="../js/scriptvalidation.js"></script>
   </body>
 
   <script>

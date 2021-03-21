@@ -529,6 +529,7 @@
     <script src="js/plugins/bootstrap-datepicker.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   </body>
 
   <script>
@@ -564,13 +565,26 @@
 
       $("#date_submit").submit((e) => {
         e.preventDefault();
+
         let check_in = moment($("#check-in").val()).format("YYYY-MM-DD");
         let check_out = moment($("#check-out").val()).format("YYYY-MM-DD");
-        //session_save
-        sessionStorage.setItem("checkin_date", check_in);
-        sessionStorage.setItem("checkout_date", check_out);
 
-        window.location = "booking/select_rooms.html";
+       
+        if (check_in != "Invalid date" && check_out != "Invalid date") {
+          //session_save
+          sessionStorage.setItem("checkin_date", check_in);
+          sessionStorage.setItem("checkout_date", check_out);
+
+          window.location = "booking/select_rooms.html";
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Oops...",
+            text: "Something went wrong!, Please select dates",
+            timer: 5000,
+            showConfirmButton: true,
+          });
+        }
       });
       sessionStorage.clear();
     });

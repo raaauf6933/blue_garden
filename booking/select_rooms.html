@@ -93,12 +93,16 @@
         <div class="bread">
           <div class="breadcrumb-pagination">
             <div class="completed">
-              <span>1</span>
-              <p>Select Dates</p>
+              <a href="../index.html">
+                <span>1</span>
+                <p>Select Dates</p>
+              </a>
             </div>
             <div class="active">
-              <span>2</span>
-              <p>Rooms</p>
+              <a href="select_rooms.html">
+                <span>2</span>
+                <p>Rooms</p>
+              </a>
             </div>
             <div class="todo">
               <span>3</span>
@@ -161,7 +165,9 @@
                 </table>
               </div>
               <div class="card-body">
-                <h5 class="text-dark">Subtotal : P <b id="sub_total">0</b>.00</h5>
+                <h5 class="text-dark">
+                  Subtotal : P <b id="sub_total">0</b>.00
+                </h5>
                 <div class="dropdown-divider"></div>
                 <button class="btn btn-info mr-2" id="continue">
                   Continue
@@ -279,6 +285,12 @@
         }
       }
 
+      const formatter = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
+
       $("#room_row").append(
         $(
           '<div class="room-details-item" id="view' +
@@ -315,8 +327,8 @@
             "</div> " +
             "</div> " +
             "<h2>" +
-            roomtype.roomtype_price +
-            "Php<span>/ Pernight</span></h2> " +
+            formatter.format(roomtype.roomtype_price) +
+            "<span> / Pernight</span></h2> " +
             "<table> " +
             "<tbody>" +
             "<tr> " +
