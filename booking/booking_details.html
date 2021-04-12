@@ -423,15 +423,15 @@
       });
 
       let total_amount = sub_total;
-      let VAT = total_amount * 1.12;
-      let vatable_sales = total_amount - VAT;
+      let vatable_sales = total_amount / 1.12;
+      let VAT = vatable_sales * 0.12;
       let downpayment = total_amount / 2;
 
-      $("#vatable").html("PHP " + vatable_sales + ".00");
-      $("#vat").html("PHP " + VAT + ".00");
-      $("#sub_total").html("PHP " + total_amount + ".00");
-      $("#downpayment").html("PHP " + downpayment + ".00");
-      $("#total_amount").html("PHP " + total_amount + ".00");
+      $("#vatable").html("PHP " + vatable_sales.toFixed(2));
+      $("#vat").html("PHP " + VAT.toFixed(2));
+      $("#sub_total").html("PHP " + total_amount.toFixed(2));
+      $("#downpayment").html("PHP " + downpayment.toFixed(2));
+      $("#total_amount").html("PHP " + total_amount.toFixed(2));
 
       let selected_rooms = [];
 

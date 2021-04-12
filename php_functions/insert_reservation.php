@@ -107,8 +107,8 @@ foreach ($room_array as $room_array) {
   
 }
 
-$vat = ($total_amount * 1.12);
-$vatable = $total_amount - $vat;
+$vatable = $total_amount / 1.12;
+$vat = ($total_amount * 0.12);
 $downpayment = $total_amount / 2;
 
 $email_body = '<html>
@@ -228,7 +228,7 @@ $email_body = '<html>
         <td colspan="5" style="color: #6b6b6b;">* Payment is available only for Bank Deposit / BDO Account number - 006844224985 | BDO Account name - Blue Garden Resort</td>
        
     </tr>
-    <tr> <td colspan="5" style="color: #6b6b6b;">* Deposit your 50% Downpayment to bank, <br/>and upload your picture of bank receipt here <a href="http://bluegardenresort.com/my_booking.html" target="_blank">My Booking</a></td></tr>
+    <tr> <td colspan="5" style="color: #6b6b6b;">* Deposit your 50% Downpayment to bank, <br/>and upload your picture of bank receipt here <a href="http://bluegardenresort.com/myBooking.html" target="_blank">My Booking</a></td></tr>
     
     <tr>
         <td style="height: 1rem;"></td>
