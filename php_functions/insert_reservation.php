@@ -164,7 +164,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px;"><b>Vatable Sales</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px;">
-         Php '.$vatable.'
+         Php '.number_format($vatable,2).'
         </td>
       </tr>
         <tr style="text-align: center;">
