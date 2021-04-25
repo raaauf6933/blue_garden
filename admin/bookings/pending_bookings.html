@@ -288,7 +288,7 @@
               <div class="modal-body">
                 <table class="table">
                   <tr>
-                    <th>Reservation ID:</th>
+               
                     <td id="reservation_id"></td>
                     <th>Booking Reference:</th>
                     <td id="booking_reference">FFD12</td>
@@ -570,7 +570,7 @@
           console.log(table.row(this).data());
           $("#receipts").dataTable().fnDestroy();
           $("#modal-lg").modal("show");
-          $("#reservation_id").html(table.row(this).data().reservation_id);
+      
           $("#booking_reference").html(
             table.row(this).data().booking_reference
           );

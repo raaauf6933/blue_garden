@@ -264,7 +264,7 @@
                 >
                   <thead>
                     <th>Remarks</th>
-                    <th>Reservation ID</th>
+                   
                     <th>Guest Name</th>
                     <th>Reservation Date</th>
                     <th>Check-in Date</th>
@@ -390,7 +390,7 @@
         if (table.data().count() > 0) {
           $("#receipts").dataTable().fnDestroy();
           $("#modal-lg").modal("show");
-          $("#reservation_id").html(table.row(this).data().reservation_id);
+        
           $("#booking_reference").html(
             table.row(this).data().booking_reference
           );
