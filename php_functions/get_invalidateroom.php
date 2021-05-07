@@ -1,7 +1,7 @@
 <?php
 include "./dbconn.php";
 
-$room_array = json_decode('[{"room_ids":"16"},{"room_ids":"18"},{"room_ids":"19"}]');
+$room_array = json_decode($_POST['room_details']);
 
 
 
