@@ -22,7 +22,7 @@ $mail->Username = "officialbluegardenresort@bluegardenresort.com";
 $mail->Password = "Bluegardenresort";
 
 //Set Params
-$mail->SetFrom("officialbluegardenresort");
+$mail->SetFrom("officialbluegardenresort@bluegardenresort.com", "Blue Garden Hotel & Resort");
 $mail->AddAddress("6933rauf@gmail.com");
 $mail->Subject = "Test";
 $mail->Body = "<h1>HELLO</h1>";
