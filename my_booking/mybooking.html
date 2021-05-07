@@ -337,7 +337,7 @@
                 Close
               </button>
               <button type="submit" class="btn btn-primary">
-                Save changes
+                Update Booking
               </button>
             </div>
           </form>
@@ -402,6 +402,7 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   </body>
 
   <script>
@@ -418,6 +419,7 @@
         data: "guest_id=" + guest_id,
         type: "POST",
         success: function (response) {
+          tmp = response;
           reservation_id = JSON.parse(response)[0].reservation_id;
           JSON.parse(response).map((e) => {
             $("#rooms > tbody:last-child").append(
@@ -429,6 +431,67 @@
             );
           });
         },
+      });
+
+      let room_accomodated = (function () {
+        var tmp = null;
+        $.ajax({
+          async: false,
+          url: "../php_functions/my_booking/get_rooms.php",
+          data: "guest_id=" + guest_id,
+          type: "POST",
+          success: function (response) {
+            tmp = response;
+          },
+        });
+        return JSON.parse(tmp);
+      })();
+
+      let room_id = room_accomodated.map((e) => {
+        return { room_ids: e.room_id };
+      });
+
+      console.log(room_id);
+      let rooms_invalid = (function () {
+        var tmp = null;
+        $.ajax({
+          async: false,
+          url: "../php_functions/get_invalidateroom.php",
+          data: "room_details=" + JSON.stringify(room_id),
+          type: "POST",
+          success: function (data) {
+            tmp = data;
+          },
+        });
+        return JSON.parse(tmp);
+      })();
+
+      var unavailableDates = [];
+      rooms_invalid.map((e) => {
+        Date.prototype.addDays = function (days) {
+          var dat = new Date(this.valueOf());
+          dat.setDate(dat.getDate() + days);
+          return dat;
+        };
+
+        function getDates(startDate, stopDate) {
+          var dateArray = new Array();
+          var currentDate = startDate;
+          while (currentDate <= stopDate) {
+            dateArray.push(currentDate);
+            currentDate = currentDate.addDays(1);
+          }
+          return dateArray;
+        }
+
+        var dateArray = getDates(
+          new Date(moment(e.checkin_date).format("MM-DD-YYYY")),
+          new Date(moment(e.checkout_date).format("MM-DD-YYYY"))
+        );
+
+        for (i = 0; i < dateArray.length; i++) {
+          unavailableDates.push(moment(dateArray[i]).format("D-M-YYYY"));
+        }
       });
 
       booking_status = (value) => {
@@ -454,8 +517,6 @@
             $("#checkin").html(e.checkin_date);
             $("#checkout").html(e.checkout_date);
             $("#status").html(booking_status(e.status));
-
-            console.log(e);
 
             if (e.status !== "0") {
               $("#changebooking_btn").hide();
@@ -559,12 +620,8 @@
           },
         });
       });
-    });
-  </script>
 
-  <script>
-    $(document).ready(() => {
-      var unavailableDates = ["18-5-2021", "19-5-2021", "20-5-2021", "fff"];
+      //////////////////////date validation
 
       $("#check-in")
         .datepicker({
@@ -643,12 +700,41 @@
 
         var dateArray = getDates(new Date(check_in), new Date(check_out));
 
-        for (i = 0; i < dateArray.length; i++) {
-          if (
-            unavailableDates.includes(moment(dateArray[i]).format("D-M-YYYY"))
-          ) {
-            alert("INVALID");
+        let validateDate = () => {
+          for (i = 0; i < dateArray.length; i++) {
+            if (
+              unavailableDates.includes(moment(dateArray[i]).format("D-M-YYYY"))
+            ) {
+              return true;
+            }
           }
+        };
+
+        if (!validateDate()) {
+          //submit update here
+          console.log(reservation_id);
+          $.ajax({
+            url: "./php_function/update_booking.php",
+            data:
+              "reservation_id=" +
+              reservation_id +
+              "&checkin_date=" +
+              moment(check_in).format("YYYY-MM-DD") +
+              "&checkout_date=" +
+              moment(check_out).format("YYYY-MM-DD"),
+            type: "POST",
+            success: function (response) {
+              if (response === "1") {
+                location.reload();
+              }
+            },
+          });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Invalid Date",
+            text: "Please select a valid date",
+          });
         }
       });
     });
