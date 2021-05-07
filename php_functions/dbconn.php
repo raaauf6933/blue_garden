@@ -1,7 +1,7 @@
 <?php
 
-$dbUsername = "root";
-$dbPassword = "";
+$dbUsername = "bluegarden_db";
+$dbPassword = "bluegarden_db";
 $dbServername = "localhost";
 $dbName = "bluegarden_db";
 
