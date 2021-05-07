@@ -219,6 +219,7 @@ require("email/PHPMailer-master/src/SMTP.php");
 require("email/PHPMailer-master/src/Exception.php");
 
 
+
 $mail = new PHPMailer\PHPMailer\PHPMailer();
 $mail->IsSMTP();
 
@@ -237,7 +238,8 @@ $mail->Username = "officialbluegardenresort@bluegardenresort.com";
 $mail->Password = "Bluegardenresort";
 
 //Set Params
-$mail->AddEmbeddedImage('../../../img/core-img/logo.png', 'logo_2u');
+$mail->AddEmbeddedImage('../img/core-img/logo.png', 'logo_2u');
+
 
 $mail->SetFrom("officialbluegardenresort@bluegardenresort.com", "Blue Garden Resort");
 $mail->AddAddress($guest_email);
