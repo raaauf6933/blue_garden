@@ -18,6 +18,12 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="../style.css" />
+
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="../css/datepicker/bootstrap-datepicker3.css" />
+
+    <link rel="stylesheet" href="../css/flaticon.css" type="text/css" />
   </head>
 
   <body>
@@ -121,12 +127,15 @@
                       >
                         <i class="fa fa-image"></i> UPLOAD BANK RECEIPT
                       </button>
-                      <!-- <a
+                      <a
+                        id="changebooking_btn"
                         class="btn btn-primary ml-1 text-light"
-                        href="../change_booking/select_date.html"
+                        href="./change_booking/select_date.html"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
                       >
-                        <i class="fa fa-undo"></i> CHANGE BOOKING
-                      </a> -->
+                        <i class="fa fa-undo"></i> RESCHED BOOKING
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -212,7 +221,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="submit" class="btn btn-primary" id="btn-submit">
-                Save changes
+                Update Booking
               </button>
               <button
                 type="button"
@@ -266,6 +275,69 @@
     </div>
     <!-- ##### Google Maps ##### -->
 
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="date_submit" action="#" class="justify-content-center">
+              <label for="select1">Check In</label>
+
+              <input
+                type="text"
+                class="form-control"
+                id="check-in"
+                autocomplete="off"
+                placeholder="Select Date"
+                required
+                readonly
+              />
+
+              <div class="form-group mt-2">
+                <label for="select1">Check Out</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="check-out"
+                  autocomplete="off"
+                  placeholder="Select Date"
+                  required
+                  readonly
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">
       <div class="container">
@@ -313,6 +385,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <script src="../js/plugins/bootstrap-datepicker.js"></script>
   </body>
 
   <script>
@@ -365,6 +439,12 @@
             $("#checkin").html(e.checkin_date);
             $("#checkout").html(e.checkout_date);
             $("#status").html(booking_status(e.status));
+
+            console.log(e);
+
+            if (e.status !== "0") {
+              $("#changebooking_btn").hide();
+            }
           });
         },
       });
@@ -464,6 +544,52 @@
           },
         });
       });
+    });
+  </script>
+
+  <script>
+    $(document).ready(() => {
+      var unavailableDates = ["29-5-2021", "14-3-2012", "15-3-2012"];
+
+      $("#check-in")
+        .datepicker({
+          format: "mm/dd/yyyy",
+          startDate: "+1d",
+          beforeShowDay: function (date) {
+            dmy =
+              date.getDate() +
+              "-" +
+              (date.getMonth() + 1) +
+              "-" +
+              date.getFullYear();
+            if (unavailableDates.indexOf(dmy) != -1) {
+              return false;
+            } else {
+              return true;
+            }
+          },
+        })
+        .change(() => {
+          if ($("#check-out").val() == "") {
+            var check_in = $("#check-in").val();
+            var test = new Date(check_in);
+            test.setDate(test.getDate() + 1);
+
+            $("#check-out").datepicker({
+              startDate: test,
+            });
+            $("#check-out").datepicker("setStartDate", test);
+          }
+
+          if ($("#check-in").val() != "" && $("#check-out").val() != "") {
+            var check_in1 = $("#check-in").val();
+            var test1 = new Date(check_in1);
+            test1.setDate(test1.getDate() + 1);
+
+            $("#check-out").datepicker("setDate", test1);
+            $("#check-out").datepicker("setStartDate", test1);
+          }
+        });
     });
   </script>
 </html>
