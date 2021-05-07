@@ -238,7 +238,7 @@ $mail->Username = "officialbluegardenresort@bluegardenresort.com";
 $mail->Password = "Bluegardenresort";
 
 //Set Params
-$mail->AddEmbeddedImage('../img/core-img/logo.png', 'logo_2u');
+$mail->AddEmbeddedImage('../../../img/core/logo.png', 'logo_2u');
 
 
 $mail->SetFrom("officialbluegardenresort@bluegardenresort.com", "Blue Garden Resort");
