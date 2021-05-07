@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="../css/datepicker/bootstrap-datepicker3.css" />
 
     <link rel="stylesheet" href="../css/flaticon.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
   </head>
 
   <body>
@@ -285,19 +290,19 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="date_submit" action="#" class="justify-content-center">
+          <form id="date_submit" action="#" class="justify-content-center">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
               <label for="select1">Check In</label>
 
               <input
@@ -322,18 +327,20 @@
                   readonly
                 />
               </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -378,7 +385,6 @@
     <script src="../admin/plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="../admin/plugins/toastr/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-    <script src="./datepicker_files/jquery.datepicker2.js"></script>
     <script src="../admin/plugins/datatables/jquery.dataTables.js"></script>
     <script src="../admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
@@ -387,6 +393,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <script src="../js/plugins/bootstrap-datepicker.js"></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
   </body>
 
   <script>
@@ -549,7 +564,7 @@
 
   <script>
     $(document).ready(() => {
-      var unavailableDates = ["29-5-2021", "14-3-2012", "15-3-2012"];
+      var unavailableDates = ["18-5-2021", "19-5-2021", "20-5-2021", "fff"];
 
       $("#check-in")
         .datepicker({
@@ -577,6 +592,19 @@
 
             $("#check-out").datepicker({
               startDate: test,
+              beforeShowDay: function (date) {
+                dmy =
+                  date.getDate() +
+                  "-" +
+                  (date.getMonth() + 1) +
+                  "-" +
+                  date.getFullYear();
+                if (unavailableDates.indexOf(dmy) != -1) {
+                  return false;
+                } else {
+                  return true;
+                }
+              },
             });
             $("#check-out").datepicker("setStartDate", test);
           }
@@ -590,6 +618,39 @@
             $("#check-out").datepicker("setStartDate", test1);
           }
         });
+
+      $("#date_submit").submit((e) => {
+        e.preventDefault();
+
+        let check_in = moment($("#check-in").val()).format("MM-DD-YYYY");
+        let check_out = moment($("#check-out").val()).format("MM-DD-YYYY");
+
+        Date.prototype.addDays = function (days) {
+          var dat = new Date(this.valueOf());
+          dat.setDate(dat.getDate() + days);
+          return dat;
+        };
+
+        function getDates(startDate, stopDate) {
+          var dateArray = new Array();
+          var currentDate = startDate;
+          while (currentDate <= stopDate) {
+            dateArray.push(currentDate);
+            currentDate = currentDate.addDays(1);
+          }
+          return dateArray;
+        }
+
+        var dateArray = getDates(new Date(check_in), new Date(check_out));
+
+        for (i = 0; i < dateArray.length; i++) {
+          if (
+            unavailableDates.includes(moment(dateArray[i]).format("D-M-YYYY"))
+          ) {
+            alert("INVALID");
+          }
+        }
+      });
     });
   </script>
 </html>
