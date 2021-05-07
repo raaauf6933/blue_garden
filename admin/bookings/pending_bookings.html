@@ -30,24 +30,22 @@
     />
 
     <link
-    rel="stylesheet"
-    href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
-  />
+      rel="stylesheet"
+      href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
+    />
 
-  
+    <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
+    <style>
+      #pending_booking td,
+      th {
+        text-align: center;
+        cursor: pointer;
+      }
 
-  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
-  <style>
-    #pending_booking td,
-    th {
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .modal {
-      overflow: auto !important;
-    }
-  </style>
+      .modal {
+        overflow: auto !important;
+      }
+    </style>
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -65,12 +63,15 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a style="color: white; cursor:pointer;" className="nav-link" id="logout">
+            <a
+              style="color: white; cursor: pointer"
+              className="nav-link"
+              id="logout"
+            >
               Sign out
             </a>
           </li>
         </ul>
-        
       </nav>
       <!-- /.navbar -->
 
@@ -288,7 +289,6 @@
               <div class="modal-body">
                 <table class="table">
                   <tr>
-               
                     <td id="reservation_id"></td>
                     <th>Booking Reference:</th>
                     <td id="booking_reference">FFD12</td>
@@ -460,14 +460,11 @@
       </div>
 
       <footer class="main-footer">
-        <strong
-        >Copyright 2021
-       Blue Garden Resort.</strong
-      >
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.0.5
-      </div>
+        <strong>Copyright 2021 Blue Garden Resort.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 3.0.5
+        </div>
       </footer>
 
       <!-- Control Sidebar -->
@@ -512,6 +509,11 @@
         window.location = "../authentication/login.html";
       });
 
+      $.ajax({
+        url: "../php_function/expired_noshow/update_booking.php",
+        type: "POST",
+        success: function (response) {},
+      });
 
       //get all pending bookings
       let table = $("#pending_booking").DataTable({
@@ -570,7 +572,7 @@
           console.log(table.row(this).data());
           $("#receipts").dataTable().fnDestroy();
           $("#modal-lg").modal("show");
-      
+          $("#reservation_id").html(table.row(this).data().reservation_id);
           $("#booking_reference").html(
             table.row(this).data().booking_reference
           );
@@ -700,10 +702,13 @@
           type: "POST",
           success: function (response) {
             console.log(response);
-            $("#modal-lg").modal("hide");
-            $(".loading").remove();
           },
         });
+
+        setTimeout(() => {
+          $("#modal-lg").modal("hide");
+          $(".loading").remove();
+        }, 3000);
       };
 
       updateHigh = () => {
