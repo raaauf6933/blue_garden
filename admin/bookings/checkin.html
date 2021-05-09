@@ -40,8 +40,6 @@
         overflow: auto !important;
       }
     </style>
-
-    
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -58,7 +56,11 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a style="color: white; cursor:pointer;" className="nav-link" id="logout">
+            <a
+              style="color: white; cursor: pointer"
+              className="nav-link"
+              id="logout"
+            >
               Sign out
             </a>
           </li>
@@ -248,13 +250,12 @@
               <h3 class="card-title">Check-In</h3>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
+              <div class="table-responsive text-center">
                 <table
                   class="table table-sm table-striped table-hover"
                   id="checkin_table"
                 >
                   <thead>
-                    
                     <th>Guest Name</th>
                     <th>Check-in Date</th>
                     <th>Check-out Date</th>
@@ -292,26 +293,35 @@
               <div class="modal-body">
                 <table class="table">
                   <tr>
-                   
                     <th>Booking Reference:</th>
-                    <td id="booking_reference">FFD12</td>
+                    <td id="booking_reference"></td>
                     <th>Number of Guest</th>
-                    <td id="number_guest">18</td>
+                    <td id="number_guest"></td>
                   </tr>
                   <tr>
                     <th>Name:</th>
-                    <td id="name">Rauf Dimaampao</td>
+                    <td id="name"></td>
                     <th>Contact Number:</th>
-                    <td id="contact_number">09472454073</td>
+                    <td id="contact_number"></td>
                     <th>Email:</th>
-                    <td id="email">6933rauf@gmail.com</td>
+                    <td id="email"></td>
                   </tr>
                   <tr>
                     <th>Address</th>
-                    <td colspan="5" id="address">Manila, Philippines</td>
+                    <td colspan="5" id="address"></td>
                   </tr>
                 </table>
                 <div class="row">
+                  <div class="col-12 d-flex flex-row-reverse mb-3">
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      data-toggle="modal"
+                      data-target="#cancelModal"
+                    >
+                      Cancel Booking
+                    </button>
+                  </div>
                   <div class="col-12">
                     <div class="card">
                       <div class="card-header bg-dark">
@@ -360,6 +370,7 @@
                               <th>Room Type</th>
                               <th>Room no.</th>
                               <th>Room Price</th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody class="text-center"></tbody>
@@ -488,6 +499,7 @@
                 >
                   Close
                 </button>
+
                 <button type="submit" class="btn btn-danger" id="btn-submit">
                   Check-out
                 </button>
@@ -577,12 +589,90 @@
         <!-- /.modal-dialog -->
       </div>
 
+      <!-- <div
+        class="modal fade"
+        id="cancelModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Cancel Booking</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <h3>Are you sure you want to cancel this booking?</h3>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="modal fade" id="changeRoomModal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Change Room</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-center">
+              <table id="table_rooms" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Room name</th>
+                    <th>Room rate</th>
+                    <th>Room ID</th>
+
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
       <footer class="main-footer">
-      
-        <strong
-          >Copyright 2021
-         Blue Garden Resort.</strong
-        >
+        <strong>Copyright 2021 Blue Garden Resort.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
           <b>Version</b> 3.0.5
@@ -612,20 +702,18 @@
     <script src="../plugins/datatables/jquery.dataTables.js"></script>
     <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
 
     <script src="../dist/js/update_expire_noshow.js"></script>
-    
   </body>
 
   <script>
     $(document).ready(function () {
       if (sessionStorage.getItem("user_info") == null)
-          window.location = "../authentication/login.html";
+        window.location = "../authentication/login.html";
 
       $("#user_admin").html(
         JSON.parse(sessionStorage.getItem("user_info")).name
@@ -636,7 +724,6 @@
         window.location = "../authentication/login.html";
       });
 
-
       let table = $("#checkin_table").DataTable({
         responsive: true,
         autoWidth: false,
@@ -645,9 +732,6 @@
           dataSrc: "",
         },
         columns: [
-          {
-            data: "reservation_id",
-          },
           {
             data: "first_name",
             render: function (data, type, full, meta) {
@@ -677,6 +761,7 @@
       $("#checkin_table tbody").on("click", "tr", async function () {
         if (table.data().count() > 0) {
           $("#receipts").dataTable().fnDestroy();
+          $("#confirmed_rooms").dataTable().fnDestroy();
           $("#guest_additional").dataTable().fnDestroy();
           $("#modal-lg").modal("show");
           $("#reservation_id").html(table.row(this).data().reservation_id);
@@ -743,24 +828,111 @@
             );
           });
 
-          await $.ajax({
-            url: "../php_function/checkin/get_checkin_rooms.php",
-            data: "reservation_id=" + reservation_id,
-            type: "POST",
-            success: function (response) {
-              var pending_rooms = JSON.parse(response);
-              pending_rooms.map((e) => {
-                $("#confirmed_rooms > tbody:last-child").append(
-                  "<tr class='guest_details'><td>" +
-                    e.roomtype_name +
-                    "</td><td>" +
-                    e.room_num +
-                    "</td><td>" +
-                    e.room_price +
-                    "</td></tr>"
-                );
-              });
+          let tableRooms = $("#confirmed_rooms").DataTable({
+            paging: false,
+            ordering: false,
+            info: false,
+            searching: false,
+            bAutoWidth: false,
+            responsive: true,
+            autoWidth: false,
+            ajax: {
+              url: "../php_function/checkin/get_checkin_rooms.php",
+              type: "POST",
+              dataSrc: "",
+              data: { reservation_id: reservation_id },
             },
+            columns: [
+              {
+                data: "roomtype_name",
+              },
+              {
+                data: "room_num",
+              },
+              {
+                data: "room_price",
+              },
+              {
+                data: "room_reservation_id",
+                render: function (data, type, full, meta) {
+                  let status = data;
+                  return "<span class='btn btn-outline-info'><i class='fas fa-redo'></i></span>";
+                },
+              },
+            ],
+          });
+
+          let reqr_roomtype = (function () {
+            var tmp = null;
+            $.ajax({
+              async: false,
+              url: "../php_function/walkin/get_roomtype.php",
+              type: "POST",
+              success: function (data) {
+                tmp = data;
+              },
+            });
+            return JSON.parse(tmp);
+          })();
+
+          let req_rooms = (function () {
+            var tmp = null;
+            $.ajax({
+              async: false,
+              url: "../php_function/walkin/get_rooms.php",
+              data: "check_in=" + "2021-05-27" + "&check_out=" + "2021-05-28",
+              type: "POST",
+              success: function (data) {
+                tmp = data;
+              },
+            });
+            return JSON.parse(tmp);
+          })();
+
+          $("#confirmed_rooms tbody").on("click", "tr", async function () {
+            $("#changeRoomModal").modal("show");
+            reqr_roomtype.map((e) => {
+              req_rooms.map((rooms) => {
+                console.log(rooms);
+                console.log(rooms);
+                if (rooms.roomtype_id == e.roomtype_id) {
+                  $("#table_rooms > tbody:last-child").append(
+                    "<tr class='table_rooms_row'><td>" +
+                      e.roomtype_name +
+                      "</td><td>" +
+                      e.roomtype_price +
+                      "</td><td>" +
+                      rooms.room_id +
+                      "</td><td><form class='change_room_form'><div class='input-group mb-3'><input value='" +
+                      e.roomtype_id +
+                      "' hidden/><input value='" +
+                      e.roomtype_price +
+                      "' hidden/><input value='" +
+                      e.roomtype_name +
+                      "' hidden/><input value='" +
+                      e.roomtype_capacity +
+                      "' hidden/><div class='input-group-append'><button type='submit' class='room" +
+                      rooms.room_id +
+                      " btn btn-primary' id='room" +
+                      rooms.room_id +
+                      "'><i class='fa fa-plus' aria-hidden='true'></i></button></div></div></form></td></tr>"
+                  );
+                }
+              });
+            });
+
+            $("#changeRoomModal").on("hidden.bs.modal", function () {
+              $("#equictntbl").dataTable().fnClearTable();
+
+              $(".table_rooms_row").remove();
+              table.ajax.reload();
+              tableRooms.ajax.reload();
+            });
+
+            $(".change_room_form").submit((e) => {
+              e.preventDefault();
+              console.log(e.target[0].value);
+            });
           });
 
           var total_amount_payed = 0;
