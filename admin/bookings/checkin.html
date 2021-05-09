@@ -312,16 +312,6 @@
                   </tr>
                 </table>
                 <div class="row">
-                  <div class="col-12 d-flex flex-row-reverse mb-3">
-                    <button
-                      type="button"
-                      class="btn btn-warning"
-                      data-toggle="modal"
-                      data-target="#cancelModal"
-                    >
-                      Cancel Booking
-                    </button>
-                  </div>
                   <div class="col-12">
                     <div class="card">
                       <div class="card-header bg-dark">
@@ -648,7 +638,7 @@
                     <th>Room name</th>
                     <th>Room rate</th>
                     <th>Room ID</th>
-
+                    <th>Room Num</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -758,6 +748,13 @@
       let global_balance = 0;
       let global_additional = 0;
 
+      let global_checkin = "";
+      let global_checkout = "";
+
+      function removeRow() {
+        $(".table_rooms_row").remove();
+      }
+
       $("#checkin_table tbody").on("click", "tr", async function () {
         if (table.data().count() > 0) {
           $("#receipts").dataTable().fnDestroy();
@@ -789,6 +786,11 @@
           var billing_id = table.row(this).data().billing_id;
           global_reservation_id = reservation_id;
           global_billing_id = billing_id;
+          let checkin = table.row(this).data().checkin_date;
+          let checkout = table.row(this).data().checkout_date;
+
+          global_checkin = checkin;
+          global_checkout = checkout;
 
           let table_receipts = $("#receipts").DataTable({
             paging: false,
@@ -826,113 +828,6 @@
                 table_receipts.row(this).data().photo +
                 ""
             );
-          });
-
-          let tableRooms = $("#confirmed_rooms").DataTable({
-            paging: false,
-            ordering: false,
-            info: false,
-            searching: false,
-            bAutoWidth: false,
-            responsive: true,
-            autoWidth: false,
-            ajax: {
-              url: "../php_function/checkin/get_checkin_rooms.php",
-              type: "POST",
-              dataSrc: "",
-              data: { reservation_id: reservation_id },
-            },
-            columns: [
-              {
-                data: "roomtype_name",
-              },
-              {
-                data: "room_num",
-              },
-              {
-                data: "room_price",
-              },
-              {
-                data: "room_reservation_id",
-                render: function (data, type, full, meta) {
-                  let status = data;
-                  return "<span class='btn btn-outline-info'><i class='fas fa-redo'></i></span>";
-                },
-              },
-            ],
-          });
-
-          let reqr_roomtype = (function () {
-            var tmp = null;
-            $.ajax({
-              async: false,
-              url: "../php_function/walkin/get_roomtype.php",
-              type: "POST",
-              success: function (data) {
-                tmp = data;
-              },
-            });
-            return JSON.parse(tmp);
-          })();
-
-          let req_rooms = (function () {
-            var tmp = null;
-            $.ajax({
-              async: false,
-              url: "../php_function/walkin/get_rooms.php",
-              data: "check_in=" + "2021-05-27" + "&check_out=" + "2021-05-28",
-              type: "POST",
-              success: function (data) {
-                tmp = data;
-              },
-            });
-            return JSON.parse(tmp);
-          })();
-
-          $("#confirmed_rooms tbody").on("click", "tr", async function () {
-            $("#changeRoomModal").modal("show");
-            reqr_roomtype.map((e) => {
-              req_rooms.map((rooms) => {
-                console.log(rooms);
-                console.log(rooms);
-                if (rooms.roomtype_id == e.roomtype_id) {
-                  $("#table_rooms > tbody:last-child").append(
-                    "<tr class='table_rooms_row'><td>" +
-                      e.roomtype_name +
-                      "</td><td>" +
-                      e.roomtype_price +
-                      "</td><td>" +
-                      rooms.room_id +
-                      "</td><td><form class='change_room_form'><div class='input-group mb-3'><input value='" +
-                      e.roomtype_id +
-                      "' hidden/><input value='" +
-                      e.roomtype_price +
-                      "' hidden/><input value='" +
-                      e.roomtype_name +
-                      "' hidden/><input value='" +
-                      e.roomtype_capacity +
-                      "' hidden/><div class='input-group-append'><button type='submit' class='room" +
-                      rooms.room_id +
-                      " btn btn-primary' id='room" +
-                      rooms.room_id +
-                      "'><i class='fa fa-plus' aria-hidden='true'></i></button></div></div></form></td></tr>"
-                  );
-                }
-              });
-            });
-
-            $("#changeRoomModal").on("hidden.bs.modal", function () {
-              $("#equictntbl").dataTable().fnClearTable();
-
-              $(".table_rooms_row").remove();
-              table.ajax.reload();
-              tableRooms.ajax.reload();
-            });
-
-            $(".change_room_form").submit((e) => {
-              e.preventDefault();
-              console.log(e.target[0].value);
-            });
           });
 
           var total_amount_payed = 0;
@@ -1025,6 +920,8 @@
             global_total_amount = 0;
             global_total_payed = 0;
             global_billing_id = 0;
+            global_checkin = "";
+            global_checkout = "";
             table.ajax.reload();
             $(".guest_details").remove();
             $("#btn-submit").removeAttr("disabled", "disabled");
@@ -1037,6 +934,169 @@
             guest_additional.ajax.reload();
           });
         }
+      });
+
+      let tableRooms = "";
+      $("#modal-lg").on("shown.bs.modal", function (e) {
+        tableRooms = $("#confirmed_rooms").DataTable({
+          paging: false,
+          ordering: false,
+          info: false,
+          searching: false,
+          bAutoWidth: false,
+          responsive: true,
+          autoWidth: false,
+          ajax: {
+            url: "../php_function/checkin/get_checkin_rooms.php",
+            type: "POST",
+            dataSrc: "",
+            data: { reservation_id: global_reservation_id },
+          },
+          columns: [
+            {
+              data: "roomtype_name",
+            },
+            {
+              data: "room_num",
+            },
+            {
+              data: "room_price",
+            },
+            {
+              data: "room_reservation_id",
+              render: function (data, type, full, meta) {
+                let status = data;
+                return "<span class='btn btn-outline-info'><i class='fas fa-redo'></i></span>";
+              },
+            },
+          ],
+        });
+      });
+
+      let reqr_roomtype = (function () {
+        var tmp = null;
+        $.ajax({
+          async: false,
+          url: "../php_function/walkin/get_roomtype.php",
+          type: "POST",
+          success: function (data) {
+            tmp = data;
+          },
+        });
+        return JSON.parse(tmp);
+      })();
+
+      let req_rooms = (function () {
+        var tmp = null;
+        $.ajax({
+          async: false,
+          url: "../php_function/walkin/get_rooms.php",
+          data: "check_in=" + global_checkin + "&check_out=" + global_checkout,
+          type: "POST",
+          success: function (data) {
+            tmp = data;
+          },
+        });
+        return JSON.parse(tmp);
+      })();
+
+      $("#confirmed_rooms tbody").on("click", "tr", async function () {
+        $("#changeRoomModal").modal("show");
+        reqr_roomtype.map((e) => {
+          req_rooms.map((rooms) => {
+            if (rooms.roomtype_id == e.roomtype_id) {
+              console.log(rooms);
+              $("#table_rooms > tbody:last-child").append(
+                "<tr class='table_rooms_row'><td>" +
+                  e.roomtype_name +
+                  "</td><td>" +
+                  e.roomtype_price +
+                  "</td><td>" +
+                  rooms.room_id +
+                  "</td><td>" +
+                  rooms.room_num +
+                  "</td><td><form class='change_room_form'><div class='input-group mb-3'><input value='" +
+                  e.roomtype_id +
+                  "' hidden/><input value='" +
+                  e.roomtype_price +
+                  "' hidden/><input value='" +
+                  e.roomtype_name +
+                  "' hidden/><input value='" +
+                  rooms.room_id +
+                  "' hidden/><input value='" +
+                  rooms.room_num +
+                  "' hidden/><div class='input-group-append'><button type='submit' class='room" +
+                  rooms.room_id +
+                  " btn btn-primary' id='room" +
+                  rooms.room_id +
+                  "'><i class='fa fa-plus' aria-hidden='true'></i></button></div></div></form></td></tr>"
+              );
+            }
+          });
+        });
+
+        $("#changeRoomModal").on("hidden.bs.modal", function () {
+          $("#equictntbl").dataTable().fnClearTable();
+          table.ajax.reload();
+          $(".table_rooms_row").remove();
+        });
+
+        $(".change_room_form").submit(async (e) => {
+          e.preventDefault();
+          let reservation_id = tableRooms.row(this).data().reservation_id;
+          let billing_id = global_billing_id;
+          let roomtype_id = e.target[0].value;
+          let room_price = e.target[1].value;
+          let roomtype_name = e.target[2].value;
+          let room_id = e.target[3].value;
+          let room_num = e.target[4].value;
+
+          let old_room_id = tableRooms.row(this).data().room_id;
+          let old_room_price = tableRooms.row(this).data().room_price;
+
+          await $.ajax({
+            url: "../php_function/checkin/change_room.php",
+            data:
+              "reservation_id=" +
+              reservation_id +
+              "&room_price=" +
+              room_price +
+              "&room_num=" +
+              room_num +
+              "&old_room_id=" +
+              old_room_id +
+              "&room_id=" +
+              room_id +
+              "&roomtype_name=" +
+              roomtype_name +
+              "&billing_id=" +
+              billing_id +
+              "&old_room_price=" +
+              old_room_price,
+            type: "POST",
+            success: (response) => {
+              console.log(response);
+              if (response === "1") {
+                $("#changeRoomModal").modal("hide");
+                location.reload();
+              } else {
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+
+                Toast.fire({
+                  icon: "error",
+                  title: "Something Went Wrong",
+                });
+                $("#changeRoomModal").modal("hide");
+              }
+              tableRooms.ajax.reload();
+            },
+          });
+        });
       });
 
       $(document).on("click", "#btn-additional", async (e) => {
@@ -1104,7 +1164,6 @@
                 global_total_payed = parseInt(e.payed_capital);
                 global_balance = global_total_amount - global_total_payed;
               });
-              console.log();
               $("#balance").html(global_balance);
               $("#total_amount").html(global_total_amount);
 
