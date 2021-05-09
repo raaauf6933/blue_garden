@@ -1078,7 +1078,22 @@
               console.log(response);
               if (response === "1") {
                 $("#changeRoomModal").modal("hide");
-                location.reload();
+
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  timer: 3000,
+                });
+
+                Toast.fire({
+                  icon: "success",
+                  title: "Room Updated",
+                });
+
+                setTimeout(function () {
+                  location.reload();
+                }, 1500);
               } else {
                 const Toast = Swal.mixin({
                   toast: true,
