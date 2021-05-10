@@ -6,7 +6,7 @@ $check_out = $_POST['check_out'];
 
 $sql = mysqli_query(
     $conn,
-    "SELECT rm.room_id, rm.roomtype_id, rt.roomtype_capacity, rt.roomtype_name, rt.roomtype_price,rt.description,rt.roomtype_photo
+    "SELECT rm.room_id, rm.roomtype_id, rt.roomtype_capacity, rt.roomtype_name, rt.roomtype_price,rt.description,rt.roomtype_photo,rm.room_num
 FROM rooms rm
 inner join room_type rt on rt.roomtype_id = rm.roomtype_id
 where rm.room_id not in 
