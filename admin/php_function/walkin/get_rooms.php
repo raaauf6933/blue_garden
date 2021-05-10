@@ -13,7 +13,7 @@ where rm.room_id not in
 (select room_id 
  from room_reservation rr
 left join reservation r on r.reservation_id = rr.reservation_id
-where status in (0,1,4,6) and (('2021-05-27' between r.checkin_date and r.checkout_date) OR ('2021-05-28' BETWEEN r.checkin_date and r.checkout_date) OR ('$check_in' <= r.checkin_date and '$check_out' >= r.checkout_date)))"
+where status in (0,1,4,6) and (('$check_in' between r.checkin_date and r.checkout_date) OR ('$check_out' BETWEEN r.checkin_date and r.checkout_date) OR ('$check_in' <= r.checkin_date and '$check_out' >= r.checkout_date)))"
 );
 
 
