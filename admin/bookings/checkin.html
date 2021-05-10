@@ -936,6 +936,8 @@
         }
       });
 
+      let wewe = function () {};
+
       let tableRooms = "";
       $("#modal-lg").on("shown.bs.modal", function (e) {
         tableRooms = $("#confirmed_rooms").DataTable({
@@ -973,39 +975,39 @@
         });
       });
 
-      let reqr_roomtype = (function () {
-        var tmp = null;
-        $.ajax({
-          async: false,
-          url: "../php_function/walkin/get_roomtype.php",
-          type: "POST",
-          success: function (data) {
-            tmp = data;
-          },
-        });
-        return JSON.parse(tmp);
-      })();
-
-      let req_rooms = (function () {
-        var tmp = null;
-        $.ajax({
-          async: false,
-          url: "../php_function/walkin/get_rooms.php",
-          data: "check_in=" + global_checkin + "&check_out=" + global_checkout,
-          type: "POST",
-          success: function (data) {
-            tmp = data;
-          },
-        });
-        return JSON.parse(tmp);
-      })();
-
       $("#confirmed_rooms tbody").on("click", "tr", async function () {
+        let reqr_roomtype = (function () {
+          var tmp = null;
+          $.ajax({
+            async: false,
+            url: "../php_function/walkin/get_roomtype.php",
+            type: "POST",
+            success: function (data) {
+              tmp = data;
+            },
+          });
+          return JSON.parse(tmp);
+        })();
+
+        let req_rooms = (function () {
+          var tmp = null;
+          $.ajax({
+            async: false,
+            url: "../php_function/walkin/get_rooms.php",
+            data:
+              "check_in=" + global_checkin + "&check_out=" + global_checkout,
+            type: "POST",
+            success: function (data) {
+              tmp = data;
+            },
+          });
+          return JSON.parse(tmp);
+        })();
+
         $("#changeRoomModal").modal("show");
         reqr_roomtype.map((e) => {
           req_rooms.map((rooms) => {
             if (rooms.roomtype_id == e.roomtype_id) {
-              console.log(rooms);
               $("#table_rooms > tbody:last-child").append(
                 "<tr class='table_rooms_row'><td>" +
                   e.roomtype_name +
