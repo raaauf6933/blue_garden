@@ -36,7 +36,8 @@
     <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
 
     <style>
-      #pending_booking td,
+      #pending_booking,
+      #additional_type td,
       th {
         text-align: center;
         cursor: pointer;
@@ -46,8 +47,6 @@
         overflow: auto !important;
       }
     </style>
-
-
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -65,13 +64,15 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a style="color: white; cursor:pointer;" className="nav-link" id="logout">
+            <a
+              style="color: white; cursor: pointer"
+              className="nav-link"
+              id="logout"
+            >
               Sign out
             </a>
           </li>
         </ul>
-
-        
       </nav>
       <!-- /.navbar -->
 
@@ -107,7 +108,11 @@
           <!-- Sidebar Menu -->
           <nav class="mt-2">
             <ul
-              class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent"
+              class="
+                nav nav-pills nav-sidebar
+                flex-column
+                nav-flat nav-child-indent
+              "
               data-widget="treeview"
               role="menu"
               data-accordion="false"
@@ -209,6 +214,15 @@
               </li>
               <li class="nav-item">
                 <a
+                  href="../content_settings/content_settings.html"
+                  class="nav-link"
+                >
+                  <i class="nav-icon fas fa-user-cog"></i>
+                  <p>Content Settings</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
                   href="../user_management/user_management.html"
                   class="nav-link"
                 >
@@ -264,7 +278,7 @@
                 >
                   <thead>
                     <th>Notification</th>
-                 
+
                     <th>Guest Name</th>
                     <th>Reservation Date</th>
                     <th>Check-in Date</th>
@@ -302,7 +316,6 @@
               <div class="modal-body">
                 <table class="table">
                   <tr>
-                 
                     <th>Booking Reference:</th>
                     <td id="booking_reference">FFD12</td>
                     <th>Number of Guest</th>
@@ -413,6 +426,49 @@
                 <div class="row">
                   <div class="col-12">
                     <div class="card">
+                      <div class="card-header bg-primary">
+                        <h3
+                          style="font-size: 1.1rem; font-weight: 400; margin: 0"
+                          class="d-flex"
+                        >
+                          <div class="mr-auto">Discount Applied</div>
+                          <div class="ml-auto">
+                            <button
+                              type="button"
+                              id="btn-discount"
+                              class="btn btn-light"
+                            >
+                              <i class="fas fa-edit"></i>
+                            </button>
+                          </div>
+                        </h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body table-responsive p-0">
+                        <table
+                          class="table table-head-fixed text-nowrap"
+                          id="discount_applied"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Discount Name</th>
+                              <th>Discount Percent</th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class="text-center"
+                            style="cursor: pointer"
+                          ></tbody>
+                        </table>
+                      </div>
+                      <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card">
                       <table class="table">
                         <tbody>
                           <tr class="table-primary">
@@ -500,15 +556,54 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-      <footer class="main-footer">
-        <strong
-        >Copyright 2021
-       Blue Garden Resort.</strong
-      >
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.0.5
+
+      <div class="modal fade" id="modal-discount">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-secondary">
+              <h4 class="modal-title">Select Discount</h4>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table" id="additional_type">
+                <thead>
+                  <tr>
+                    <th>Discount Name</th>
+                    <th>Discount Value</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button
+                type="button"
+                class="btn btn-default"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
       </div>
+
+      <footer class="main-footer">
+        <strong>Copyright 2021 Blue Garden Resort.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 3.0.5
+        </div>
       </footer>
 
       <!-- Control Sidebar -->
@@ -542,15 +637,15 @@
   <script>
     $(document).ready(function () {
       if (sessionStorage.getItem("user_info") == null)
-          window.location = "../authentication/login.html";
-      $("#user_admin").html(JSON.parse(sessionStorage.getItem("user_info")).name);
+        window.location = "../authentication/login.html";
+      $("#user_admin").html(
+        JSON.parse(sessionStorage.getItem("user_info")).name
+      );
 
       $("#logout").click(() => {
         sessionStorage.removeItem("user_info");
         window.location = "../authentication/login.html";
       });
-
-
 
       let table = $("#confirmed_booking").DataTable({
         responsive: true,
@@ -707,6 +802,24 @@
             },
           });
 
+          await $.ajax({
+            url: "../php_function/confirmed_booking/get_discount_applied.php",
+            data: "reservation_id=" + reservation_id,
+            type: "POST",
+            success: function (response) {
+              var discount_applied = JSON.parse(response);
+              discount_applied.map((e) => {
+                $("#discount_applied > tbody:last-child").append(
+                  "<tr class='guest_details'><td>" +
+                    e.discount_name +
+                    "</td><td>" +
+                    e.discount_value +
+                    "</td></tr>"
+                );
+              });
+            },
+          });
+
           var total_amount = 0;
           await $.ajax({
             url: "../php_function/confirmed_booking/get_confirmed_billing.php",
@@ -728,6 +841,78 @@
             $(".guest_details").remove();
           });
         }
+      });
+
+      $(document).on("click", "#btn-discount", async (e) => {
+        $("#modal-discount").modal("show");
+
+        await $.ajax({
+          url: "../php_function/confirmed_booking/get_discount_type.php",
+          data: "reservation_id=" + rev_id,
+          type: "POST",
+          success: (response) => {
+            console.log(response);
+            let additional_type = JSON.parse(response);
+            additional_type.map((e) => {
+              $("#additional_type > tbody:last-child").append(
+                "<tr class='additional_type'><td>" +
+                  e.discount_name +
+                  "</td><td>" +
+                  e.discount_value +
+                  "</td><td colspan='2'><form class='add-additional'> <div class='input-group mb-3'><input value='" +
+                  rev_id +
+                  "' hidden/><input value='" +
+                  e.id +
+                  "'  hidden/><input type='number' min='1' class='inputAd form-control' aria-describedby='button-addon2' value='1' required hidden> <div class='input-group-append'> <button class='btn btn-outline-secondary' ><i class='fas fa-plus'></i></button> </div> </div></form></td></tr>"
+              );
+            });
+          },
+        });
+
+        $(".add-additional").submit(async function (e) {
+          $("#guest_additional").dataTable().fnDestroy();
+          e.preventDefault();
+          let reservation_id = e.target[0].value;
+          let discount_id = e.target[1].value;
+          let qty = e.target[2].value;
+
+          updateGuestadditional = () => {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Discount Applied",
+            });
+          };
+
+          await $.ajax({
+            url: "../php_function/confirmed/insert_guest_discount.php",
+            data: "reservation_id=" + rev_id + "&discount_id=" + discount_id,
+            type: "POST",
+            success: (response) => {
+              let guest_billing = JSON.parse(response);
+
+              //FE computation
+
+              // guest_billing.map((e) => {
+              //   global_additional = parseInt(e.additional_amount);
+              //   global_total_amount =
+              //     parseInt(e.original_capital) + global_additional;
+              //   global_total_payed = parseInt(e.payed_capital);
+              //   global_balance = global_total_amount - global_total_payed;
+              // });
+              // $("#balance").html(global_balance);
+              // $("#total_amount").html(global_total_amount);
+
+              updateGuestadditional();
+            },
+          });
+        });
       });
 
       updateSuccess = () => {

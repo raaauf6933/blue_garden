@@ -47,8 +47,6 @@
         overflow: auto !important;
       }
     </style>
-
-    
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -65,12 +63,15 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a style="color: white; cursor:pointer;" className="nav-link" id="logout">
+            <a
+              style="color: white; cursor: pointer"
+              className="nav-link"
+              id="logout"
+            >
               Sign out
             </a>
           </li>
         </ul>
-
       </nav>
       <!-- /.navbar -->
 
@@ -106,7 +107,11 @@
           <!-- Sidebar Menu -->
           <nav class="mt-2">
             <ul
-              class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent"
+              class="
+                nav nav-pills nav-sidebar
+                flex-column
+                nav-flat nav-child-indent
+              "
               data-widget="treeview"
               role="menu"
               data-accordion="false"
@@ -207,6 +212,15 @@
               </li>
               <li class="nav-item">
                 <a
+                  href="../content_settings/content_settings.html"
+                  class="nav-link"
+                >
+                  <i class="nav-icon fas fa-user-cog"></i>
+                  <p>Content Settings</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
                   href="../user_management/user_management.html"
                   class="nav-link"
                 >
@@ -264,7 +278,7 @@
                 >
                   <thead>
                     <th>Remarks</th>
-                   
+
                     <th>Guest Name</th>
                     <th>Reservation Date</th>
                     <th>Check-in Date</th>
@@ -285,14 +299,11 @@
       <!-- /.content-wrapper -->
 
       <footer class="main-footer">
-        <strong
-        >Copyright 2021
-       Blue Garden Resort.</strong
-      >
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.0.5
-      </div>
+        <strong>Copyright 2021 Blue Garden Resort.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+          <b>Version</b> 3.0.5
+        </div>
       </footer>
 
       <!-- Control Sidebar -->
@@ -331,7 +342,6 @@
         sessionStorage.removeItem("user_info");
         window.location = "../authentication/login.html";
       });
-      
 
       //get all pending bookings
       let table = $("#pending_booking").DataTable({
@@ -390,7 +400,7 @@
         if (table.data().count() > 0) {
           $("#receipts").dataTable().fnDestroy();
           $("#modal-lg").modal("show");
-        
+
           $("#booking_reference").html(
             table.row(this).data().booking_reference
           );

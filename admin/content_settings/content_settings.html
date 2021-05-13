@@ -23,7 +23,6 @@
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="../plugins/datatables-bs4/css/dataTables.bootstrap4.css"
@@ -33,9 +32,9 @@
       rel="stylesheet"
       href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
     />
-    <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
+    <link rel="stylesheet" href="../plugins/toastr/toastr.css" />
     <style>
-      #additional_table td,
+      #discount_table td,
       th {
         text-align: center;
         cursor: pointer;
@@ -57,6 +56,18 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"
               ><i class="fas fa-bars"></i
             ></a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a
+              style="color: white; cursor: pointer"
+              className="nav-link"
+              id="logout"
+            >
+              Sign out
+            </a>
           </li>
         </ul>
       </nav>
@@ -150,7 +161,6 @@ with font-awesome or any other icon font library -->
                     </a>
                   </li>
                   <div class="dropdown-divider"></div>
-
                   <li class="nav-item">
                     <a href="../bookings/checkin.html" class="nav-link">
                       <i class="fas fa-user-check nav-icon text-success"></i>
@@ -199,16 +209,16 @@ with font-awesome or any other icon font library -->
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="additional_categories.html" class="nav-link active">
+                <a
+                  href="../additional_categories/additional_categories.html"
+                  class="nav-link"
+                >
                   <i class="nav-icon fas fa-tags"></i>
                   <p>Additional/Extras</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a
-                  href="../content_settings/content_settings.html"
-                  class="nav-link"
-                >
+                <a href="./content_settings.html" class="nav-link active">
                   <i class="nav-icon fas fa-user-cog"></i>
                   <p>Content Settings</p>
                 </a>
@@ -250,7 +260,7 @@ with font-awesome or any other icon font library -->
                 <!-- small box -->
                 <div class="small-box bg-primary">
                   <div class="inner">
-                    <h4 class="mb-5">NEW ITEM</h4>
+                    <h4 class="mb-5">CREATE DISCOUNT TYPE</h4>
                   </div>
                   <div class="icon">
                     <i class="fas fa-plus"></i>
@@ -267,20 +277,20 @@ with font-awesome or any other icon font library -->
         <section class="content">
           <!-- Default box -->
           <div class="card">
-            <div class="card-header bg-indigo">
-              <h3 class="card-title">Additional/Extras</h3>
+            <div class="card-header bg-info">
+              <h3 class="card-title">Discount Type</h3>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table
                   class="
-                    table table-lg table-striped table-bordered table-hover
+                    table table-sm table-striped table-bordered table-hover
                   "
-                  id="additional_table"
+                  id="discount_table"
                 >
                   <thead>
-                    <th>Item Name</th>
-                    <th>Item Price</th>
+                    <th>Discount Name</th>
+                    <th>Discount Value</th>
                     <th>Status</th>
                   </thead>
                   <tbody></tbody>
@@ -298,10 +308,10 @@ with font-awesome or any other icon font library -->
 
       <div class="modal fade" id="add-default">
         <div class="modal-dialog">
-          <form id="new_additional_form">
+          <form id="new_discount_form">
             <div class="modal-content">
-              <div class="modal-header bg-indigo">
-                <h4 class="modal-title">New Item</h4>
+              <div class="modal-header bg-info">
+                <h4 class="modal-title">New Discount</h4>
                 <button
                   type="button"
                   class="close"
@@ -314,12 +324,24 @@ with font-awesome or any other icon font library -->
               <div class="modal-body">
                 <div class="row">
                   <div class="col-6">
-                    <label>Item Name:</label
+                    <label>Discount Name:</label
                     ><input class="form-control" required />
                   </div>
                   <div class="col-6">
-                    <label>Item Price:</label
-                    ><input class="form-control" required />
+                    <label>Discount Value:</label
+                    ><select class="form-control" required>
+                      <option selected hidden disabled>--select value--</option>
+                      <option value=".10">10%</option>
+                      <option value=".20">20%</option>
+                      <option value=".30">30%</option>
+                      <option value=".40">40%</option>
+                      <option value=".50">50%</option>
+                      <option value=".60">60%</option>
+                      <option value=".70">70%</option>
+                      <option value=".80">80%</option>
+                      <option value=".90">90%</option>
+                      <option value="1">100%</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -344,10 +366,10 @@ with font-awesome or any other icon font library -->
 
       <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
-          <form id="update_additional">
+          <form id="update_discount">
             <div class="modal-content">
               <div class="modal-header bg-info">
-                <h4 class="modal-title" id="additional_title"></h4>
+                <h4 class="modal-title">Edit Discount</h4>
                 <button
                   type="button"
                   class="close"
@@ -359,18 +381,42 @@ with font-awesome or any other icon font library -->
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <div class="col-12">
-                    <label>Item Price:</label>
-                    <input id="item_id" hidden />
-                    <input
+                  <div class="col-6">
+                    <input id="discount_id" hidden />
+                    <label>Discount Name:</label
+                    ><input
                       class="form-control"
-                      id="new_item_price"
-                      placeholder="Enter new item price"
-                      required
+                      id="discount_name_input"
+                      readonly
                     />
-                    <label>Status:</label>
-                    <select class="form-control">
-                      <option value="1">Active</option>
+                  </div>
+                  <div class="col-6">
+                    <label>Discount Value:</label> ><select
+                      class="form-control"
+                      id="discount_value_input"
+                      readOnly
+                    >
+                      <option selected hidden disabled>--select value--</option>
+                      <option value=".10">10%</option>
+                      <option value=".20">20%</option>
+                      <option value=".30">30%</option>
+                      <option value=".40">40%</option>
+                      <option value=".50">50%</option>
+                      <option value=".60">60%</option>
+                      <option value=".70">70%</option>
+                      <option value=".80">80%</option>
+                      <option value=".90">90%</option>
+                      <option value="1">100%</option>
+                    </select>
+                  </div>
+                  <div class="col-12 mt-2">
+                    <label>Status Value:</label
+                    ><select
+                      class="form-control"
+                      id="discount_status_input"
+                      required
+                    >
+                      <option value="1">Activate</option>
                       <option value="0">Disable</option>
                     </select>
                   </div>
@@ -385,7 +431,7 @@ with font-awesome or any other icon font library -->
                   Close
                 </button>
                 <button type="submit" class="btn btn-primary" id="btn-update">
-                  Save changes
+                  Save Changes
                 </button>
               </div>
             </div>
@@ -431,23 +477,35 @@ with font-awesome or any other icon font library -->
 
   <script>
     $(document).ready(function () {
-      //     if (sessionStorage.getItem("user_info") == null)
-      //       window.location = "../../authentication/login.html";
-      //  $("#user_admin").html(JSON.parse(sessionStorage.getItem("user_info")).name);
+      if (sessionStorage.getItem("user_info") == null)
+        window.location = "../authentication/login.html";
+      $("#user_admin").html(
+        JSON.parse(sessionStorage.getItem("user_info")).name
+      );
 
-      let table = $("#additional_table").DataTable({
+      $("#logout").click(() => {
+        sessionStorage.removeItem("user_info");
+        window.location = "../authentication/login.html";
+      });
+
+      let table = $("#discount_table").DataTable({
         responsive: true,
         autoWidth: false,
         ajax: {
-          url: "../php_function/additional_categories/get_additional.php",
+          url: "../php_function/content_settings/get_discount.php",
           dataSrc: "",
         },
         columns: [
           {
-            data: "additional_type",
+            data: "discount_name",
           },
+
           {
-            data: "additional_amount",
+            data: "discount_value",
+            render: function (data, type, full, meta) {
+              let discount = data;
+              return `<span>${discount}</span>`;
+            },
           },
           {
             data: "status",
@@ -463,15 +521,12 @@ with font-awesome or any other icon font library -->
         ],
       });
 
-      $("#additional_table tbody").on("click", "tr", async function () {
-        console.log(table.row(this).data());
+      $("#discount_table tbody").on("click", "tr", async function () {
         $("#modal-default").modal("show");
 
-        $("#item_id").val(table.row(this).data().additional_id);
-        $("#new_item_price").val(
-          parseInt(table.row(this).data().additional_amount)
-        );
-        $("#additional_title").html(table.row(this).data().additional_type);
+        $("#discount_id").val(table.row(this).data().id);
+        $("#discount_name_input").val(table.row(this).data().discount_name);
+        $("#discount_value_input").val(table.row(this).data().discount_value);
       });
 
       updateSuccess = () => {
@@ -485,7 +540,7 @@ with font-awesome or any other icon font library -->
 
         Toast.fire({
           type: "success",
-          title: "Item Modified!",
+          title: "Discount Modified!",
         });
       };
 
@@ -494,24 +549,18 @@ with font-awesome or any other icon font library -->
         table.ajax.reload();
       });
 
-      $("#update_additional").submit((e) => {
+      $("#update_discount").submit((e) => {
         e.preventDefault();
         $("#btn-update").attr("disabled", "disabled");
-        let item_id = e.target[1].value;
-        let item_price = e.target[2].value;
-        let status = e.target[3].value;
+        let id = e.target[1].value;
+        let status = e.target[4].value;
 
         $.ajax({
-          url: "../php_function/additional_categories/update_additional.php",
-          data:
-            "item_id=" +
-            item_id +
-            "&item_price=" +
-            item_price +
-            "&status=" +
-            status,
+          url: "../php_function/content_settings/update_discount.php",
+          data: "id=" + id + "&status=" + status,
           type: "POST",
           success: function (response) {
+            table.ajax.reload();
             updateSuccess();
           },
         });
@@ -528,26 +577,26 @@ with font-awesome or any other icon font library -->
 
         Toast.fire({
           type: "success",
-          title: "New item added!",
+          title: "New discount added!",
         });
       };
 
-      $("#add-default").on("hidden.bs.modal", function () {
-        table.ajax.reload();
-        $("#btn-save").removeAttr("disabled", "disabled");
-      });
-
-      $("#new_additional_form").submit((e) => {
+      $("#new_discount_form").submit((e) => {
         e.preventDefault();
         $("#btn-save").attr("disabled", "disabled");
-        let item_name = e.target[1].value;
-        let item_price = e.target[2].value;
+        let discount_name = e.target[1].value;
+        let discount_value = e.target[2].value;
 
         $.ajax({
-          url: "../php_function/additional_categories/insert_additional.php",
-          data: "item_name=" + item_name + "&item_price=" + item_price,
+          url: "../php_function/content_settings/insert_discount.php",
+          data:
+            "discount_name=" +
+            discount_name +
+            "&discount_value=" +
+            discount_value,
           type: "POST",
           success: function (response) {
+            table.ajax.reload();
             addSuccess();
           },
         });
