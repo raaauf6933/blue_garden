@@ -35,10 +35,16 @@ $(document).ready(function () {
   let nights = timediff / (1000 * 3600 * 24);
 
   $("#check_in").html(
-    moment(sessionStorage.getItem("walkin_checkin")).format("DD MMMM YYYY")
+    moment(sessionStorage.getItem("walkin_checkin")).format("DD MMMM YYYY") +
+      " (" +
+      moment(sessionStorage.getItem("walkin_checkin")).format("dddd") +
+      ")"
   );
   $("#check_out").html(
-    moment(sessionStorage.getItem("walkin_checkout")).format("DD MMMM YYYY")
+    moment(sessionStorage.getItem("walkin_checkout")).format("DD MMMM YYYY") +
+      " (" +
+      moment(sessionStorage.getItem("walkin_checkout")).format("dddd") +
+      ")"
   );
   $("#nights").html(nights);
 
@@ -52,18 +58,18 @@ $(document).ready(function () {
         "<td>" +
         room.roomtype_name +
         "</td>" +
-        "<td>PHP " +
-        room.new_price / room.num_rooms / nights +
-        ".00</td>" +
+        "<td> " +
+        formatter.format(room.new_price / room.num_rooms / nights) +
+        "</td>" +
         "<td>" +
         nights +
         "</td>" +
         "<td>" +
         room.num_rooms +
         "</td>" +
-        "<td>PHP " +
-        room.new_price +
-        ".00</td>" +
+        "<td> " +
+        formatter.format(room.new_price) +
+        "</td>" +
         "</tr>"
     );
   });

@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
 
     <style>
-      #pending_booking,
+      #confirmed_booking,
       #additional_type td,
       th {
         text-align: center;
@@ -471,13 +471,13 @@
                           <tr class="table-primary">
                             <th><h4>BALANCE:</h4></th>
                             <th>
-                              <h4> <b id="balance"></b></h4>
+                              <h4><b id="balance"></b></h4>
                             </th>
                           </tr>
                           <tr class="table-primary">
                             <th><h4>TOTAL AMOUNT</h4></th>
                             <th>
-                              <h4> <b id="total_amount"></b></h4>
+                              <h4><b id="total_amount"></b></h4>
                             </th>
                           </tr>
                           <tr>
@@ -683,9 +683,7 @@
               }
             },
           },
-          {
-            data: "reservation_id",
-          },
+
           {
             data: "first_name",
             render: function (data, type, full, meta) {
@@ -702,9 +700,17 @@
           },
           {
             data: "checkin_date",
+            render: function (data) {
+              let date = data;
+              return `${date} (${moment(date).format("dddd")})`;
+            },
           },
           {
             data: "checkout_date",
+            render: function (data) {
+              let date = data;
+              return `${date} (${moment(date).format("dddd")})`;
+            },
           },
           {
             data: "num_guest",

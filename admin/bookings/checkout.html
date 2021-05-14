@@ -240,13 +240,10 @@
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-              <div class="col-sm-6">
-           
-              </div>
+              <div class="col-sm-6"></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                 
                 </ol>
               </div>
             </div>
@@ -457,7 +454,7 @@
                           <tr class="table-primary">
                             <th><h4>TOTAL AMOUNT</h4></th>
                             <th>
-                              <h4> <b id="total_amount"></b></h4>
+                              <h4><b id="total_amount"></b></h4>
                             </th>
                           </tr>
                         </tbody>
@@ -567,7 +564,6 @@
         minimumFractionDigits: 2,
       });
 
-
       //get all pending bookings
       let table = $("#check_out").DataTable({
         responsive: true,
@@ -577,9 +573,6 @@
           dataSrc: "",
         },
         columns: [
-          {
-            data: "reservation_id",
-          },
           {
             data: "first_name",
             render: function (data, type, full, meta) {
@@ -596,9 +589,17 @@
           },
           {
             data: "checkin_date",
+            render: function (data) {
+              let date = data;
+              return `${date} (${moment(date).format("dddd")})`;
+            },
           },
           {
             data: "checkout_date",
+            render: function (data) {
+              let date = data;
+              return `${date} (${moment(date).format("dddd")})`;
+            },
           },
         ],
       });

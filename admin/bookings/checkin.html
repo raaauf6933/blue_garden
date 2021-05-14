@@ -760,9 +760,17 @@
           },
           {
             data: "checkin_date",
+            render: function (data) {
+              let date = data;
+              return `${date} (${moment(date).format("dddd")})`;
+            },
           },
           {
             data: "checkout_date",
+            render: function (data) {
+              let date = data;
+              return `${date} (${moment(date).format("dddd")})`;
+            },
           },
           {
             data: "num_guest",
