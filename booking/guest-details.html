@@ -245,12 +245,16 @@
                         <input class="form-control" id="" required />
                       </div>
                     </div>
-                    <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
+                    <div
+                      class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2"
+                      style="display: none"
+                    >
                       <div class="field-icon-wrap">
                         <label><b>Zip Code:</b></label>
                         <input
                           class="form-control"
                           id="zipcode"
+                          value="1001"
                           required
                           onkeypress="return restrictCharacters(this, event, digitsOnly);"
                         />
