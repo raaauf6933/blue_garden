@@ -250,7 +250,7 @@
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1>Blank Page</h1>
+             
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -846,7 +846,7 @@
           });
 
           var balance = total_amount - total_amount_payed;
-          $("#balance").html(balance);
+          $("#balance").html(balance.toFixed(2));
 
           $("#modal-lg").on("hidden.bs.modal", function () {
             $("#btn-submit").removeAttr("disabled", "disabled");
@@ -923,6 +923,7 @@
               // $("#total_amount").html(global_total_amount);
 
               updateGuestadditional();
+              location.reload();
             },
           });
         });
@@ -985,7 +986,7 @@
         var billing_id = e.target[2].value;
         var payment_amt = parseFloat(e.target[3].value);
         $("#btn-submit").attr("disabled", "disabled");
-
+        console.log(payment_amt);
         $.ajax({
           url: "../php_function/confirmed_booking/update_booking.php",
           data: "billing_id=" + billing_id + "&payed_capital=" + payment_amt,
