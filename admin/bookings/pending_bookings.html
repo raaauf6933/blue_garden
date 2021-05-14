@@ -764,6 +764,7 @@
           data: "billing_id=" + billing_id + "&payed_capital=" + payment_amt,
           type: "POST",
           success: function (response) {
+            console.log(response);
             if (response == '"1"') {
               updateSuccess(payment_amt);
             } else if (response == '"2"') {
