@@ -179,6 +179,13 @@
           JSON.parse(sessionStorage.getItem("user_info")).name
         );
 
+        const formatter = new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "PHP",
+          minimumFractionDigits: 2,
+        });
+
+
         let report_type = sessionStorage.getItem("report_type");
         let from = sessionStorage.getItem("report_from");
         let to = sessionStorage.getItem("report_to");
@@ -259,9 +266,9 @@
                     </td><td> 
                     ${sts(e.status)} 
                   </td><td> 
-                    ${e.total_payed} 
+                    ${formatter.format(e.total_payed)} 
                     </td><td>
-                    ${e.total_amount * nights + parseInt(e.additional_amount)}
+                    ${formatter.format(e.total_amount * nights + parseInt(e.additional_amount))}
                     </td></tr>`
                 );
               });
@@ -270,8 +277,8 @@
             $("#num_reservation").html(num_reservation);
             $("#num_room").html(num_room);
             $("#num_guest").html(num_guest);
-            $("#total_amount").html(total_amount);
-            $("#total_sales").html(total_sales);
+            $("#total_amount").html(formatter.format(total_amount));
+            $("#total_sales").html(formatter.format(total_sales));
           },
         });
 
