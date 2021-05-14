@@ -29,6 +29,13 @@
       href="../plugins/datatables-bs4/css/dataTables.bootstrap4.css"
     />
 
+    <link
+      rel="stylesheet"
+      href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
+    />
+
+    <link rel="stylesheet" href="../plugins/toastr/toastr.min.css" />
+
     <style>
       #pending_booking td,
       th {
@@ -463,13 +470,13 @@
                           <tr class="table-primary">
                             <th><h4>BALANCE:</h4></th>
                             <th>
-                              <h4> <b id="balance"></b></h4>
+                              <h4><b id="balance"></b></h4>
                             </th>
                           </tr>
                           <tr class="table-primary">
                             <th><h4>TOTAL AMOUNT</h4></th>
                             <th>
-                              <h4> <b id="total_amount"></b></h4>
+                              <h4><b id="total_amount"></b></h4>
                             </th>
                           </tr>
                           <tr>
@@ -703,7 +710,6 @@
     <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
 
@@ -945,7 +951,7 @@
             parseFloat(global_total_amount) - parseFloat(global_total_payed);
           console.log(parseFloat(global_total_amount));
           console.log(parseFloat(global_total_payed));
-          $("#balance").html(global_balance);
+          $("#balance").html(formatter.format(global_balance));
 
           $("#modal-lg").on("hidden.bs.modal", function () {
             $("#btn-submit").removeAttr("disabled", "disabled");
@@ -1295,6 +1301,7 @@
             "billing_id=" + global_billing_id + "&payed_capital=" + payment_amt,
           type: "POST",
           success: function (response) {
+            console.log(response);
             if (response == '"1"') {
               updateSuccess();
             } else if (response == '"2"') {

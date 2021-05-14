@@ -26,12 +26,12 @@ while ($row = mysqli_fetch_assoc($query_payment)) {
 $balance = $total_amount - $total_payed;
 
 
-if($payed_capital == (float)number_format($balance, 2)){
+if((float)number_format($payed_capital,2) == (float)number_format($balance, 2)){
     $sql = mysqli_query($conn, "INSERT INTO payment(billing_id,payed_capital,payment_date) 
 VALUES ('$billing_id','$payed_capital','$payment_date')");
     $sql_update = mysqli_query($conn, "UPDATE reservation SET status = '6' WHERE billing_id ='$billing_id'");
 echo json_encode('1');
-}elseif(floatval($payed_capital) > (float)number_format($balance, 2)){
+}elseif((float)number_format($payed_capital,2) > (float)number_format($balance, 2)){
     echo json_encode('2');
 }else{
  
