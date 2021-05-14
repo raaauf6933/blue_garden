@@ -234,6 +234,12 @@
     var Difference_In_Time = date_to.getTime() - date_from.getTime();
     var nights = Difference_In_Time / (1000 * 3600 * 24);
 
+    const formatter = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 2,
+    });
+
     let reqr_roomtype = (function () {
       var tmp = null;
       $.ajax({
@@ -283,12 +289,6 @@
           option += "<option value=" + i + ">" + i + "</option>";
         }
       }
-
-      const formatter = new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "PHP",
-        minimumFractionDigits: 2,
-      });
 
       $("#room_row").append(
         $(
