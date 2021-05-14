@@ -481,7 +481,7 @@
                               <label>Amount Paid:</label>
                               <input id="billing_id" hidden />
                               <input
-                                onkeypress="return isNumberKey(event)"
+                                pattern="^\d*(\.\d{0,2})?$"
                                 class="form-control"
                                 placeholder="Enter Amount"
                                 required
@@ -714,6 +714,19 @@
   </body>
 
   <script>
+    $(document).on("keydown", "input[pattern]", function (e) {
+      var input = $(this);
+      var oldVal = input.val();
+      var regex = new RegExp(input.attr("pattern"), "g");
+
+      setTimeout(function () {
+        var newVal = input.val();
+        if (!regex.test(newVal)) {
+          input.val(oldVal);
+        }
+      }, 0);
+    });
+
     $(document).ready(function () {
       if (sessionStorage.getItem("user_info") == null)
         window.location = "../authentication/login.html";
@@ -851,7 +864,7 @@
             success: function (response) {
               var payment_history = JSON.parse(response);
               payment_history.map((e) => {
-                global_total_payed += parseInt(e.payed_capital);
+                global_total_payed += parseFloat(e.payed_capital);
                 $("#payment_history > tbody:last-child").append(
                   "<tr class='guest_details'><td>" +
                     e.payed_capital +
@@ -917,7 +930,10 @@
             },
           });
 
-          global_balance = global_total_amount - global_total_payed;
+          global_balance =
+            parseFloat(global_total_amount) - parseFloat(global_total_payed);
+          console.log(parseFloat(global_total_amount));
+          console.log(parseFloat(global_total_payed));
           $("#balance").html(global_balance);
 
           $("#modal-lg").on("hidden.bs.modal", function () {
@@ -1191,7 +1207,7 @@
                 global_additional = parseInt(e.additional_amount);
                 global_total_amount =
                   parseInt(e.original_capital) + global_additional;
-                global_total_payed = parseInt(e.payed_capital);
+                global_total_payed = parseFloat(e.payed_capital);
                 global_balance = global_total_amount - global_total_payed;
               });
               $("#balance").html(global_balance);
@@ -1260,7 +1276,7 @@
       $("#checkin_form").submit((e) => {
         e.preventDefault();
         $("#btn-submit").attr("disabled", "disabled");
-        var payment_amt = parseInt(e.target[3].value);
+        var payment_amt = parseFloat(e.target[3].value);
 
         $.ajax({
           url: "../php_function/checkin/update_booking.php",

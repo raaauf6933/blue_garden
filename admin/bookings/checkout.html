@@ -741,10 +741,11 @@
             data: "reservation_id=" + reservation_id,
             type: "POST",
             success: (response) => {
+              console.log(response);
               var guest_billing = JSON.parse(response);
               guest_billing.map((e) => {
-                total_amount += parseInt(e.original_capital);
-                total_amount += parseInt(e.additional_amount);
+                total_amount += parseFloat(e.original_capital);
+                total_amount += parseFloat(e.additional_amount);
               });
 
               $("#total_amount").html(total_amount);

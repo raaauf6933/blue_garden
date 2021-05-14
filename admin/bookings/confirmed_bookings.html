@@ -489,7 +489,7 @@
                               <label>Amount Paid:</label>
                               <input id="billing_id" hidden />
                               <input
-                                onkeypress="return isNumberKey(event)"
+                                pattern="^\d*(\.\d{0,2})?$"
                                 class="form-control"
                                 placeholder="Enter Amount"
                                 required
@@ -635,6 +635,19 @@
   </body>
 
   <script>
+    $(document).on("keydown", "input[pattern]", function (e) {
+      var input = $(this);
+      var oldVal = input.val();
+      var regex = new RegExp(input.attr("pattern"), "g");
+
+      setTimeout(function () {
+        var newVal = input.val();
+        if (!regex.test(newVal)) {
+          input.val(oldVal);
+        }
+      }, 0);
+    });
+
     $(document).ready(function () {
       if (sessionStorage.getItem("user_info") == null)
         window.location = "../authentication/login.html";
@@ -851,7 +864,6 @@
           data: "reservation_id=" + rev_id,
           type: "POST",
           success: (response) => {
-            console.log(response);
             let additional_type = JSON.parse(response);
             additional_type.map((e) => {
               $("#additional_type > tbody:last-child").append(
@@ -891,10 +903,11 @@
           };
 
           await $.ajax({
-            url: "../php_function/confirmed/insert_guest_discount.php",
+            url: "../php_function/confirmed_booking/insert_guest_discount.php",
             data: "reservation_id=" + rev_id + "&discount_id=" + discount_id,
             type: "POST",
             success: (response) => {
+              console.log(response);
               let guest_billing = JSON.parse(response);
 
               //FE computation
@@ -912,6 +925,11 @@
               updateGuestadditional();
             },
           });
+        });
+        $("#modal-discount").on("hidden.bs.modal", function () {
+          //table.ajax.reload();
+
+          $(".additional_type").remove();
         });
       });
 
@@ -964,8 +982,8 @@
 
       $("#confirmed_form").submit((e) => {
         e.preventDefault();
-        var billing_id = e.target[1].value;
-        var payment_amt = parseInt(e.target[2].value);
+        var billing_id = e.target[2].value;
+        var payment_amt = parseFloat(e.target[3].value);
         $("#btn-submit").attr("disabled", "disabled");
 
         $.ajax({

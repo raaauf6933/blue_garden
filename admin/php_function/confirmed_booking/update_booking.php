@@ -31,8 +31,8 @@ if($payed_capital == $balance){
 VALUES ('$billing_id','$payed_capital','$payment_date')");
     $sql_update = mysqli_query($conn, "UPDATE reservation SET status = '6' WHERE billing_id ='$billing_id'");
 echo json_encode('1');
-}elseif($payed_capital > $balance){
+}elseif(floatval($payed_capital) > floatval($balance)){
     echo json_encode('2');
 }else{
-    echo json_encode('0');
+     echo json_encode('0');
 }
