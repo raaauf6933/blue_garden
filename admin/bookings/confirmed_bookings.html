@@ -249,13 +249,10 @@
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-              <div class="col-sm-6">
-             
-              </div>
+              <div class="col-sm-6"></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                
                 </ol>
               </div>
             </div>
@@ -660,6 +657,12 @@
         window.location = "../authentication/login.html";
       });
 
+      const formatter = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
+
       let table = $("#confirmed_booking").DataTable({
         responsive: true,
         autoWidth: false,
@@ -841,12 +844,12 @@
             success: (response) => {
               var billing_pending = JSON.parse(response);
               total_amount = parseFloat(billing_pending);
-              $("#total_amount").html(total_amount);
+              $("#total_amount").html(formatter.format(total_amount));
             },
           });
 
           var balance = total_amount - total_amount_payed;
-          $("#balance").html(balance.toFixed(2));
+          $("#balance").html(formatter.format(balance));
 
           $("#modal-lg").on("hidden.bs.modal", function () {
             $("#btn-submit").removeAttr("disabled", "disabled");

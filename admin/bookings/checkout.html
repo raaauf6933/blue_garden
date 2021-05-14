@@ -561,6 +561,13 @@
         window.location = "../authentication/login.html";
       });
 
+      const formatter = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
+
+
       //get all pending bookings
       let table = $("#check_out").DataTable({
         responsive: true,
@@ -748,7 +755,7 @@
                 total_amount += parseFloat(e.additional_amount);
               });
 
-              $("#total_amount").html(total_amount);
+              $("#total_amount").html(formatter.format(total_amount));
             },
           });
 

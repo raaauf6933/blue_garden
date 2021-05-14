@@ -528,6 +528,12 @@
         success: function (response) {},
       });
 
+      const formatter = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
+
       //get all pending bookings
       let table = $("#pending_booking").DataTable({
         responsive: true,
@@ -679,8 +685,8 @@
               total_amount = parseInt(billing_pending);
               downpayment = total_amount / 2;
 
-              $("#downpayment").html(downpayment);
-              $("#total_amount").html(total_amount);
+              $("#downpayment").html(formatter.format(downpayment));
+              $("#total_amount").html(formatter.format(total_amount));
             },
           });
 

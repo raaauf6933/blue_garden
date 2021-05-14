@@ -245,7 +245,6 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  
                 </ol>
               </div>
             </div>
@@ -738,6 +737,12 @@
         window.location = "../authentication/login.html";
       });
 
+      const formatter = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
+
       let table = $("#checkin_table").DataTable({
         responsive: true,
         autoWidth: false,
@@ -924,7 +929,7 @@
             success: (response) => {
               var billing_pending = JSON.parse(response);
               global_total_amount += parseFloat(billing_pending);
-              $("#total_amount").html(global_total_amount);
+              $("#total_amount").html(formatter.format(global_total_amount));
             },
           });
 
@@ -1208,7 +1213,7 @@
                 global_total_payed = parseFloat(e.payed_capital);
                 global_balance = global_total_amount - global_total_payed;
               });
-              $("#balance").html(global_balance);
+              $("#balance").html(formatter.format(global_balance));
               $("#total_amount").html(global_total_amount);
 
               $(".inputAd").val("");
