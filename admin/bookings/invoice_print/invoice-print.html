@@ -134,6 +134,12 @@
 
         let nights_;
 
+        const formatter = new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "PHP",
+          minimumFractionDigits: 2,
+        });
+
         await $.ajax({
           url: "../../php_function/invoice_print/get_guest_information.php",
           data: "reservation_id=" + reservation_id,
@@ -182,7 +188,7 @@
                   "</td><td>" +
                   e.num_room +
                   "</td><td>" +
-                  e.room_total * nights_ +
+                  formatter.format(e.room_total * nights_) +
                   ".00</td></tr>"
               );
             });
@@ -212,13 +218,14 @@
             });
           },
         });
+
         let subtotal = room_billing * nights_ + additional_billing;
         let vatable = subtotal / 1.12;
         let vat = subtotal * 0.12;
 
-        $("#vatable").html("PHP " + vatable.toFixed(2));
-        $("#vat").html("PHP " + vat.toFixed(2));
-        $("#sub_total").html("PHP " + subtotal.toFixed(2));
+        $("#vatable").html(formatter.format(vatable));
+        $("#vat").html(formatter.format(vat));
+        $("#sub_total").html(formatter.format(subtotal));
 
         setTimeout(() => {
           window.addEventListener("load", window.print());

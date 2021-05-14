@@ -2,6 +2,12 @@ $(document).ready(function () {
   if (sessionStorage.getItem("user_info") == null)
     window.location = "../../authentication/login.html";
 
+  const formatter = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "PHP",
+    minimumFractionDigits: 2,
+  });
+
   $("#user_admin").html(JSON.parse(sessionStorage.getItem("user_info")).name);
 
   if (sessionStorage.getItem("walkin_guest_details") == null)
@@ -68,11 +74,11 @@ $(document).ready(function () {
 
   let downpayment = total_amount / 2;
 
-  $("#vatable").html("PHP " + vatable_sales.toFixed(2));
-  $("#vat").html("PHP " + VAT.toFixed(2));
-  $("#sub_total").html("PHP " + total_amount.toFixed(2));
-  $("#downpayment").html("PHP " + downpayment.toFixed(2));
-  $("#total_amount").html("PHP " + total_amount.toFixed(2));
+  $("#vatable").html(formatter.format(vatable_sales));
+  $("#vat").html(formatter.format(VAT));
+  $("#sub_total").html(formatter.format(total_amount));
+  $("#downpayment").html(formatter.format(downpayment));
+  $("#total_amount").html(formatter.format(total_amount));
 
   let selected_rooms = [];
 
