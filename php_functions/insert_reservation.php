@@ -145,7 +145,7 @@ $email_body = '<html>
         <td style="width:50%;padding:20px;vertical-align:top" colspan="2">
           <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Address</span> ' . $address . ', ' . $city . ', ' . $zipcode . '</p>
           <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Number of gusets</span> ' . $num_guest . '</p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Duration of your vacation</span><div style="font-size: 17px; color:mediumblue; font-weight: bold;"><small>' . $check_in . '</small>  to <small>' . $check_out . '.</small></p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Duration of your vacation</span><div style="font-size: 17px; color:mediumblue; font-weight: bold;"><small>' . date_format(date_create($check_in),"Y-m-d (l)") . '</small>  to <small>' . date_format(date_create($check_out),"Y-m-d (l)") . '.</small></p>
         </td>
       </tr>
       <tr  >

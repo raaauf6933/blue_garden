@@ -203,7 +203,12 @@
                     <div class="col-md-2 mb-2 mb-lg-0 col-lg-2 mt-2">
                       <div class="field-icon-wrap">
                         <label><b>No. of Guest:</b></label>
-                        <select class="form-control" id="num_guest" required>
+                        <select
+                          class="form-control"
+                          id="num_guest"
+                          name="num_guest"
+                          required
+                        >
                           <option value="" disabled selected hidden>
                             -select-
                           </option>
@@ -236,13 +241,22 @@
                             >Address line (street, subdivision, Barangay):</b
                           ></label
                         >
-                        <input class="form-control" id="address" />
+                        <input
+                          class="form-control"
+                          id="address"
+                          name="address"
+                        />
                       </div>
                     </div>
                     <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
                       <div class="field-icon-wrap">
                         <label><b>City:</b></label>
-                        <input class="form-control" id="" required />
+                        <input
+                          class="form-control"
+                          name="city"
+                          id=""
+                          required
+                        />
                       </div>
                     </div>
                     <div
@@ -402,6 +416,17 @@
       sessionStorage.getItem("room_details") == null
     )
       window.location = "../index.html";
+
+    if (sessionStorage.getItem("guest_details") !== null) {
+      let guest_details = JSON.parse(sessionStorage.getItem("guest_details"));
+      $('[name="firstname"]').val(guest_details.first_name);
+      $('[name="lastname"]').val(guest_details.last_name);
+      $('[name="email"]').val(guest_details.email);
+      $('[name="contact"]').val(guest_details.contact_num);
+      $('[name="address"]').val(guest_details.address);
+      $('[name="city"]').val(guest_details.city);
+      $('[name="num_guest"]').val(guest_details.num_guest);
+    }
 
     let room_details = JSON.parse(sessionStorage.getItem("room_details"));
 

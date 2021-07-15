@@ -168,27 +168,52 @@
                       <thead>
                         <tr>
                           <th
-                            class="border-0 text-uppercase small font-weight-bold"
+                            class="
+                              border-0
+                              text-uppercase
+                              small
+                              font-weight-bold
+                            "
                           >
                             Availed Room
                           </th>
                           <th
-                            class="border-0 text-uppercase small font-weight-bold"
+                            class="
+                              border-0
+                              text-uppercase
+                              small
+                              font-weight-bold
+                            "
                           >
                             Rate
                           </th>
                           <th
-                            class="border-0 text-uppercase small font-weight-bold"
+                            class="
+                              border-0
+                              text-uppercase
+                              small
+                              font-weight-bold
+                            "
                           >
                             Night(s)
                           </th>
                           <th
-                            class="border-0 text-uppercase small font-weight-bold"
+                            class="
+                              border-0
+                              text-uppercase
+                              small
+                              font-weight-bold
+                            "
                           >
                             Quantity
                           </th>
                           <th
-                            class="border-0 text-uppercase small font-weight-bold"
+                            class="
+                              border-0
+                              text-uppercase
+                              small
+                              font-weight-bold
+                            "
                           >
                             Amount
                           </th>
@@ -375,10 +400,14 @@
       let nights = timediff / (1000 * 3600 * 24);
 
       $("#check_in").html(
-        moment(sessionStorage.getItem("checkin_date")).format("DD MMMM YYYY")
+        moment(sessionStorage.getItem("checkin_date")).format(
+          "DD MMMM YYYY dddd"
+        )
       );
       $("#check_out").html(
-        moment(sessionStorage.getItem("checkout_date")).format("DD MMMM YYYY")
+        moment(sessionStorage.getItem("checkout_date")).format(
+          "DD MMMM YYYY dddd"
+        )
       );
       $("#nights").html(nights);
 
@@ -480,8 +509,7 @@
                   Swal.fire({
                     icon: "success",
                     title: "Thank You for Booking With Us!",
-                    text:
-                      "You have until today 11:59PM to pay your downpayment, Please check your e-mail",
+                    text: "You have until today 11:59PM to pay your downpayment, Please check your e-mail",
                     footer:
                       "<span class='text-info'>You will direct to home page in 5 seconds...</span>",
                     timer: 5000,
@@ -494,8 +522,7 @@
                   Swal.fire({
                     icon: "success",
                     title: "Thank You for Booking With Us!",
-                    text:
-                      "You have 24 Hours to pay your downpayment, Please check your e-mail",
+                    text: "You have 24 Hours to pay your downpayment, Please check your e-mail",
                     footer:
                       "<span class='text-info'>You will direct to home page in 5 seconds...</span>",
                     timer: 5000,

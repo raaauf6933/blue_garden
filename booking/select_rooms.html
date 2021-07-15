@@ -475,5 +475,52 @@
         }
       });
     });
+
+    if (sessionStorage.getItem("room_details") !== null) {
+      let room_details = sessionStorage.getItem("room_details");
+      JSON.parse(room_details).map((e) => {
+        selected_array.push({
+          roomtype_id: e.roomtype_id,
+          roomtype_name: e.roomtype_name,
+          num_rooms: e.num_rooms,
+          new_capacity: e.new_capacity,
+          new_price: e.new_price,
+          room_ids: e.selected_rooms,
+        });
+
+        $("#room" + e.roomtype_id).attr("disabled", "disabled");
+        $(".room" + e.roomtype_id).attr("disabled", "disabled");
+
+        $("#invoice > tbody:last-child").append(
+          "<tr id='" +
+            e.roomtype_id +
+            "'>" +
+            "<th>" +
+            e.roomtype_name +
+            "</th>" +
+            "<td>" +
+            e.num_rooms +
+            "</td>" +
+            "<td>PHP " +
+            formatter.format(e.new_price) +
+            "</td>" +
+            "<td>" +
+            '<button class="btn' +
+            e.roomtype_id +
+            ' btn btn-default">' +
+            '<i class="fa fa-times"></i>' +
+            "</button>" +
+            "</td>" +
+            "</tr>"
+        );
+        $(".btn" + e.roomtype_id).attr(
+          "onclick",
+          "deleteselected(" + e.roomtype_id + ")"
+        );
+
+        sub_total += e.new_price;
+        $("#sub_total").html(formatter.format(sub_total));
+      });
+    }
   </script>
 </html>
