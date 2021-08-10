@@ -12,7 +12,16 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css" />
     <!-- Ionicons -->
-    <link rel="stylesheet" href="./datepicker_files/jquery.datepicker2.css" />
+    <!-- <link rel="stylesheet" href="./datepicker_files/jquery.datepicker2.css" /> -->
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link
+      id="bsdp-css"
+      href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
@@ -292,32 +301,43 @@
                               Check-out Reservation
                             </option>
                           </select>
+                          <label>Category:</label>
+                          <select id="dateType" class="form-control">
+                            <option value="" disabled selected hidden>
+                              Select Period
+                            </option>
+                            <option value="daily">Daily</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                          </select>
                         </div>
-                        <div class="col-6">
-                          <label>From:</label>
-                          <input
-                            name="date"
-                            id="from"
-                            data-select="datepicker"
-                            style="font-size: 25px; font-weight: 500"
-                            class="form-control pl-2 text-center"
-                            placeholder="Enter Date"
-                            readonly
-                            required
-                          />
-                        </div>
-                        <div class="col-6">
-                          <label>To:</label>
-                          <input
-                            name="date"
-                            id="to"
-                            data-select="datepicker"
-                            style="font-size: 25px; font-weight: 500"
-                            class="form-control pl-2 text-center"
-                            readonly
-                            placeholder="Enter Date"
-                            required
-                          />
+                        <div id="dateType" class="col-12 d-flex">
+                          <div class="col-6">
+                            <label>From:</label>
+                            <input
+                              name="date"
+                              id="from"
+                              data-select="datepicker"
+                              style="font-size: 25px; font-weight: 500"
+                              class="form-control pl-2 text-center"
+                              placeholder="Enter Date"
+                              readonly
+                              required
+                            />
+                          </div>
+                          <div class="col-6">
+                            <label>To:</label>
+                            <input
+                              name="date"
+                              id="to"
+                              data-select="datepicker"
+                              style="font-size: 25px; font-weight: 500"
+                              class="form-control pl-2 text-center"
+                              readonly
+                              placeholder="Enter Date"
+                              required
+                            />
+                          </div>
                         </div>
                         <div class="col-12 mt-3">
                           <div class="d-flex justify-content-center">
@@ -348,7 +368,6 @@
           <b>Version</b> 3.0.5
         </div>
       </footer>
-
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
@@ -373,11 +392,17 @@
 
     <!--<script src="../plugins/daterangepicker/daterangepicker.js"></script> -->
 
-    <script src="./datepicker_files/jquery.datepicker2.js"></script>
+    <!-- <script src="./datepicker_files/jquery.datepicker2.js"></script> -->\
+
+    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
 
     <script src="../plugins/chart.js/Chart.min.js"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
   </body>
 
   <script>
@@ -417,6 +442,50 @@
         });
       };
 
+      $("#dateType").change(() => {
+        switch ($("#dateType").val()) {
+          case "daily":
+            $("#from").datepicker("destroy");
+            $("#to").datepicker("destroy");
+            $("#from").datepicker({
+              minViewMode: 0,
+            });
+            $("#to").datepicker({
+              minViewMode: 0,
+            });
+            break;
+          case "monthly":
+            $("#from").datepicker("destroy");
+            $("#to").datepicker("destroy");
+            $("#from").datepicker({
+              minViewMode: 1,
+            });
+            $("#to").datepicker({
+              minViewMode: 1,
+            });
+            break;
+          case "yearly":
+            $("#from").datepicker("destroy");
+            $("#to").datepicker("destroy");
+            $("#from").datepicker({
+              minViewMode: 2,
+            });
+            $("#to").datepicker({
+              minViewMode: 2,
+            });
+            break;
+          default:
+            $("#from").datepicker("destroy");
+            $("#to").datepicker("destroy");
+            $("#from").datepicker({
+              minViewMode: 0,
+            });
+            $("#to").datepicker({
+              minViewMode: 0,
+            });
+            break;
+        }
+      });
       $("#date_sub").submit((e) => {
         e.preventDefault();
 
@@ -443,85 +512,6 @@
 
           window.open("./report-print/report-print.html", "_blank");
         }
-      });
-
-      var ticksStyle = {
-        fontColor: "#495057",
-        fontStyle: "bold",
-      };
-
-      var mode = "index";
-      var intersect = true;
-
-      var $salesChart = $("#sales-chart");
-      var salesChart = new Chart($salesChart, {
-        type: "bar",
-        data: {
-          labels: ["JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
-          datasets: [
-            {
-              backgroundColor: "#007bff",
-              borderColor: "#007bff",
-              data: [4000, 2000, 3000, 2500, 2700, 2500, 40000],
-            },
-            {
-              backgroundColor: "#ced4da",
-              borderColor: "#ced4da",
-              data: [700, 1700, 2700, 2000, 1800, 1500, 2000],
-            },
-          ],
-        },
-        options: {
-          maintainAspectRatio: false,
-          tooltips: {
-            mode: mode,
-            intersect: intersect,
-          },
-          hover: {
-            mode: mode,
-            intersect: intersect,
-          },
-          legend: {
-            display: false,
-          },
-          scales: {
-            yAxes: [
-              {
-                // display: false,
-                gridLines: {
-                  display: true,
-                  lineWidth: "4px",
-                  color: "rgba(0, 0, 0, .2)",
-                  zeroLineColor: "transparent",
-                },
-                ticks: $.extend(
-                  {
-                    beginAtZero: true,
-
-                    // Include a dollar sign in the ticks
-                    callback: function (value, index, values) {
-                      if (value >= 1000) {
-                        // value /= 1000
-                        value += "";
-                      }
-                      return "₱ " + value;
-                    },
-                  },
-                  ticksStyle
-                ),
-              },
-            ],
-            xAxes: [
-              {
-                display: true,
-                gridLines: {
-                  display: false,
-                },
-                ticks: ticksStyle,
-              },
-            ],
-          },
-        },
       });
     });
   </script>
