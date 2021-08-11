@@ -107,8 +107,16 @@ foreach ($room_array as $room_array) {
   
 }
 
-$vatable = $total_amount / 1.12;
-$vat = ($total_amount * 0.12);
+$sql_vat = mysqli_query($conn, "SELECT * FROM vat_settings");
+
+$vat_rate = 0;
+while ($row = mysqli_fetch_assoc($sql_vat)) {
+  $vat_rate = $row['value'];
+}
+
+
+$vatable = $total_amount / $vat_rate;
+$vat = ($total_amount - $vatable);
 $downpayment = $total_amount / 2;
 
 $email_body = '<html>
