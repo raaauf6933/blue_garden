@@ -302,6 +302,63 @@ with font-awesome or any other icon font library -->
           </div>
           <!-- /.card -->
         </section>
+
+        <!-- <section class="content-header">
+          <div class="container-fluid">
+            <div class="row">
+              <div
+                class="col-lg-3 col-6"
+                style="cursor: pointer"
+                data-toggle="modal"
+                data-target="#add-default"
+              >
+           
+                <div class="small-box bg-primary">
+                  <div class="inner">
+                    <h4 class="mb-5">CREATE DISCOUNT TYPE</h4>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-plus"></i>
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        
+        </section> -->
+
+        <!-- Main content -->
+        <section class="content">
+          <!-- Default box -->
+          <div class="card">
+            <div class="card-header bg-info">
+              <h3 class="card-title">Others</h3>
+            </div>
+            <div class="card-body">
+              <form id="other_settings">
+                <div class="row">
+                  <div class="col-4">
+                    <label for="">VAT Rate:</label>
+                    <input
+                      pattern="^\d*(\.\d{0,2})?$"
+                      class="form-control"
+                      placeholder="Vat Rate"
+                      id="vat_rate"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="mt-2 d-flex justify-content-end">
+                  <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- /.card-footer-->
+          </div>
+          <!-- /.card -->
+        </section>
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
@@ -473,9 +530,23 @@ with font-awesome or any other icon font library -->
 
     <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
     <script src="../plugins/toastr/toastr.min.js"></script>
+    <script src="../../js/scriptvalidation.js"></script>
   </body>
 
   <script>
+    $(document).on("keydown", "input[pattern]", function (e) {
+      var input = $(this);
+      var oldVal = input.val();
+      var regex = new RegExp(input.attr("pattern"), "g");
+
+      setTimeout(function () {
+        var newVal = input.val();
+        if (!regex.test(newVal)) {
+          input.val(oldVal);
+        }
+      }, 0);
+    });
+
     $(document).ready(function () {
       if (sessionStorage.getItem("user_info") == null)
         window.location = "../authentication/login.html";
@@ -527,6 +598,15 @@ with font-awesome or any other icon font library -->
         $("#discount_id").val(table.row(this).data().id);
         $("#discount_name_input").val(table.row(this).data().discount_name);
         $("#discount_value_input").val(table.row(this).data().discount_value);
+      });
+
+      $.ajax({
+        url: "../php_function/content_settings/get_vatrate.php",
+        type: "GET",
+        success: function (response) {
+          let res = JSON.parse(response);
+          $("#vat_rate").val(res[0].value);
+        },
       });
 
       updateSuccess = () => {
@@ -581,6 +661,21 @@ with font-awesome or any other icon font library -->
         });
       };
 
+      saveSuccess = () => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+        });
+
+        Toast.fire({
+          type: "success",
+          icon: "success",
+          title: "Saved Changes!",
+        });
+      };
+
       $("#new_discount_form").submit((e) => {
         e.preventDefault();
         $("#btn-save").attr("disabled", "disabled");
@@ -598,6 +693,25 @@ with font-awesome or any other icon font library -->
           success: function (response) {
             table.ajax.reload();
             addSuccess();
+          },
+        });
+      });
+
+      $("#other_settings").submit((e) => {
+        e.preventDefault();
+        let vatValue = e.target[0].value;
+
+        $.ajax({
+          url: "../php_function/content_settings/update_settings.php",
+          data: "vat_value=" + vatValue,
+          type: "POST",
+          success: function (response) {
+            if (response) {
+              saveSuccess();
+              setTimeout(() => {
+                location.reload();
+              }, 1500);
+            }
           },
         });
       });

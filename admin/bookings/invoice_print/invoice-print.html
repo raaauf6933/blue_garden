@@ -219,13 +219,21 @@
           },
         });
 
-        let subtotal = room_billing * nights_ + additional_billing;
-        let vatable = subtotal / 1.12;
-        let vat = subtotal * 0.12;
+        let vatRate = 0;
+        $.ajax({
+          url: "../../php_function/content_settings/get_vatrate.php",
+          type: "GET",
+        }).then((e) => {
+          let res = JSON.parse(e);
+          vatRate = parseFloat(res[0].value);
+          let subtotal = room_billing * nights_ + additional_billing;
+          let vatable = subtotal / vatRate;
+          let vat = subtotal - vatable;
 
-        $("#vatable").html(formatter.format(vatable));
-        $("#vat").html(formatter.format(vat));
-        $("#sub_total").html(formatter.format(subtotal));
+          $("#vatable").html(formatter.format(vatable));
+          $("#vat").html(formatter.format(vat));
+          $("#sub_total").html(formatter.format(subtotal));
+        });
 
         setTimeout(() => {
           window.addEventListener("load", window.print());

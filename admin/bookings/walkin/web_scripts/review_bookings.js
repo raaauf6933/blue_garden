@@ -74,17 +74,25 @@ $(document).ready(function () {
     );
   });
 
-  let total_amount = sub_total;
-  let vatable_sales = total_amount / 1.12;
-  let VAT = total_amount * 0.12;
+  let vatRate = 0;
+  $.ajax({
+    url: "../../php_function/content_settings/get_vatrate.php",
+    type: "GET",
+  }).then((e) => {
+    let res = JSON.parse(e);
+    vatRate = parseFloat(res[0].value);
+    let total_amount = sub_total;
+    let vatable_sales = total_amount / vatRate;
+    let VAT = total_amount - vatable_sales;
 
-  let downpayment = total_amount / 2;
+    let downpayment = total_amount / 2;
 
-  $("#vatable").html(formatter.format(vatable_sales));
-  $("#vat").html(formatter.format(VAT));
-  $("#sub_total").html(formatter.format(total_amount));
-  $("#downpayment").html(formatter.format(downpayment));
-  $("#total_amount").html(formatter.format(total_amount));
+    $("#vatable").html(formatter.format(vatable_sales));
+    $("#vat").html(formatter.format(VAT));
+    $("#sub_total").html(formatter.format(total_amount));
+    $("#downpayment").html(formatter.format(downpayment));
+    $("#total_amount").html(formatter.format(total_amount));
+  });
 
   let selected_rooms = [];
 
