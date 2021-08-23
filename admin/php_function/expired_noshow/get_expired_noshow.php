@@ -5,7 +5,7 @@ $sql = mysqli_query($conn, "SELECT r.status,g.guest_id,g.first_name,g.last_name,
 FROM reservation r 
 LEFT JOIN guest g on g.guest_id = r.guest_id 
 LEFT JOIN receipt_photo rp on r.reservation_id = rp.reservation_id
-WHERE r.status in (3,5)
+WHERE r.status in (3,5,8)
 group by g.guest_id,g.first_name,g.last_name,g.contact_number,g.email,g.addressline_1,g.city,g.zipcode,r.reservation_id,r.billing_id,r.booking_reference,r.num_guest,r.reservation_date,r.checkin_date,r.checkout_date,r.expiration_date");
 
 $data = array();
