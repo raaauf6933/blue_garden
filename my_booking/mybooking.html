@@ -141,6 +141,14 @@
                       >
                         <i class="fa fa-undo"></i> RESCHED BOOKING
                       </a>
+                      <a
+                        id="cancelBooking_btn"
+                        class="btn btn-danger ml-1 text-light"
+                        data-toggle="modal"
+                        data-target="#cancelModal"
+                      >
+                        <i class="fa fa-undo"></i> CANCEL BOOKING
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -292,7 +300,9 @@
         <div class="modal-content">
           <form id="date_submit" action="#" class="justify-content-center">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">
+                Reschedule Booking
+              </h5>
               <button
                 type="button"
                 class="close"
@@ -338,6 +348,62 @@
               </button>
               <button type="submit" class="btn btn-primary">
                 Update Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="cancelModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form id="date_submit" action="#" class="justify-content-center">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Cancel Booking</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h5
+                class="mb-3"
+                style="font-family: Arial, Helvetica, sans-serif"
+              >
+                Are you sure you want to cancel your booking ?
+              </h5>
+
+              <div class="text-primary">
+                Cancellation Policy:
+                <br />
+                <div id="readMore_btn">
+                  <span style="cursor: pointer"><u>read more</u> </span>....
+                </div>
+                <div id="readMore">Cancellation policy here</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button id="cancel_submit" class="btn btn-primary">
+                Confirm
               </button>
             </div>
           </form>
@@ -409,10 +475,12 @@
     $(document).ready(() => {
       let billing_id = sessionStorage.getItem("my_booking_billingid");
       let guest_id = sessionStorage.getItem("my_booking_guestid");
-      if (guest_id == null || guest_id == undefined)
+      if (guest_id == null || guest_id == undefined )
         window.location = "../my_booking.html";
 
       let reservation_id = 0;
+
+      $("#readMore").hide();
 
       $.ajax({
         url: "../php_functions/my_booking/get_rooms.php",
@@ -497,7 +565,9 @@
       booking_status = (value) => {
         if (value == 0 || value == 1) {
           return "<span class='text-danger'>Pending</span>";
-        } else {
+        } else if (value == 8){
+          return "<span class='text-danger'>Cancelled</span>";
+        }else {
           return "<span class='text-success'>Confirmed</span>";
         }
       };
@@ -520,6 +590,7 @@
 
             if (e.status !== "0") {
               $("#changebooking_btn").hide();
+              $("#cancelBooking_btn").hide();
             }
           });
         },
@@ -736,6 +807,26 @@
             text: "Please select a valid date",
           });
         }
+      });
+
+      $("#cancel_submit").click((e) => {
+        $.ajax({
+            url: "./php_function/cancel_booking.php",
+            data:
+              "reservation_id=" +
+              reservation_id,
+            type: "POST",
+            success: function (response) {
+              if (response === "1") {
+                location.reload();
+              }
+            },
+          });
+      });
+
+      $("#readMore_btn").click(() => {
+        $("#readMore_btn").hide();
+        $("#readMore").show();
       });
     });
   </script>
