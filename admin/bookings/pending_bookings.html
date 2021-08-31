@@ -369,7 +369,7 @@
                             <tr>
                               <th>Room Type</th>
                               <th>Room no.</th>
-                              <th>Room Price</th>
+                              <th style="text-align: right">Room Price</th>
                             </tr>
                           </thead>
                           <tbody class="text-center"></tbody>
@@ -388,13 +388,13 @@
                         <tbody>
                           <tr class="table-primary">
                             <th><h4>DOWNPAYMENT REQUIRED:</h4></th>
-                            <th>
+                            <th style="text-align: right">
                               <h4><b id="downpayment"></b></h4>
                             </th>
                           </tr>
                           <tr class="table-primary">
                             <th><h4>TOTAL AMOUNT</h4></th>
-                            <th>
+                            <th style="text-align: right">
                               <h4><b id="total_amount"></b></h4>
                             </th>
                           </tr>
@@ -674,8 +674,8 @@
                     e.roomtype_name +
                     "</td><td>" +
                     e.room_num +
-                    "</td><td>" +
-                    e.room_price +
+                    "</td><td style='text-align:right'>" +
+                    formatter.format(e.room_price) +
                     "</td></tr>"
                 );
               });
@@ -713,7 +713,7 @@
         );
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -742,7 +742,7 @@
         $("#btn-submit").removeAttr("disabled", "disabled");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -757,7 +757,7 @@
         $("#btn-submit").removeAttr("disabled", "disabled");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });

@@ -469,13 +469,13 @@
                         <tbody>
                           <tr class="table-primary">
                             <th><h4>BALANCE:</h4></th>
-                            <th>
+                            <th style="text-align: right">
                               <h4><b id="balance"></b></h4>
                             </th>
                           </tr>
                           <tr class="table-primary">
                             <th><h4>TOTAL AMOUNT</h4></th>
-                            <th>
+                            <th style="text-align: right">
                               <h4><b id="total_amount"></b></h4>
                             </th>
                           </tr>
@@ -884,7 +884,7 @@
                 global_total_payed += parseFloat(e.payed_capital);
                 $("#payment_history > tbody:last-child").append(
                   "<tr class='guest_details'><td>" +
-                    e.payed_capital +
+                    formatter.format(e.payed_capital) +
                     "</td><td>" +
                     moment(e.payment_date).format("YYYY-MM-DD hh:mm a") +
                     "</td></tr>"
@@ -1009,6 +1009,9 @@
             },
             {
               data: "room_price",
+              render: function (data) {
+                return formatter.format(data);
+              },
             },
             {
               data: "room_reservation_id",
@@ -1058,7 +1061,7 @@
                 "<tr class='table_rooms_row'><td>" +
                   e.roomtype_name +
                   "</td><td>" +
-                  e.roomtype_price +
+                  formatter.format(e.roomtype_price) +
                   "</td><td>" +
                   rooms.room_id +
                   "</td><td>" +
@@ -1129,7 +1132,7 @@
 
                 const Toast = Swal.mixin({
                   toast: true,
-                  position: "top-end",
+                  position: "top",
                   showConfirmButton: false,
                   timer: 3000,
                 });
@@ -1145,7 +1148,7 @@
               } else {
                 const Toast = Swal.mixin({
                   toast: true,
-                  position: "top-end",
+                  position: "top",
                   showConfirmButton: false,
                   timer: 3000,
                 });
@@ -1197,7 +1200,7 @@
           updateGuestadditional = () => {
             const Toast = Swal.mixin({
               toast: true,
-              position: "top-end",
+              position: "top",
               showConfirmButton: false,
               timer: 3000,
             });
@@ -1249,7 +1252,7 @@
         window.open("./invoice_print/invoice-print.html", "_blank");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -1264,7 +1267,7 @@
         $("#btn-submit").removeAttr("disabled", "disabled");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -1279,7 +1282,7 @@
         $("#btn-submit").removeAttr("disabled", "disabled");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });

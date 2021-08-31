@@ -94,7 +94,12 @@
       <div class="hero-slides owl-carousel">
         <!-- Single Hero Slide -->
         <div
-          class="single-hero-slide d-flex align-items-center justify-content-center"
+          class="
+            single-hero-slide
+            d-flex
+            align-items-center
+            justify-content-center
+          "
         >
           <!-- Slide Img -->
           <div
@@ -139,7 +144,12 @@
 
         <!-- Single Hero Slide -->
         <div
-          class="single-hero-slide d-flex align-items-center justify-content-center"
+          class="
+            single-hero-slide
+            d-flex
+            align-items-center
+            justify-content-center
+          "
         >
           <!-- Slide Img -->
           <div
@@ -184,7 +194,12 @@
 
         <!-- Single Hero Slide -->
         <div
-          class="single-hero-slide d-flex align-items-center justify-content-center"
+          class="
+            single-hero-slide
+            d-flex
+            align-items-center
+            justify-content-center
+          "
         >
           <!-- Slide Img -->
           <div
@@ -539,6 +554,14 @@
 
   <script>
     $(document).ready(() => {
+      if (
+        sessionStorage.getItem("checkin_date") !== ("" || null) &&
+        sessionStorage.getItem("checkout_date") !== ("" || null)
+      ) {
+        $("#check-in").val(sessionStorage.getItem("checkin_date"));
+        $("#check-out").val(sessionStorage.getItem("checkout_date"));
+      }
+
       $("#check-in")
         .datepicker({
           format: "mm/dd/yyyy",
@@ -590,7 +613,6 @@
           });
         }
       });
-      sessionStorage.clear();
     });
   </script>
 </html>
