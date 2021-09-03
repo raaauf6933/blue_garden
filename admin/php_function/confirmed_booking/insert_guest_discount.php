@@ -23,7 +23,7 @@ $billing_id = $billing_fetch['billing_id'];
 $original_capital = $billing_fetch['original_capital'];
 
 
-$discount_amount = ((floatval($original_capital) / 1.12) * floatval($discount_value));
+$discount_amount = ((floatval($original_capital)) * floatval($discount_value));
 $new_billing_amount = floatval($original_capital) - floatval($discount_amount);
 
 $sql_insert_guest_discount = mysqli_query($conn,"INSERT INTO guest_discount (reservation_id,discount_id) VALUES ('$reservation_id','$discount_id')");

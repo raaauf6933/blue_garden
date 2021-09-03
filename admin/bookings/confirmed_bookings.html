@@ -830,6 +830,9 @@
             type: "POST",
             success: function (response) {
               var discount_applied = JSON.parse(response);
+              if (discount_applied.length !== 0) {
+                $("#btn-discount").hide();
+              }
               discount_applied.map((e) => {
                 $("#discount_applied > tbody:last-child").append(
                   "<tr class='guest_details'><td>" +
@@ -900,7 +903,7 @@
           updateGuestadditional = () => {
             const Toast = Swal.mixin({
               toast: true,
-              position: "top-end",
+              position: "top",
               showConfirmButton: false,
               timer: 3000,
             });
@@ -949,7 +952,7 @@
         window.open("./invoice_print/invoice-print.html", "_blank");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });
@@ -979,7 +982,7 @@
         $("#btn-submit").removeAttr("disabled", "disabled");
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
+          position: "top",
           showConfirmButton: false,
           timer: 3000,
         });

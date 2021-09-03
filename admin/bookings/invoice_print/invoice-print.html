@@ -93,25 +93,41 @@
                   <th>Rate</th>
                   <th>Night(s)</th>
                   <th>Qty</th>
-                  <th>Total Amount</th>
+                  <th style="text-align: right;">Total Amount</th>
                 </tr>
               </thead>
               <tbody></tbody>
               <tfoot>
                 <tr>
                   <th colspan="3"></th>
-                  <th><h5>Vatable Sales</h5></th>
-                  <td><h5 id="vatable"></h5></td>
+                  <th style="text-align: right;"><h5>Sub Total</h5></th>
+                  <th style="text-align: right;"><h5 id="sub_total"></h5></th>
                 </tr>
                 <tr>
                   <th colspan="3"></th>
-                  <th><h5>VAT (12%)</h5></th>
-                  <th><h5 id="vat"></h5></th>
+                  <th style="text-align: right;"><h5>Vatable Sales</h5></th>
+                  <td style="text-align: right;"><h5 id="vatable"></h5></td>
                 </tr>
                 <tr>
                   <th colspan="3"></th>
-                  <th><h5>Sub Total</h5></th>
-                  <th><h5 id="sub_total"></h5></th>
+                  <th style="text-align: right;"><h5>VAT (12%)</h5></th>
+                  <th style="text-align: right;"><h5 id="vat"></h5></th>
+                </tr>
+                <tr id="discount_cell">
+                  <th colspan="3"></th>
+                  <th style="text-align: right;">
+                    <h5>Discount (<span id="discount_value"></span>%)</h5>
+                  </th>
+                  <th style="text-align: right;"><h5 id="discount_amount"></h5></th>
+                </tr>
+                <tr>
+                  <th colspan="3" ></th>
+                  <th style="text-align: right;">
+                    <b style="font-size: 2em">Total Amount</b>
+                  </th>
+                  <th style="text-align: right;">
+                    <b  id="total_amount" style="font-size: 2em"></b></b>
+                  </th>
                 </tr>
               </tfoot>
             </table>
@@ -187,7 +203,7 @@
                   nights_ +
                   "</td><td>" +
                   e.num_room +
-                  "</td><td>" +
+                  "</td><td style='text-align: right;'>" +
                   formatter.format(e.room_total * nights_) +
                   "</td></tr>"
               );
@@ -211,29 +227,70 @@
                   e.rate +
                   "</td><td></td><td>" +
                   e.num_additional +
-                  "</td><td>" +
+                  "</td><td style='text-align: right;'>" +
                   formatter.format(e.additional_amount) +
                   "</td></tr>"
               );
             });
           },
         });
-
         let vatRate = 0;
-        $.ajax({
-          url: "../../php_function/content_settings/get_vatrate.php",
-          type: "GET",
-        }).then((e) => {
-          let res = JSON.parse(e);
-          vatRate = parseFloat(res[0].value);
-          let subtotal = room_billing * nights_ + additional_billing;
-          let vatable = subtotal / vatRate;
-          let vat = subtotal - vatable;
 
-          $("#vatable").html(formatter.format(vatable));
-          $("#vat").html(formatter.format(vat));
-          $("#sub_total").html(formatter.format(subtotal));
-        });
+        $.ajax({
+          url: "../../php_function/invoice_print/get_guest_discount.php",
+          data: "reservation_id=" + reservation_id,
+          type: "POST",
+        })
+          .then((e) => {
+            let data = JSON.parse(e)[0];
+
+            if (data.id === null) {
+
+              $("#discount_cell").hide();
+              $.ajax({
+                url: "../../php_function/content_settings/get_vatrate.php",
+                type: "GET",
+              }).then((e) => {
+                let res = JSON.parse(e);
+                vatRate = parseFloat(res[0].value);
+                let subtotal = room_billing * nights_ + additional_billing;
+                let vatable = subtotal / vatRate;
+                let vat = subtotal - vatable;
+
+                $("#vatable").html(formatter.format(vatable));
+                $("#vat").html(formatter.format(vat));
+                $("#sub_total").html(formatter.format(subtotal));
+                $("#total_amount").html(formatter.format(subtotal));
+              });
+            } else {
+              let discount_percent = data.discount_value.substring(1);
+              let discount_value = parseFloat(data.discount_value);
+              $("#discount_value").html(discount_percent);
+
+              $.ajax({
+                url: "../../php_function/content_settings/get_vatrate.php",
+                type: "GET",
+              }).then((e) => {
+                let res = JSON.parse(e);
+                vatRate = parseFloat(res[0].value);
+                let subtotal = room_billing * nights_ 
+                let vatable = subtotal / vatRate;
+                let vat = subtotal - vatable;
+
+                $("#vatable").html(formatter.format(vatable));
+                $("#vat").html(formatter.format(vat));
+                $("#sub_total").html(formatter.format(subtotal));
+
+                let discount_amount = subtotal * discount_value;
+                $("#discount_amount").html(formatter.format(discount_amount));
+                let total_amount = subtotal - discount_amount + additional_billing;;
+                $("#total_amount").html(formatter.format(total_amount));
+              });
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
 
         setTimeout(() => {
           window.addEventListener("load", window.print());
