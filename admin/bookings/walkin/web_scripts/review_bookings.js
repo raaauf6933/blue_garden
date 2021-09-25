@@ -67,7 +67,7 @@ $(document).ready(function () {
         "<td>" +
         room.num_rooms +
         "</td>" +
-        "<td> " +
+        "<td style='text-align: right'> " +
         formatter.format(room.new_price) +
         "</td>" +
         "</tr>"
