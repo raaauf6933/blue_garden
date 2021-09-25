@@ -185,10 +185,10 @@
           minimumFractionDigits: 2,
         });
 
-
         let report_type = sessionStorage.getItem("report_type");
         let from = sessionStorage.getItem("report_from");
         let to = sessionStorage.getItem("report_to");
+        let sortBy = sessionStorage.getItem("sortBy");
 
         $("#report-from").html(from);
         $("#report-to").html(to);
@@ -205,7 +205,15 @@
         $.ajax({
           async: false,
           url: "../../php_function/report/get_reports.php",
-          data: "report_type=" + report_type + "&from=" + from + "&to=" + to,
+          data:
+            "report_type=" +
+            report_type +
+            "&from=" +
+            from +
+            "&to=" +
+            to +
+            "&sortBy=" +
+            sortBy,
           type: "POST",
           success: (response) => {
             sts = (val) => {
@@ -223,7 +231,7 @@
                 return "<i>check-in</i>";
               } else if (val == 8) {
                 return "<i>Cancelled</i>";
-              }else {
+              } else {
                 return "<i>check-out</i>";
               }
             };
@@ -270,7 +278,9 @@
                   </td><td> 
                     ${formatter.format(e.total_payed)} 
                     </td><td>
-                    ${formatter.format(e.total_amount * nights + parseInt(e.additional_amount))}
+                    ${formatter.format(
+                      e.total_amount * nights + parseInt(e.additional_amount)
+                    )}
                     </td></tr>`
                 );
               });

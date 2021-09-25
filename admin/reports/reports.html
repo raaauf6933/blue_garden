@@ -313,6 +313,18 @@
                             <option value="monthly">Monthly</option>
                             <option value="yearly">Yearly</option>
                           </select>
+                          <label>Sort by:</label>
+                          <select id="dateType" class="form-control" required>
+                            <option value="" disabled selected hidden>
+                              Select Value
+                            </option>
+                            <option value="7">Check-in Date</option>
+                            <option value="8">Check-out Date</option>
+                            <option value="6">No. Guest</option>
+                            <option value="5">No. Rooms</option>
+                            <option value="12">Total Payed</option>
+                            <option value="10">Total Amount</option>
+                          </select>
                         </div>
                         <div id="dateType" class="col-12 d-flex">
                           <div class="col-6">
@@ -493,6 +505,7 @@
         e.preventDefault();
 
         let report_type = e.target[0].value;
+        let sortBy = e.target[2].value;
 
         if (
           moment($("#from").val()).format("YYYY-MM-DD") >
@@ -504,6 +517,7 @@
         } else {
           //session_save
           sessionStorage.setItem("report_type", report_type);
+          sessionStorage.setItem("sortBy", sortBy);
           sessionStorage.setItem(
             "report_from",
             moment($("#from").val()).format("YYYY-MM-DD")

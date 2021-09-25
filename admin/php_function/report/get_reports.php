@@ -4,6 +4,7 @@ include "../dbconn.php";
 $report_type = $_POST['report_type'];
 $from = $_POST['from'];
 $to = $_POST['to'];
+$sort_by = $_POST['sortBy'];
 
 
 if($report_type == 'Pending Reservation'){
@@ -51,7 +52,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
@@ -106,7 +107,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
@@ -160,7 +161,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
@@ -214,7 +215,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
@@ -268,7 +269,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
@@ -321,7 +322,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
@@ -374,7 +375,7 @@ rv.num_guest,g.last_name");
   g.first_name,rv.checkin_date, 
   rv.checkout_date, 
   rv.status,
-  rv.num_guest,g.last_name");
+  rv.num_guest,g.last_name order by $sort_by");
   
   
       $data = array();
@@ -429,7 +430,7 @@ g.guest_id,
 g.first_name,rv.checkin_date, 
 rv.checkout_date, 
 rv.status,
-rv.num_guest,g.last_name");
+rv.num_guest,g.last_name order by $sort_by");
 
 
     $data = array();
