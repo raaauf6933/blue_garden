@@ -469,8 +469,10 @@
         icon: "warning",
         title: "Are you sure you want to reset?",
         confirmButtonColor: "#3085d6",
+        showCancelButton: true,
       }).then((result) => {
         if (result.isConfirmed) {
+          sessionStorage.removeItem("room_details");
           window.location.reload();
         }
       });
