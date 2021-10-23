@@ -152,7 +152,7 @@ $email_body = '<html>
         </td>
         <td style="width:50%;padding:20px;vertical-align:top" colspan="2">
           <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Address</span> ' . $address . ', ' . $city . ', ' . $zipcode . '</p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Number of gusets</span> ' . $num_guest . '</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Number of guest</span> ' . $num_guest . '</p>
           <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Duration of your vacation</span><div style="font-size: 17px; color:mediumblue; font-weight: bold;"><small>' . date_format(date_create($check_in),"Y-m-d (l)") . '</small>  to <small>' . date_format(date_create($check_out),"Y-m-d (l)") . '.</small></p>
         </td>
       </tr>
@@ -172,7 +172,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px;"><b>Vatable Sales</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px;">
-         Php '.number_format($vatable,2).'
+        ₱'.number_format($vatable,2).'
         </td>
       </tr>
         <tr style="text-align: center;">
@@ -181,7 +181,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px;"><b>VAT (12%)</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px;">
-         Php '.number_format($vat,2).'
+        ₱'.number_format($vat,2).'
         </td>
       </tr>
         <tr style="text-align: center; ">
@@ -190,7 +190,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/"><b>Subtotal</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/">
-         Php '.number_format($total_amount,2).'
+        ₱'.number_format($total_amount,2).'
         </td>
       </tr>
       
@@ -222,7 +222,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/ color:navy"><b>Downpayment</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/color:navy">
-         Php '.number_format($downpayment,2).'
+        ₱'.number_format($downpayment,2).'
         </td>
       </tr>
     </tfooter>

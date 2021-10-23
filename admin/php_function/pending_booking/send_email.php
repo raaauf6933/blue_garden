@@ -149,7 +149,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px;"><b>Vatable Sales</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px;">
-   ' . number_format($vatable,2) . '
+        ₱' . number_format($vatable,2) . '
         </td>
       </tr>
         <tr style="text-align: center;">
@@ -158,7 +158,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px;"><b>VAT (12%)</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px;">
-   ' . number_format($vat,2) . '
+        ₱' . number_format($vat,2) . '
         </td>
       </tr>
         <tr style="text-align: center; ">
@@ -167,7 +167,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/"><b>Subtotal</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/">
-       ' . number_format($total_amount,2) . '
+        ₱' . number_format($total_amount,2) . '
         </td>
       </tr>
       
@@ -199,7 +199,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/ color:navy"><b>Payed Amount</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/color:navy">
-    ' . number_format($payed_capital,2) . '
+        ₱' . number_format($payed_capital,2) . '
         </td>
       </tr>
       <tr style="text-align: center;  ">
@@ -208,7 +208,7 @@ $email_body = '<html>
           <td></td>
           <td style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/ color:navy"><b>Balance</b></td>
         <td colspan="1" style="font-size:14px;padding:10px 15px 0 15px; /*border-bottom: 3px solid #929090;*/color:navy">
-       ' . number_format($balance,2) . '
+        ₱' . number_format($balance,2) . '
         </td>
       </tr>
     </tfooter>
