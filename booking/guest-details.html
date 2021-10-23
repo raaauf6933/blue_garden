@@ -188,7 +188,7 @@
                     </div>
                     <div class="col-md-4 mb-4 mb-lg-0 col-lg-4 mt-2">
                       <div class="field-icon-wrap">
-                        <label><b>Contact number:</b></label>
+                        <label><b>Mobile phone / Telephone:</b></label>
                         <input
                           maxlength="11"
                           type="text"
@@ -250,13 +250,41 @@
                     </div>
                     <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
                       <div class="field-icon-wrap">
-                        <label><b>City:</b></label>
-                        <input
+                        <label><b>Province:</b></label>
+                        <select
+                          id="province"
+                          name="province"
+                          class="form-control"
+                          required
+                        ></select>
+                        <!-- <select
+                          id="city"
+                          class="form-control"
+                          name="city"
+                        ></select> -->
+                        <!-- <input
                           class="form-control"
                           name="city"
                           id=""
                           required
-                        />
+                        /> -->
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
+                      <div class="field-icon-wrap">
+                        <label><b>City:</b></label>
+                        <select
+                          id="city"
+                          class="form-control"
+                          name="city"
+                          required
+                        ></select>
+                        <!-- <input
+                          class="form-control"
+                          name="city"
+                          id=""
+                          required
+                        /> -->
                       </div>
                     </div>
                     <div
@@ -407,6 +435,7 @@
     <script src="../js/active.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="../js/scriptvalidation.js"></script>
+    <script src="../js/city.js"></script>
   </body>
 
   <script>
@@ -417,13 +446,19 @@
     )
       window.location = "../index.html";
 
+    var phCities = new City();
+    phCities.showProvinces("#province");
+    phCities.showCities("#city");
+
     if (sessionStorage.getItem("guest_details") !== null) {
       let guest_details = JSON.parse(sessionStorage.getItem("guest_details"));
+      phCities.showCities(guest_details.province, "#city");
       $('[name="firstname"]').val(guest_details.first_name);
       $('[name="lastname"]').val(guest_details.last_name);
       $('[name="email"]').val(guest_details.email);
       $('[name="contact"]').val(guest_details.contact_num);
       $('[name="address"]').val(guest_details.address);
+      $('[name="province"]').val(guest_details.province);
       $('[name="city"]').val(guest_details.city);
       $('[name="num_guest"]').val(guest_details.num_guest);
     }
@@ -448,8 +483,9 @@
       let contact_num = e.target[5].value;
       let num_guest = e.target[6].options.selectedIndex;
       let address = e.target[7].value;
-      let city = e.target[8].value;
-      let zipcode = e.target[9].value;
+      let province = e.target[8].value;
+      let city = e.target[9].value;
+      let zipcode = e.target[10].value;
 
       let guest_object = {};
       guest_object.first_name = first_name;
@@ -460,7 +496,7 @@
       guest_object.num_guest = num_guest;
       guest_object.address = address;
       guest_object.city = city;
-      guest_object.zipcode = zipcode;
+      guest_object.province = province;
 
       console.log(guest_object);
 

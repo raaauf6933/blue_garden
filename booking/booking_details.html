@@ -428,9 +428,9 @@
             "<td>" +
             room.roomtype_name +
             "</td>" +
-            "<td>PHP " +
-            room.new_price / room.num_rooms / nights +
-            ".00</td>" +
+            "<td> " +
+            formatter.format(room.new_price / room.num_rooms / nights) +
+            "</td>" +
             "<td>" +
             nights +
             "</td>" +
