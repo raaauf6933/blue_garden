@@ -103,7 +103,11 @@
           <!-- Sidebar Menu -->
           <nav class="mt-2">
             <ul
-              class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent"
+              class="
+                nav nav-pills nav-sidebar
+                flex-column
+                nav-flat nav-child-indent
+              "
               data-widget="treeview"
               role="menu"
               data-accordion="false"
@@ -231,9 +235,7 @@
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-              <div class="col-sm-6">
-               
-              </div>
+              <div class="col-sm-6"></div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -327,7 +329,7 @@
                     </div>
                     <div class="col-md-4 mb-4 mb-lg-0 col-lg-4 mt-2">
                       <div class="field-icon-wrap">
-                        <label><b>Contact number:</b></label>
+                        <label><b>Mobile number / Telephone:</b></label>
                         <input
                           type="text"
                           name="contact"
@@ -357,7 +359,7 @@
                       ></i>
                     </div>
                   </div>-->
-                    <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
+                    <div class="col-md-4 mb-4 mb-lg-4 col-lg-4 mt-2">
                       <div class="field-icon-wrap">
                         <label
                           ><b
@@ -367,13 +369,29 @@
                         <input class="form-control" id="address" />
                       </div>
                     </div>
-                    <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
+                    <div class="col-md-3 mb-3 mb-lg-3 col-lg-3 mt-2">
                       <div class="field-icon-wrap">
-                        <label><b>City:</b></label>
-                        <input class="form-control" id="" required />
+                        <label><b>Province:</b></label>
+                        <select
+                          id="province"
+                          name="province"
+                          class="form-control"
+                          required
+                        ></select>
                       </div>
                     </div>
-                    <div class="col-md-6 mb-6 mb-lg-0 col-lg-4 mt-2">
+                    <div class="col-md-3 mb-3 mb-lg-3 col-lg-3 mt-2">
+                      <div class="field-icon-wrap">
+                        <label><b>City:</b></label>
+                        <select
+                          id="city"
+                          name="city"
+                          class="form-control"
+                          required
+                        ></select>
+                      </div>
+                    </div>
+                    <div class="col-md-3 mb-3 mb-lg-3 col-lg-3 mt-2">
                       <div class="field-icon-wrap">
                         <label><b>Zip Code:</b></label>
                         <input
@@ -461,5 +479,12 @@
 
     <script src="./datepicker_files/jquery.datepicker2.js"></script>
     <script src="./web_scripts/guest_details.js"></script>
+    <script src="./../../../js/city.js"></script>
   </body>
+
+  <script>
+    var phCities = new City();
+    phCities.showProvinces("#province");
+    phCities.showCities("#city");
+  </script>
 </html>
