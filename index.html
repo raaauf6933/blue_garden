@@ -562,6 +562,8 @@
         $("#check-out").val(sessionStorage.getItem("checkout_date"));
       }
 
+      sessionStorage.removeItem("room_details");
+
       $("#check-in")
         .datepicker({
           format: "mm/dd/yyyy",
