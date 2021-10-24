@@ -440,7 +440,7 @@
           sub_total = sub_total - item.new_price;
         }
       }
-      $("#sub_total").html(sub_total);
+      $("#sub_total").html(formatter.format(sub_total));
       //console.log(room_id[0])
       console.log(selected_array);
       $("#" + room_id).remove();
@@ -481,14 +481,17 @@
     if (sessionStorage.getItem("room_details") !== null) {
       let room_details = sessionStorage.getItem("room_details");
       JSON.parse(room_details).map((e) => {
+        console.log(e);
         selected_array.push({
           roomtype_id: e.roomtype_id,
           roomtype_name: e.roomtype_name,
           num_rooms: e.num_rooms,
           new_capacity: e.new_capacity,
           new_price: e.new_price,
-          room_ids: e.selected_rooms,
+          room_ids: e.room_ids,
         });
+
+        console.log(selected_array);
 
         $("#room" + e.roomtype_id).attr("disabled", "disabled");
         $(".room" + e.roomtype_id).attr("disabled", "disabled");
