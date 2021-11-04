@@ -198,7 +198,7 @@
                 "<tr><td>" +
                   e.roomtype_name +
                   "</td><td>" +
-                  e.room_price +
+                    formatter.format(e.room_price) +
                   "</td><td>" +
                   nights_ +
                   "</td><td>" +
@@ -224,7 +224,7 @@
                 "<tr><td>" +
                   e.additional_type +
                   "</td><td>" +
-                  e.rate +
+                    formatter.format(e.rate) +
                   "</td><td></td><td>" +
                   e.num_additional +
                   "</td><td style='text-align: right;'>" +

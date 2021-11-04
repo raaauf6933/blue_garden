@@ -84,7 +84,7 @@ foreach ($room_array as $room_array) {
         </td>
         <td  style="padding:15px;">
           <p style="font-size:14px;margin:0;padding:0px;font-weight:bold;">
-            <span style="display:block;font-size:13px;font-weight:normal;">' . $room_array->new_price / $room_array->num_rooms / $nights. '</span>
+            <span style="display:block;font-size:13px;font-weight:normal;">₱' . number_format($room_array->new_price / $room_array->num_rooms / $nights,2). '</span>
           </p>
         </td>
         <td  style="padding:15px;">
@@ -99,7 +99,7 @@ foreach ($room_array as $room_array) {
         </td>
         <td  style="padding:15px;">
           <p style="font-size:14px;margin:0;padding:0px;font-weight:bold;">
-            <span style="display:block;font-size:13px;font-weight:normal;">'. $room_array->new_price.'</span>
+            <span style="display:block;font-size:13px;font-weight:normal;">₱'. number_format($room_array->new_price,2).'</span>
           </p>
         </td>
   
