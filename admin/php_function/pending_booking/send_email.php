@@ -63,7 +63,7 @@ foreach ($array_rooms as $rooms) {
         </td>
         <td  style="padding:15px;">
           <p style="font-size:14px;margin:0;padding:0px;font-weight:bold;">
-            <span style="display:block;font-size:13px;font-weight:normal;">' .  $rooms[1] . '</span>
+            <span style="display:block;font-size:13px;font-weight:normal;">₱' .  number_format($rooms[1],2) . '</span>
           </p>
         </td>
         <td  style="padding:15px;">
@@ -78,7 +78,7 @@ foreach ($array_rooms as $rooms) {
         </td>
         <td  style="padding:15px;">
           <p style="font-size:14px;margin:0;padding:0px;font-weight:bold;">
-            <span style="display:block;font-size:13px;font-weight:normal;">' . $rooms[3] * $nights . '</span>
+            <span style="display:block;font-size:13px;font-weight:normal;">₱' . number_format($rooms[3] * $nights,2) . '</span>
           </p>
         </td>
   
@@ -116,7 +116,7 @@ $email_body = '<html>
       <tr>
         <td colspan="5" style="border: solid 1px #ddd; padding:10px 20px;">
           <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Status</span><b style="color:green;font-weight:normal;margin:0">Confirmed</b></p>
-          <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Reservation ID</span> ' . $reservation_id . ' </p>
+
           <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Booking Reference</span>' . $booking_reference . '</p>
         </td>
       </tr>

@@ -117,6 +117,9 @@
                   <div class="col-xl-6 col-lg-12">
                     <h4 class="text-success">Booking Information</h4>
                     <address class="m-t-5 m-b-5">
+                      <h5 class="m-2">
+                        Bookin Reference: <b id="booking_reference"></b>
+                      </h5>
                       <h5 class="m-2">Check-In: <b id="checkin"></b></h5>
                       <h5 class="m-2">Check-Out: <b id="checkout"></b></h5>
                       <h5 class="m-2">No. Night(s): <b id="num_nights"></b></h5>
@@ -152,6 +155,24 @@
                     </div>
                   </div>
                 </div>
+                <div
+                  style="
+                    margin-top: 1.5em;
+                    font-family: Arial, Helvetica, sans-serif;
+                  "
+                >
+                  <span>
+                    <b>HOW TO PAY?</b><br />
+                    <span id="readMorePayment" style="font-size: 12px"
+                      >* Payment is available only for Bank Deposit / BDO
+                      Account number - 006844224985 | BDO Account name - Blue
+                      Garden Resort <br />* Deposit your 50% Downpayment to
+                      bank, and upload your picture of bank receipt here <br />
+                      * Wait for your booking confirmation (For any concern call
+                      +63 906 6000 801)</span
+                    >
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -168,6 +189,16 @@
                   </thead>
                   <tbody></tbody>
                 </table>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: end;
+                  "
+                >
+                  <span>Downpayment: <b id="downpayment">123123</b></span>
+                  <span>Total Amount: <b id="totalAmount">12312</b></span>
+                </div>
               </div>
             </div>
           </div>
@@ -475,13 +506,19 @@
     $(document).ready(() => {
       let billing_id = sessionStorage.getItem("my_booking_billingid");
       let guest_id = sessionStorage.getItem("my_booking_guestid");
-      if (guest_id == null || guest_id == undefined )
+      if (guest_id == null || guest_id == undefined)
         window.location = "../my_booking.html";
 
       let reservation_id = 0;
+      const formatter = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "PHP",
+        minimumFractionDigits: 2,
+      });
 
       $("#readMore").hide();
 
+      let total_anount = 0;
       $.ajax({
         url: "../php_functions/my_booking/get_rooms.php",
         data: "guest_id=" + guest_id,
@@ -490,14 +527,17 @@
           tmp = response;
           reservation_id = JSON.parse(response)[0].reservation_id;
           JSON.parse(response).map((e) => {
+            total_anount += parseInt(e.room_price);
             $("#rooms > tbody:last-child").append(
               "<tr class='guest_room'><td>" +
                 e.roomtype_name +
-                "</td><td>PHP " +
-                e.room_price +
+                "</td><td> " +
+                formatter.format(e.room_price) +
                 "</td></tr>"
             );
           });
+          $("#downpayment").html(formatter.format(total_anount / 2));
+          $("#totalAmount").html(formatter.format(total_anount));
         },
       });
 
@@ -519,7 +559,6 @@
         return { room_ids: e.room_id };
       });
 
-      console.log(room_id);
       let rooms_invalid = (function () {
         var tmp = null;
         $.ajax({
@@ -565,9 +604,9 @@
       booking_status = (value) => {
         if (value == 0 || value == 1) {
           return "<span class='text-danger'>Pending</span>";
-        } else if (value == 8){
+        } else if (value == 8) {
           return "<span class='text-danger'>Cancelled</span>";
-        }else {
+        } else {
           return "<span class='text-success'>Confirmed</span>";
         }
       };
@@ -582,12 +621,22 @@
             $("#guest_address").html(
               e.addressline_1 + " " + e.city + " " + e.zipcode
             );
+            console.log(e);
+
+            var start = moment(e.checkin_date, "YYYY-MM-DD");
+            var end = moment(e.checkout_date, "YYYY-MM-DD");
+
+            //Difference in number of days
+            $("#num_nights").html(
+              Math.abs(moment.duration(start.diff(end)).asDays())
+            );
+
             $("#guest_contact").html(e.contact_number);
             $("#guest_email").html(e.email);
             $("#checkin").html(e.checkin_date);
             $("#checkout").html(e.checkout_date);
             $("#status").html(booking_status(e.status));
-
+            $("#booking_reference").html(e.booking_reference);
             if (e.status !== "0") {
               $("#changebooking_btn").hide();
               $("#cancelBooking_btn").hide();
@@ -603,8 +652,8 @@
         success: function (response) {
           JSON.parse(response).map((e) => {
             $("#payment_history > tbody:last-child").append(
-              "<tr class='guest_room'><td>PHP " +
-                e.payed_capital +
+              "<tr class='guest_room'><td> " +
+                formatter.format(e.payed_capital) +
                 "</td><td> " +
                 moment(e.payment_date).format("YYYY-MM-DD hh:mm a") +
                 "</td></tr>"
@@ -811,17 +860,15 @@
 
       $("#cancel_submit").click((e) => {
         $.ajax({
-            url: "./php_function/cancel_booking.php",
-            data:
-              "reservation_id=" +
-              reservation_id,
-            type: "POST",
-            success: function (response) {
-              if (response === "1") {
-                location.reload();
-              }
-            },
-          });
+          url: "./php_function/cancel_booking.php",
+          data: "reservation_id=" + reservation_id,
+          type: "POST",
+          success: function (response) {
+            if (response === "1") {
+              location.reload();
+            }
+          },
+        });
       });
 
       $("#readMore_btn").click(() => {
