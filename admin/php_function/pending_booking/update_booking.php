@@ -15,7 +15,7 @@ while ($row = mysqli_fetch_assoc($query_billing)) {
 }
 $down_payment = $total_amount / 2;
 
-if($payed_capital > 0 && ($payed_capital < $down_payment || $payed_capital > $down_payment || $payed_capital == $down_payment)  && $payed_capital <= $total_amount){
+if($payed_capital > 0   && ($payed_capital > $down_payment  || $payed_capital == $down_payment) && $payed_capital <= $total_amount){
     
     $sql = mysqli_query($conn, "INSERT INTO payment(billing_id,payed_capital,payment_date) 
 VALUES ('$billing_id','$payed_capital','$payment_date')");
@@ -25,7 +25,7 @@ echo json_encode('1');
 }elseif($payed_capital > $total_amount){
     echo json_encode('2');
 }else{
-
+    echo $total_amount;
     echo json_encode('0');
 }
 
