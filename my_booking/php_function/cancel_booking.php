@@ -69,7 +69,7 @@ $email_body = '<html>
       <tr>
         <th style="text-align: left" colspan="4">
           <img style="max-width: 70px" src="cid:logo_2u" /><strong>
-            Fairfields Resort & Playhouse Inn.</strong
+            Blue Garden Hotel & Resort</strong
           >
         </th>
         <th style="text-align: right; font-weight: 400"></th>
@@ -259,7 +259,7 @@ $email_body = '<html>
       <td colspan="5" style="color: #6b6b6b;">* Payment is available only for Bank Deposit</td>
      
   </tr>
-  <tr> <td colspan="5" style="color: #6b6b6b;">* Deposit your 50% Downpayment to bank, <br/>and upload your picture of bank receipt here <a href="http://fairfieldsresort.com/my_booking.html" target="_blank">My Booking</a></td></tr>
+  <tr> <td colspan="5" style="color: #6b6b6b;">* Deposit your 50% Downpayment to bank, <br/>and upload your picture of bank receipt here <a href="http://bluegardenresort.com/myBooking.html" target="_blank">My Booking</a></td></tr>
   
   <tr>
       <td style="height: 1rem;"></td>

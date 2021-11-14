@@ -185,6 +185,7 @@
                     <tr class="table-success">
                       <th>Availed Room</th>
                       <th>Amount</th>
+                      <th>No. Night(s)</th>
                     </tr>
                   </thead>
                   <tbody></tbody>
@@ -196,8 +197,9 @@
                     align-items: end;
                   "
                 >
-                  <span>Downpayment: <b id="downpayment">123123</b></span>
-                  <span>Total Amount: <b id="totalAmount">12312</b></span>
+                
+                  <span>Downpayment: <b id="downpayment"></b></span>
+                  <span>Total Amount: <b id="totalAmount"></b></span>
                 </div>
               </div>
             </div>
@@ -267,7 +269,7 @@
               <button type="submit" class="btn btn-primary" id="btn-submit">
                 Update Booking
               </button>
-              <button
+              <buttons
                 type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"
@@ -377,7 +379,7 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" id="btn-update-booking">
                 Update Booking
               </button>
             </div>
@@ -509,6 +511,11 @@
       if (guest_id == null || guest_id == undefined)
         window.location = "../my_booking.html";
 
+      if($("#check-in").val() === "" || $("#check-out").val() === "" )  {
+      
+        $("#btn-update-booking").attr("disabled", true)
+      }
+
       let reservation_id = 0;
       const formatter = new Intl.NumberFormat("en-IN", {
         style: "currency",
@@ -517,7 +524,6 @@
       });
 
       $("#readMore").hide();
-
       let total_anount = 0;
       $.ajax({
         url: "../php_functions/my_booking/get_rooms.php",
@@ -527,17 +533,21 @@
           tmp = response;
           reservation_id = JSON.parse(response)[0].reservation_id;
           JSON.parse(response).map((e) => {
+        
+            var start = moment(e.checkin_date, "YYYY-MM-DD");
+            var end = moment(e.checkout_date, "YYYY-MM-DD");
+            var numNights =  Math.abs(moment.duration(start.diff(end)).asDays())
+          
             total_anount += parseInt(e.room_price);
             $("#rooms > tbody:last-child").append(
               "<tr class='guest_room'><td>" +
                 e.roomtype_name +
                 "</td><td> " +
                 formatter.format(e.room_price) +
-                "</td></tr>"
+                "</td><td>"+ numNights + "</td></tr>"
             );
           });
-          $("#downpayment").html(formatter.format(total_anount / 2));
-          $("#totalAmount").html(formatter.format(total_anount));
+        
         },
       });
 
@@ -574,6 +584,7 @@
       })();
 
       var unavailableDates = [];
+      var tempUnavailable = [];
       rooms_invalid.map((e) => {
         Date.prototype.addDays = function (days) {
           var dat = new Date(this.valueOf());
@@ -598,6 +609,7 @@
 
         for (i = 0; i < dateArray.length; i++) {
           unavailableDates.push(moment(dateArray[i]).format("D-M-YYYY"));
+          tempUnavailable.push(dateArray[i]);
         }
       });
 
@@ -621,15 +633,19 @@
             $("#guest_address").html(
               e.addressline_1 + " " + e.city + " " + e.zipcode
             );
-            console.log(e);
+          
 
             var start = moment(e.checkin_date, "YYYY-MM-DD");
             var end = moment(e.checkout_date, "YYYY-MM-DD");
+            var numNights =  Math.abs(moment.duration(start.diff(end)).asDays())
 
             //Difference in number of days
             $("#num_nights").html(
-              Math.abs(moment.duration(start.diff(end)).asDays())
+              numNights
             );
+
+            $("#downpayment").html(formatter.format((total_anount * numNights) / 2));
+          $("#totalAmount").html(formatter.format(total_anount * numNights));
 
             $("#guest_contact").html(e.contact_number);
             $("#guest_email").html(e.email);
@@ -767,26 +783,55 @@
             var test = new Date(check_in);
             test.setDate(test.getDate() + 1);
 
-            $("#check-out").datepicker({
-              startDate: test,
-              beforeShowDay: function (date) {
-                dmy =
-                  date.getDate() +
-                  "-" +
-                  (date.getMonth() + 1) +
-                  "-" +
-                  date.getFullYear();
-                if (unavailableDates.indexOf(dmy) != -1) {
-                  return false;
-                } else {
-                  return true;
+            $("#check-out")
+              .datepicker({
+                startDate: test,
+                beforeShowDay: function (date) {
+                  dmy =
+                    date.getDate() +
+                    "-" +
+                    (date.getMonth() + 1) +
+                    "-" +
+                    date.getFullYear();
+                  if (unavailableDates.indexOf(dmy) != -1) {
+                    return false;
+                  } else {
+                    return true;
+                  }
+                },
+              })
+              .change((e) => {
+                $("#btn-update-booking").removeAttr("disabled")
+                var dateFrom = $("#check-out").val();
+                var dateTo = $("#check-in").val();
+
+                // console.log(tempUnavailable);
+
+                for (var i = 0; i < tempUnavailable.length; i++) {
+                  var dateCheck = moment(e).format("MM/DD/YYYY");
+                  var d1 = dateFrom.split("/");
+                  var d2 = dateTo.split("/");
+                  var c = dateCheck.split("/");
+
+                  var from = new Date(d1[2], parseInt(d1[1]) - 1, d1[0]); // -1 because months are from 0 to 11
+                  var to = new Date(d2[2], parseInt(d2[1]) - 1, d2[0]);
+                  var check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
+
+                  if (check > from && check < to) {
+                    
+                    break;
+                  }
                 }
-              },
-            });
+                // tempUnavailable.map((e) => {
+
+                // });
+              });
             $("#check-out").datepicker("setStartDate", test);
           }
 
           if ($("#check-in").val() != "" && $("#check-out").val() != "") {
+          
+         
             var check_in1 = $("#check-in").val();
             var test1 = new Date(check_in1);
             test1.setDate(test1.getDate() + 1);
@@ -832,7 +877,14 @@
 
         if (!validateDate()) {
           //submit update here
-          console.log(reservation_id);
+
+            var newStart = moment($("#check-in").val()).format("YYYY-MM-DD");
+            var newEnd = moment($("#check-out").val()).format("YYYY-MM-DD");
+            var newNumNights =  Math.abs(moment.duration(moment($("#check-in").val()).diff(newEnd)).asDays())
+
+          let newBilling =  total_anount * newNumNights;
+          let newNumOfNights;
+          console.log(newBilling )
           $.ajax({
             url: "./php_function/update_booking.php",
             data:
@@ -841,7 +893,9 @@
               "&checkin_date=" +
               moment(check_in).format("YYYY-MM-DD") +
               "&checkout_date=" +
-              moment(check_out).format("YYYY-MM-DD"),
+              moment(check_out).format("YYYY-MM-DD") +
+              "&billing_id=" + billing_id +
+              "&newBilling=" + newBilling,
             type: "POST",
             success: function (response) {
               if (response === "1") {
