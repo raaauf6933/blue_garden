@@ -17,6 +17,23 @@ $(document).ready(function () {
   for (i = 1; counter_guest >= i; i++) {
     $("#num_guest").append("<option value='" + i + "'>" + i + "</option>");
   }
+
+  if (sessionStorage.getItem("walkin_guest_details") !== null) {
+    let guest_details = JSON.parse(
+      sessionStorage.getItem("walkin_guest_details")
+    );
+    console.log(guest_details);
+    phCities.showCities(guest_details.province, "#city");
+    $('[name="firstname"]').val(guest_details.first_name);
+    $('[name="lastname"]').val(guest_details.last_name);
+    $('[name="email"]').val(guest_details.email);
+    $('[name="contact"]').val(guest_details.contact_num);
+    $('[name="address"]').val(guest_details.address);
+    $('[name="province"]').val(guest_details.province);
+    $('[name="city"]').val(guest_details.city);
+    $('[name="num_guest"]').val(guest_details.num_guest);
+  }
+
   $("#guest_form").submit((e) => {
     e.preventDefault();
     let first_name = e.target[0].value;

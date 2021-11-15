@@ -43,6 +43,14 @@
     />
 
     <link rel="stylesheet" href="./datepicker_files/jquery.datepicker2.css" />
+    <style>
+      .tableDescription {
+        width: 178px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
   </head>
   <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -285,12 +293,16 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-8">
-                        <table id="table_rooms" class="table table-bordered">
+                        <table
+                          id="table_rooms"
+                          class="table table-bordered"
+                          style="table-layout: fixed"
+                        >
                           <thead>
                             <tr>
                               <th>Room name</th>
                               <th>Room rate</th>
-                              <th>Max. capacity</th>
+                              <th>Capacity</th>
                               <th>Description</th>
                               <th>Action</th>
                             </tr>
@@ -305,6 +317,7 @@
                             <table
                               class="table table-bordered table-sm ml-2"
                               id="invoice"
+                              style="table-layout: fixed"
                             >
                               <thead>
                                 <tr>
@@ -386,4 +399,15 @@
     <script src="./datepicker_files/jquery.datepicker2.js"></script>
     <script src="./web_scripts/select_rooms.js"></script>
   </body>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    const formatter = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "PHP",
+      minimumFractionDigits: 2,
+    });
+  </script>
 </html>

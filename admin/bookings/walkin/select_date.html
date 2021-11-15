@@ -376,6 +376,16 @@
       if (sessionStorage.getItem("user_info") == null)
         window.location = "../../../authentication/login.html";
 
+      if (
+        sessionStorage.getItem("walkin_checkin") !== ("" || null) &&
+        sessionStorage.getItem("walkin_checkout") !== ("" || null)
+      ) {
+        $("#from").val(sessionStorage.getItem("walkin_checkin"));
+        $("#to").val(sessionStorage.getItem("walkin_checkout"));
+      }
+
+      sessionStorage.removeItem("walkin_room_details");
+
       $("#user_admin").html(
         JSON.parse(sessionStorage.getItem("user_info")).name
       );

@@ -73,12 +73,14 @@ $(document).ready(function () {
       "<tr><td>" +
         e.roomtype_name +
         "</td><td>" +
-        e.roomtype_price +
-        "</td><td>" +
+        formatter.format(e.roomtype_price) +
+        "</td><td >" +
         e.roomtype_capacity +
-        "</td><td>" +
+        "</td><td style='overflow:hidden; text-overflow: ellipsis;' ><span class='tableDescription' data-toggle='tooltip' data-placement='left' title='" +
         e.description +
-        "</td><td><form class='add-room'><div class='input-group mb-3'><input value='" +
+        "'>" +
+        e.description +
+        "</span></td><td><form class='add-room'><div class='input-group mb-3'><input value='" +
         e.roomtype_id +
         "' hidden/><input value='" +
         e.roomtype_price +
@@ -125,6 +127,10 @@ $(document).ready(function () {
         }
       });
 
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+
       selected_object.roomtype_id = roomtype_id;
       selected_object.roomtype_name = roomtype_name;
       selected_object.num_rooms = num_rooms;
@@ -141,15 +147,17 @@ $(document).ready(function () {
         "<tr id='" +
           roomtype_id +
           "'>" +
-          "<th>" +
+          "<th style='width:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' data-toggle='tooltip' data-placement='left' title='" +
+          roomtype_name +
+          "'>" +
           roomtype_name +
           "</th>" +
           "<td>" +
           num_rooms +
           "</td>" +
           "<td> " +
-          new_price +
-          ".00</td>" +
+          formatter.format(new_price) +
+          "</td>" +
           "<td>" +
           '<button class="btn' +
           roomtype_id +
@@ -168,8 +176,7 @@ $(document).ready(function () {
       Swal.fire({
         icon: "info",
         title: "Oops...",
-        text:
-          "This type of room has no available room, Try another booking dates",
+        text: "This type of room has no available room, Try another booking dates",
       });
     }
   });
@@ -208,4 +215,56 @@ $(document).ready(function () {
       });
     }
   });
+
+  if (sessionStorage.getItem("walkin_room_details") !== null) {
+    let room_details = sessionStorage.getItem("walkin_room_details");
+    JSON.parse(room_details).map((e) => {
+      console.log(e);
+      selected_array.push({
+        roomtype_id: e.roomtype_id,
+        roomtype_name: e.roomtype_name,
+        num_rooms: e.num_rooms,
+        new_capacity: e.new_capacity,
+        new_price: e.new_price,
+        room_ids: e.room_ids,
+      });
+
+      console.log(selected_array);
+
+      $("#room" + e.roomtype_id).attr("disabled", "disabled");
+      $(".room" + e.roomtype_id).attr("disabled", "disabled");
+
+      $("#invoice > tbody:last-child").append(
+        "<tr id='" +
+          e.roomtype_id +
+          "'>" +
+          "<th style='width:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;' data-toggle='tooltip' data-placement='left' title='" +
+          e.roomtype_name +
+          "'>" +
+          e.roomtype_name +
+          "</th>" +
+          "<td>" +
+          e.num_rooms +
+          "</td>" +
+          "<td> " +
+          formatter.format(e.new_price) +
+          "</td>" +
+          "<td>" +
+          '<button class="btn' +
+          e.roomtype_id +
+          ' btn btn-default">' +
+          '<i class="fa fa-times"></i>' +
+          "</button>" +
+          "</td>" +
+          "</tr>"
+      );
+      $(".btn" + e.roomtype_id).attr(
+        "onclick",
+        "deleteselected(" + e.roomtype_id + ")"
+      );
+
+      // sub_total += e.new_price;
+      // $("#sub_total").html(formatter.format(sub_total));
+    });
+  }
 });
