@@ -179,7 +179,7 @@
           JSON.parse(sessionStorage.getItem("user_info")).name
         );
 
-        const formatter = new Intl.NumberFormat("en-IN", {
+        const formatter = new Intl.NumberFormat("en-PH", {
           style: "currency",
           currency: "PHP",
           minimumFractionDigits: 2,
@@ -249,7 +249,6 @@
                   date_to.getTime() - date_from.getTime();
                 var nights = Difference_In_Time / (1000 * 3600 * 24);
 
-                console.log(e.total_amount);
                 num_reservation += 1;
                 num_room += parseInt(e.num_rooms);
                 num_guest += parseInt(e.num_guest);
