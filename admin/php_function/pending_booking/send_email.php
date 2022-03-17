@@ -232,7 +232,7 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
 $mail->IsSMTP();
 
 $mail->CharSet = "UTF-8";
-$mail->Host = "sg2plzcpnl456440.prod.sin2.secureserver.net";
+$mail->Host = "sg2plzcpnl491274.prod.sin2.secureserver.net";
 //$mail->SMTPAutoTLS = false; 
 $mail->SMTPDebug = 1;
 $mail->Port = 25; //465 or 587
@@ -242,16 +242,16 @@ $mail->SMTPAuth = true;
 $mail->IsHTML(true);
 
 //Authentication
-$mail->Username = "officialbluegardenresort@bluegardenresort.com";
+$mail->Username = "officialbluegardenresort@bluegardenresortph.com";
 $mail->Password = "Bluegardenresort";
 
 //Set Params
 $mail->AddEmbeddedImage('../../../img/core/logo.png', 'logo_2u');
 
 
-$mail->SetFrom("officialbluegardenresort@bluegardenresort.com", "Blue Garden Resort");
+$mail->SetFrom("officialbluegardenresort@bluegardenresortph.com", "Blue Garden Resort");
 $mail->AddAddress($guest_email);
-$mail->AddCC("officialbluegardenresort@bluegardenresort.com");
+$mail->AddCC("officialbluegardenresort@bluegardenresortph.com");
 $mail->Subject = "Booking Confirmation | Blue Garden Resort";
 $mail->Body = $email_body;
 
